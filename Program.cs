@@ -1,7 +1,20 @@
+using Microsoft.EntityFrameworkCore;
+using ToaPro;
+using ToaPro.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<IntexContext>(options =>
+{
+    options.UseNpgsql(builder.Configuration["ConnectionStrings:ThingConnection"]);
+}
+
+);
+
+builder.Services.AddScoped<IIntexRepository, EFIntexRepository>();
 
 var app = builder.Build();
 
