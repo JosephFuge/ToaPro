@@ -72,7 +72,7 @@ namespace ToaPro.Controllers
             return View();
         }
 
-        public IActionResult ProfessorAssignAwards()
+        public IActionResult ProfessorViewAssignAwards()
         {
             return View();
         }
