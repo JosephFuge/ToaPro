@@ -9,7 +9,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<IntexContext>(options =>
 {
-    options.UseNpgsql(builder.Configuration["ConnectionStrings:ThingConnection"]);
+    options.UseNpgsql(builder.Configuration["ConnectionStrings:IntexConnection"]);
 }
 
 );
