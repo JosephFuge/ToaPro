@@ -6,10 +6,14 @@ namespace ToaPro.Controllers
 {
     public class HomeController : Controller
     {
+        //Login Page
+        public IActionResult Login()
+        {
+            return View();
+        }
         public IActionResult Index()
         {
             return View();
         }
-
     }
 }
