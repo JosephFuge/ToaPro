@@ -39,8 +39,10 @@ namespace ToaPro.Controllers
             return View();
         }
 
-        public IActionResult ProfessorCreateEditRubric() 
+        public IActionResult Rubric() 
         {
+            //only Professors and TAs have access to this page. Only Professors can export the files.
+            //(TAs, Prof)
             return View();
         }
 
