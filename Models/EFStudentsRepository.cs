@@ -11,6 +11,6 @@ namespace ToaPro
             _intexContext = TempDataDictionary;
         }
 
-        public IEnumerable<Student> Students => _intexContext;
+        public IEnumerable<Student> Students => (IEnumerable<Student>)_intexContext;
     }
 }

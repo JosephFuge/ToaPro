@@ -1,4 +1,6 @@
-﻿namespace ToaPro
+﻿using ToaPro.Models;
+
+namespace ToaPro
 {
     public interface IIntexRepository
     {
