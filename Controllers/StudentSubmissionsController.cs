@@ -21,7 +21,7 @@ namespace ToaPro.Controllers
 
         public IActionResult StudentSubmitFiles()
         {
-            return View();
+            return View("StudentSubmitFiles");
         }
 
     }
