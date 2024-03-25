@@ -20,3 +20,53 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/*JULES STYLING*/
+
+/*header styling*/
+.main-header {
+    background-color: #E6E6E6;
+    padding: 30px;
+    text-align: center;
+    max-width: 100%;
+    margin: 0 auto;
+    box-shadow: inset 0px 15px 15px rgba(0, 0, 0, 0.1);
+}
+
+/*footer styling*/
+.main-footer {
+    background-color: #002E5D;
+    color: white;
+    text-align: center;
+    padding: 13px 0;
+    margin-top: auto;
+}
+
+    .main-footer h2 {
+        font-size: 20px;
+        margin-bottom: 20px;
+        letter-spacing:2.5px;
+       
+    }
+
+    .main-footer p {
+        font-size: 12px;
+        margin: 0;
+        margin-bottom: 7px;
+    }
+.content-wrapper {
+    flex: 1;
+}
+
+.bg-custom-color {
+    background-color: #002E5D;
+}
+
+.toa-pro-nav {
+    padding-bottom: 5px;
+    padding-left: 35px;
+    text-decoration: none;
+    font-size: 25px;
+    color: white;
+}
+/*END JULES STYLING*/
