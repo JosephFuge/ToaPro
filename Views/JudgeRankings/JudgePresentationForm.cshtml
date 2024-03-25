@@ -3,4 +3,81 @@
 *@
 @{
 }
-@*Judge Submits Judging Form View (Groups 9 & 11)*@
+@*Judge Submits Judging Form View (Groups 8 & 4)*@
+
+<body>
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Criteria</th>
+                    <th>Grade</th>
+                    <th>Comments</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <h3>Communication and Delivery</h3>
+                        <p>Potential Factors:</p>
+                        <ul>
+                            <li>Dress, Appearance, and Confidence</li>
+                            <li>Engaging with the audience</li>
+                            <li>Organization and timing</li>
+                            <li>Professionalism</li>
+                            <li>Transitions</li>
+                            <li>Question handling</li>
+                            <li>Slide quality</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <input type="range" value="10" min="1" max="10" oninput="this.nextElementSibling.value = this.value">
+                        <output>10</output>
+                    </td>
+                    <td>
+                        <textarea class="form-control" rows="3" id="comments1"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h3>Technology Demonstration</h3>
+                        <p>Potential Factors:</p>
+                        <ul>
+                            <li>Website implementation and functionality</li>
+                            <li>System usability and user experience</li>
+                            <li>Coherant narrative/story when describing system</li>
+                            <li>Presence or lack of errors/bugs</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <input type="range" value="10" min="1" max="10" oninput="this.nextElementSibling.value = this.value">
+                        <output>10</output>
+                    </td>
+                    <td>
+                        <textarea class="form-control" rows="3" id="comments2"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h3>Overall System and Client Satisfaction</h3>
+                        <p>Potential Factors:</p>
+                        <ul>
+                            <li>Team understands the challenges and requirements of the client</li>
+                            <li>System meets client needs</li>
+                            <li>Solution is realistic and viable</li>
+                            <li>You are confident in the solution and the team</li>
+                            <li>Client should engage with the team for continued implementation</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <input type="range" value="10" min="1" max="10" oninput="this.nextElementSibling.value = this.value">
+                        <output>10</output>
+                    </td>
+                    <td>
+                        <textarea class="form-control" rows="3" id="comments3"></textarea>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
