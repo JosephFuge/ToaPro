@@ -80,17 +80,19 @@
         <h2>Submission</h2>
         <div class="submission-form">
             <p>Please include the following in your submission:</p>
+            <form method="post">
+                <label for="github-link">GitHub Link:</label>
+                <input type="text" id="github-link" name="github-link" placeholder="Make sure your repository is public.">
 
-            <label for="github-link">GitHub Link:</label>
-            <input type="text" id="github-link" name="github-link" placeholder="Make sure your repository is public.">
+                <label for="youtube-link">YouTube Link:</label>
+                <input type="text" id="youtube-link" name="youtube-link" placeholder="Explain how your project fulfills the rubric requirements in 10 minutes or less. Showcase any extra features you've added.">
 
-            <label for="youtube-link">YouTube Link:</label>
-            <input type="text" id="youtube-link" name="youtube-link" placeholder="Explain how your project fulfills the rubric requirements in 10 minutes or less. Showcase any extra features you've added.">
+                <label for="upload-folder">Upload Folder:</label>
+                <input type="file" id="upload-folder" name="upload-folder" directory webkitdirectory mozdirectory>
 
-            <label for="upload-folder">Upload Folder:</label>
-            <input type="file" id="upload-folder" name="upload-folder" directory webkitdirectory mozdirectory>
-
-            <input type="submit" value="Submit">
+                <button type="btn" class="btn btn-submit" value="Submit"></button>
+            </form>
+            
         </div>
     </div>
 
