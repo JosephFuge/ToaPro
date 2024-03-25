@@ -5,81 +5,127 @@ For more information on enabling MVC for empty projects, visit https://go.micros
 }
 @*Create and Edit Rubric View. The TAs can view and the Professors can add and edit items (Groups 3 & 6)*@
 
-<div style="width: 1440px; height: 118px; left: 0px; top: 127px; position: absolute">
-    <div style="width: 1440px; height: 118px; left: 0px; top: 0px; position: absolute; background: #E6E6E6"></div>
-    <div style="width: 645px; height: 58px; left: 397px; top: 38px; position: absolute; text-align: center; color: black; font-size: 36px; font-family: Public Sans; font-weight: 400; letter-spacing: 1.80px; word-wrap: break-word">Rubric</div>
-</div>
-
-
-<div style="width: 80px; height: 27px; left: 1033px; top: 97px; position: absolute; text-align: center; color: #002E5D; font-size: 14px; font-family: Public Sans; font-weight: 400; word-wrap: break-word"><a asp-controller="Rubric" asp-action="Rubric">Rubric</a></div>
-<div style="width: 80px; height: 27px; left: 1101px; top: 96px; position: absolute; text-align: center; color: #002E5D; font-size: 14px; font-family: Public Sans; font-weight: 400; word-wrap: break-word"><a asp-controller="Grading" asp-action="GradingPage">Grade</a></div>
-<div style="width: 80px; height: 27px; left: 948px; top: 96px; position: absolute; text-align: center; color: #002E5D; font-size: 14px; font-family: Public Sans; font-weight: 400; word-wrap: break-word"><a asp-controller="Grading" asp-action="GradingSummaryPage">Dashboard</a></div>
-<div style="width: 121px; height: 27px; left: 1176px; top: 96px; position: absolute; text-align: center; color: #002E5D; font-size: 14px; font-family: Public Sans; font-weight: 400; word-wrap: break-word"><a asp-controller="Rubric" asp-action="AssignTAs">TA Assignments</a></div>
-<div style="width: 91px; height: 27px; left: 1311px; top: 96px; position: absolute; text-align: center; color: #002E5D; font-size: 14px; font-family: Public Sans; font-weight: 400; word-wrap: break-word"><a asp-controller="Grading" asp-action="ProfessorNormalizeGrades">Normalization</a></div>
-<div style="width: 59px; height: 27px; left: 1123px; top: 34px; position: absolute; text-align: center; color: white; font-size: 14px; font-family: Public Sans; font-weight: 400; word-wrap: break-word">Grading</div>
-<div style="width: 80px; height: 27px; left: 1212px; top: 34px; position: absolute; text-align: center; color: white; font-size: 14px; font-family: Public Sans; font-weight: 400; word-wrap: break-word">Presentation</div>
-<div style="width: 80px; height: 27px; left: 1321px; top: 34px; position: absolute; text-align: center; color: white; font-size: 14px; font-family: Public Sans; font-weight: 400; word-wrap: break-word">Permissions</div>
 
 @model List<Requirement>
 
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
+<h1 style="text-align:center">Rubric</h1>
 
-<!--Table to display movies-->
-<table class="table table-bordered table-hover table-striped">
-    <thead class="thead-dark">
-        <tr>
-            <th>Points</th>
-            <th>Objectives</th>
-        </tr>
-    </thead>
-    <tbody>
+<h2>401 Project Management</h2>
+    <table class="table table-bordered table-hover table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Points</th>
+                <th>Objectives</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
         <td></td>
         <td></td>
-    </tbody>
-</table>
+        <td>Edit</td>
+        </tbody>
+    </table>
+    <table class="table table-bordered table-hover table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Low(0-30)</th>
+                <th>Medium(40-70)</th>
+                <th>High (80-100)</th>
+            </tr>
+        </thead>
+        <tbody>
+        <td>Lorem Ipsum</td>
+        <td>Lorem Ipsum</td>
+        <td>Lorem Ipsum</td>
+        </tbody>
+    </table>
 
-<table class="table table-bordered table-hover table-striped">
-    <thead class="thead-dark">
-        <tr>
-            <th>Points</th>
-            <th>Objectives</th>
-        </tr>
-    </thead>
-    <tbody>
-    <td></td>
-    <td></td>
-    </tbody>
-</table>
+<h2>413 Enterprise Application Development</h2>
+    <table class="table table-bordered table-hover table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Points</th>
+                <th>Objectives</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <td></td>
+        <td></td>
+        <td>Edit</td>
+        </tbody>
+    </table>
+    <table class="table table-bordered table-hover table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Low(0-30)</th>
+                <th>Medium(40-70)</th>
+                <th>High (80-100)</th>
+            </tr>
+        </thead>
+        <tbody>
+        <td>Lorem Ipsum</td>
+        <td>Lorem Ipsum</td>
+        <td>Lorem Ipsum</td>
+        </tbody>
+    </table>
 
-<table class="table table-bordered table-hover table-striped">
-    <thead class="thead-dark">
-        <tr>
-            <th>Points</th>
-            <th>Objectives</th>
-        </tr>
-    </thead>
-    <tbody>
-    <td></td>
-    <td></td>
-    </tbody>
-</table>
+<h2>414 Security</h2>
+    <table class="table table-bordered table-hover table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Points</th>
+                <th>Objectives</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <td></td>
+        <td></td>
+        <td>Edit</td>
+        </tbody>
+    </table>
+    <table class="table table-bordered table-hover table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Low(0-30)</th>
+                <th>Medium(40-70)</th>
+                <th>High (80-100)</th>
+            </tr>
+        </thead>
+        <tbody>
+        <td>Lorem Ipsum</td>
+        <td>Lorem Ipsum</td>
+        <td>Lorem Ipsum</td>
+        </tbody>
+    </table>
 
-<table class="table table-bordered table-hover table-striped">
-    <thead class="thead-dark">
-        <tr>
-            <th>Points</th>
-            <th>Objectives</th>
-        </tr>
-    </thead>
-    <tbody>
-    <td></td>
-    <td></td>
-    </tbody>
-</table>
+<h2>455 Machine Learning Algorithms</h2>
+    <table class="table table-bordered table-hover table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Points</th>
+                <th>Objectives</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <td></td>
+            <td></td>
+            <td>Edit</td>
+        </tbody>
+    </table>
+    <table class="table table-bordered table-hover table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Low(0-30)</th>
+                <th>Medium(40-70)</th>
+                <th>High (80-100)</th>
+            </tr>
+        </thead>
+        <tbody>
+        <td>Lorem Ipsum</td>
+        <td>Lorem Ipsum</td>
+        <td>Lorem Ipsum</td>
+        </tbody>
+    </table>
