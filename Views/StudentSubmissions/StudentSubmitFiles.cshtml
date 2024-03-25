@@ -12,69 +12,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submission Form</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f4f4f4;
-        }
-
-        .header {
-            background: #002e5d;
-            color: white;
-            padding: 10px 20px;
-            text-align: center;
-        }
-
-        .container {
-            width: 80%;
-            margin: 20px auto;
-            background: white;
-            padding: 20px;
-        }
-
-        .submission-form {
-            background: #f4f4f4;
-            border: 1px solid #ccc;
-            padding: 20px;
-        }
-
-        input[type="text"], input[type="file"] {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-        }
-
-        input[type="submit"] {
-            background: #0054a6;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-        }
-
-            input[type="submit"]:hover {
-                background: #003c73;
-            }
-
-        .footer {
-            background: #002e5d;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-    </style>
 </head>
 <body>
-
-    <div class="header">
-        <h1>BYU | ToaPro</h1>
-    </div>
 
     <div class="container">
         <h2>Submission</h2>
@@ -83,23 +22,18 @@
             <form method="post">
                 <label for="github-link">GitHub Link:</label>
                 <input type="text" id="github-link" name="github-link" placeholder="Make sure your repository is public.">
-
+                <br />
                 <label for="youtube-link">YouTube Link:</label>
-                <input type="text" id="youtube-link" name="youtube-link" placeholder="Explain how your project fulfills the rubric requirements in 10 minutes or less. Showcase any extra features you've added.">
-
-                <label for="upload-folder">Upload Folder:</label>
+                <input type="text" id="youtube-link" name="youtube-link" placeholder="">
+                <br />
+                <label for="upload-folder">Upload Files:</label>
                 <input type="file" id="upload-folder" name="upload-folder" directory webkitdirectory mozdirectory>
-
-                <button type="btn" class="btn btn-submit" value="Submit"></button>
+                <br />
+                <br />
+                <button type="submit" class="btn">Submit</button>
+                <br />
             </form>
-            
         </div>
-    </div>
-
-    <div class="footer">
-        <p>BRIGHAM YOUNG UNIVERSITY</p>
-        <p>PROVO, UT 84602, USA | 801-422-4636 | © 2024 ALL RIGHTS RESERVED</p>
-        <p><a href="#" style="color: white;">Privacy Notice</a> | <a href="#" style="color: white;">Cookie Preferences</a></p>
     </div>
 
 </body>
