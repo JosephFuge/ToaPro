@@ -33,7 +33,11 @@ namespace ToaPro.Controllers
             //the student view will populate a text area box and a notice at the bottom (see notes in the RequestNewTime.cshtml file).
             return View();
         }
-
+         
+        public IActionResult AssignJudgeToRoom()
+        {
+            return View();
+        }
 
     }
 }
