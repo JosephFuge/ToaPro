@@ -20,7 +20,7 @@ For more information on enabling MVC for empty projects, visit https://go.micros
 <div style="width: 80px; height: 27px; left: 1212px; top: 34px; position: absolute; text-align: center; color: white; font-size: 14px; font-family: Public Sans; font-weight: 400; word-wrap: break-word">Presentation</div>
 <div style="width: 80px; height: 27px; left: 1321px; top: 34px; position: absolute; text-align: center; color: white; font-size: 14px; font-family: Public Sans; font-weight: 400; word-wrap: break-word">Permissions</div>
 
-@model List<Requirement>
+@model RequirementViewModel
 
     <br />
     <br />
@@ -40,8 +40,13 @@ For more information on enabling MVC for empty projects, visit https://go.micros
         </tr>
     </thead>
     <tbody>
-        <td></td>
-        <td></td>
+        @foreach (var x in Model.Class1Requirements)
+        {
+            <tr>
+                <td>@x.Points</td> 
+                <td>@x.Description</td>
+            </tr>
+        }
     </tbody>
 </table>
 
@@ -53,8 +58,13 @@ For more information on enabling MVC for empty projects, visit https://go.micros
         </tr>
     </thead>
     <tbody>
-    <td></td>
-    <td></td>
+        @foreach (var x in Model.Class2Requirements)
+        {
+            <tr>
+                <td>@x.Points</td> 
+                <td>@x.Description</td>
+            </tr>
+        }
     </tbody>
 </table>
 
@@ -66,8 +76,13 @@ For more information on enabling MVC for empty projects, visit https://go.micros
         </tr>
     </thead>
     <tbody>
-    <td></td>
-    <td></td>
+        @foreach (var x in Model.Class3Requirements)
+        {
+            <tr>
+                <td>@x.Points</td>
+                <td>@x.Description</td>
+            </tr>
+        }
     </tbody>
 </table>
 
@@ -79,7 +94,12 @@ For more information on enabling MVC for empty projects, visit https://go.micros
         </tr>
     </thead>
     <tbody>
-    <td></td>
-    <td></td>
+        @foreach (var x in Model.Class4Requirements)
+        {
+            <tr>
+                <td>@x.Points</td>
+                <td>@x.Description</td>
+            </tr>
+        }
     </tbody>
 </table>
