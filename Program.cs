@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ToaProContext>(options =>{
-    options.UseNpgsql(builder.Configuration["ConnectionStrings:IntexConnection"]);
+    options.UseNpgsql(builder.Configuration["ConnectionStrings:ToaPro"]);
 });
 builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 {
