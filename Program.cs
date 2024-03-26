@@ -26,8 +26,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
     options.User.RequireUniqueEmail = true;
     options.SignIn.RequireConfirmedAccount = true;
     options.SignIn.RequireConfirmedEmail = true;
-});
-    // .AddEntityFrameworkStores<IntexContext>();
+}).AddEntityFrameworkStores<ToaProContext>();
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.Cookie.IsEssential = true;
