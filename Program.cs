@@ -1,33 +1,33 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using ToaPro;
 using ToaPro.Models;
+
+// using ToaPro.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<IntexContext>(options =>{
+builder.Services.AddDbContext<ToaProContext>(options =>{
     options.UseNpgsql(builder.Configuration["ConnectionStrings:IntexConnection"]);
 });
-builder.Services.AddScoped<IIntexRepository, EFIntexRepository>();
 builder.Services.AddDefaultIdentity<IdentityUser>(options =>
-    {
-        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
-        options.Lockout.MaxFailedAccessAttempts = 5;
-        options.Password.RequireDigit = true;
-        options.Password.RequiredLength = 12;
-        options.Password.RequireLowercase = true;
-        options.Password.RequireUppercase = true;
-        options.Password.RequireNonAlphanumeric = true;
-        options.Password.RequiredUniqueChars = 2;
-        options.Stores.ProtectPersonalData = true;
-        options.User.RequireUniqueEmail = true;
-        options.SignIn.RequireConfirmedAccount = true;
-        options.SignIn.RequireConfirmedEmail = true;
-    })
-    .AddEntityFrameworkStores<IntexContext>();
+{
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
+    options.Lockout.MaxFailedAccessAttempts = 5;
+    options.Password.RequireDigit = true;
+    options.Password.RequiredLength = 12;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequiredUniqueChars = 2;
+    options.Stores.ProtectPersonalData = true;
+    options.User.RequireUniqueEmail = true;
+    options.SignIn.RequireConfirmedAccount = true;
+    options.SignIn.RequireConfirmedEmail = true;
+});
+    // .AddEntityFrameworkStores<IntexContext>();
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.Cookie.IsEssential = true;
