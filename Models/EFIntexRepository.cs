@@ -5,8 +5,8 @@ namespace ToaPro
 {
     public class EFIntexRepository : IIntexRepository
     {
-        private IntexContext _intexContext;
-        public EFIntexRepository(IntexContext TempDataDictionary) 
+        private ToaProContext _intexContext;
+        public EFIntexRepository(ToaProContext TempDataDictionary) 
         {
             _intexContext = TempDataDictionary;
         }
