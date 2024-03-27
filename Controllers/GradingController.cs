@@ -4,6 +4,12 @@ namespace ToaPro.Controllers
 {
     public class GradingController : Controller
     {
+        private IIntexRepository _gradeSummaryRepository;
+
+        public GradingController(IIntexRepository temp)
+        {
+            _gradeSummaryRepository = temp;
+        }
         public IActionResult Index()
         {
             return View();
