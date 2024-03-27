@@ -38,11 +38,17 @@ namespace ToaPro.Controllers
             return View();
         }
 
-        public IActionResult RequestNewTime()
+        [HttpGet]
+        public IActionResult RequestNewTime() 
         {
-            //This view can be accessed by both the Student and Judge. Both will have the same functionality; however,
-            //the student view will populate a text area box and a notice at the bottom (see notes in the RequestNewTime.cshtml file).
-            return View();
+            return View(new JudgeAvailability());
+        }
+        [HttpPost]
+        public IActionResult RequestNewTime(JudgeAvailability availability)
+        {
+            _repo.RequestAvailability(availability);
+
+            return View(new JudgeAvailability());
         }
         
 
