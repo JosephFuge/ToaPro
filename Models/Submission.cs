@@ -12,7 +12,7 @@ public partial class Submission
     public int StudentId { get; set; }
     public string GithubLink { get; set; }
     public string YoutubeLink { get; set; }
-    public IFormFile UploadFile { get; set; }
+    public string UploadFile { get; set; }
 
     public DateTime CreatedDate { get; set; }
 
