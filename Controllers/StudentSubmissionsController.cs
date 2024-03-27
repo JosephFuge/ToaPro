@@ -6,9 +6,9 @@ namespace ToaPro.Controllers
     public class StudentSubmissionsController : Controller
     {
 
-        private IStudentsRepository _repo;
+        private IIntexRepository _repo;
 
-        public StudentSubmissionsController(IStudentsRepository temp) //Constructor
+        public StudentSubmissionsController(IIntexRepository temp) //Constructor
         {
             _repo = temp;
         }
@@ -34,21 +34,21 @@ namespace ToaPro.Controllers
             return View("StudentSubmitFiles");
         }
 
-        [HttpPost]
-        public IActionResult StudentSubmitFiles(Submission response)
-        {
-            if (ModelState.IsValid)
-            {
-                _repo.StudentSubmitFiles(response);
+        //[HttpPost]
+        //public IActionResult StudentSubmitFiles(Submission response)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _repo.StudentSubmitFiles(response);
 
-                return View("StudentSubmitFilesConfirmation", response);
-            }
-            else
-            {
-                ViewBag.Categories = _repo.Categories.OrderBy(x => x.CategoryName).ToList();
-                return View(response);
-            }
-        }
+        //        return View("StudentSubmitFilesConfirmation", response);
+        //    }
+        //    else
+        //    {
+        //        ViewBag.Categories = _repo.Categories.OrderBy(x => x.CategoryName).ToList();
+        //        return View(response);
+        //    }
+        //}
 
     }
 }

@@ -12,5 +12,6 @@ namespace ToaPro
         }
 
         public IEnumerable<Student> Students => (IEnumerable<Student>)_intexContext;
+        public IEnumerable<Submission> Submissions => (IEnumerable<Submission>)_intexContext;
     }
 }
