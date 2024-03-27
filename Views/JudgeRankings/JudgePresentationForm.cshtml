@@ -4,8 +4,23 @@
 @{
 }
 @*Judge Submits Judging Form View (Groups 8 & 4)*@
+@model IEnumerable<Presentation>
 
 <body>
+    @foreach (var presentation in Model)
+    {
+        <p>Presentation ID: @presentation.Id</p>
+        <p>Location: @presentation.Location</p>
+        <p>Start Date: @presentation.StartDate</p>
+
+        <p>Judges:</p>
+        <ul>
+            @foreach (var judge in presentation.Judges)
+            {
+                <li>@judge.FName @judge.LName - Affiliation: @judge.Affiliation</li>
+            }
+        </ul>
+    }
     <div class="container">
         <table class="table">
             <thead>

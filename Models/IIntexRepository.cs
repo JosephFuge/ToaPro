@@ -7,5 +7,9 @@ namespace ToaPro
         IEnumerable<Student> Students { get; }
 
         IEnumerable<Submission> Submissions { get; }
+
+        IEnumerable<Judge> Judges { get; }
+
+        IEnumerable<Presentation> Presentations { get; }    
     }
 }

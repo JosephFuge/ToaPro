@@ -13,5 +13,9 @@ namespace ToaPro
 
         public IEnumerable<Student> Students => (IEnumerable<Student>)_toaProContext;
         public IEnumerable<Submission> Submissions => (IEnumerable<Submission>)_toaProContext;
+
+        public IEnumerable<Judge> Judges => _toaProContext.Judges;
+
+        public IEnumerable<Presentation> Presentations => _toaProContext.Presentations;
     }
 }
