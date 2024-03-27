@@ -1,7 +1,140 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-    ViewBag.Title = "Checklist";
+﻿@{
+    ViewData["Title"] = "Task Management Page";
+
 }
-@*Coordinator Checklist Page (Groups 3 & 6)*@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Management</title>
+    <style>
+        .task-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+            .task-table th, .task-table td {
+                text-align: left;
+                padding: 8px;
+            }
+
+            .task-table th {
+                background-color: #007bff;
+                color: white;
+            }
+
+            .task-table tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            .task-table tr.task-item td {
+                cursor: pointer;
+            }
+
+        .not-started {
+            color: red;
+        }
+
+        .in-progress {
+            color: orange;
+        }
+
+        .completed {
+            color: green;
+        }
+
+        #new-task-input {
+            padding: 10px;
+            margin-right: 10px;
+            width: 300px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+            button:hover {
+                opacity: 0.9;
+            }
+    </style>
+</head>
+<body>
+
+    <div>
+        <h2>Task Manager</h2>
+        <input type="text" id="new-task-input" placeholder="Enter a new task" />
+        <button onclick="addTask()">Add New Task</button>
+
+        <table class="task-table">
+            <thead>
+                <tr>
+                    <th>Task</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="task-list">
+                <!-- Tasks will be added here dynamically -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        let tasks = JSON.parse(sessionStorage.getItem('tasks')) || [];
+
+        function saveTasks() {
+            sessionStorage.setItem('tasks', JSON.stringify(tasks));
+            renderTasks();
+        }
+
+        function renderTasks() {
+            const taskList = document.getElementById('task-list');
+            taskList.innerHTML = ''; // Clear the list
+            tasks.forEach((task, index) => {
+                const row = taskList.insertRow();
+                row.setAttribute('class', `task-item ${task.status}`);
+                row.setAttribute('data-index', index);
+
+                const taskCell = row.insertCell(0);
+                taskCell.textContent = task.name;
+                const statusCell = row.insertCell(1);
+                statusCell.textContent = task.status.replace('-', ' ').toUpperCase();
+                statusCell.style.textTransform = 'capitalize';
+
+                // Add click event to change the status
+                row.addEventListener('click', function () {
+                    const currentIndex = this.dataset.index;
+                    const currentStatus = tasks[currentIndex].status;
+                    if (currentStatus === 'not-started') {
+                        tasks[currentIndex].status = 'in-progress';
+                    } else if (currentStatus === 'in-progress') {
+                        tasks[currentIndex].status = 'completed';
+                    } else {
+                        tasks[currentIndex].status = 'not-started';
+                    }
+                    saveTasks();
+                });
+            });
+        }
+
+        function addTask() {
+            const newTaskInput = document.getElementById('new-task-input');
+            const taskName = newTaskInput.value.trim();
+            if (taskName) {
+                tasks.push({ name: taskName, status: 'not-started' });
+                saveTasks();
+                newTaskInput.value = ''; // Clear input field
+            }
+        }
+
+        renderTasks();
+    </script>
+
+</body>
+</html>
+
