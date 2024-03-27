@@ -25,9 +25,39 @@ body {
 }
 
 /*JULES STYLING*/
-/********************************************************************
- * Navigation Bar
- *******************************************************************/
+/********************************************************************/
+
+
+
+/* Form Styling
+*******************************************************************
+*/
+.main-form {
+    /* No background */
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 200px;
+    padding: 5px;
+    border: 1px solid #0D64B5;
+    border-radius: 10px;
+}
+
+
+
+
+/* Navigation Bar
+*******************************************************************
+*/
 .toa-pro-nav {
     padding-top: 10px;
     padding-bottom: 10px;
