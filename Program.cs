@@ -8,7 +8,7 @@ using ToaPro;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 builder.Services.AddDbContext<ToaProContext>(options =>{
     options.UseNpgsql(builder.Configuration["ConnectionStrings:ToaPro"]);
