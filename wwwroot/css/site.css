@@ -74,7 +74,7 @@ body .main-header {
     text-align: center;
     width: 98.8vw; /* Use viewport width to ensure it spans the full width of the viewport */
     margin: 0 auto;
-    box-shadow: inset 0px 10px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0px 5px 5px rgba(0, 0, 0, 0.1);
     position: relative; /* Ensures it's laid out in relation to its normal flow */
     left: 50%; /* These two properties ensure the element is centered */
     right: 50%;
