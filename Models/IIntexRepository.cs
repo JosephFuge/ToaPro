@@ -7,5 +7,7 @@ namespace ToaPro
         IEnumerable<Student> Students { get; }
 
         IEnumerable<Submission> Submissions { get; }
+        void AddSubmission(Submission submission);
+
     }
 }

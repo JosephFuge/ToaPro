@@ -1,17 +1,24 @@
-﻿using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using ToaPro.Models;
+﻿using ToaPro.Models;
+using System.Linq;
 
 namespace ToaPro
 {
     public class EFIntexRepository : IIntexRepository
     {
-        private ToaProContext _toaProContext;
-        public EFIntexRepository(ToaProContext TempDataDictionary) 
+        private ToaProContext _context;
+
+        public EFIntexRepository(ToaProContext context)
         {
-            _toaProContext = TempDataDictionary;
+            _context = context;
         }
 
-        public IEnumerable<Student> Students => (IEnumerable<Student>)_toaProContext;
-        public IEnumerable<Submission> Submissions => (IEnumerable<Submission>)_toaProContext;
+        public IEnumerable<Student> Students => _context.Students.ToList();
+        public IEnumerable<Submission> Submissions => _context.Submissions.ToList();
+
+        public void AddSubmission(Submission submission)
+        {
+            _context.Submissions.Add(submission);
+            _context.SaveChanges();
+        }
     }
 }
