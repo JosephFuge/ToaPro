@@ -8,9 +8,9 @@ namespace ToaPro.Controllers
 {
     public class RubricController : Controller
     {
-        private readonly IntexContext _context;
+        private readonly ToaProContext _context;
 
-        public RubricController(IntexContext context)
+        public RubricController(ToaProContext context)
         {
             _context = context;
         }
