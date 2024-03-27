@@ -5,6 +5,10 @@ namespace ToaPro.Models;
 
 public partial class Submission
 {
+    public string GithubLink { get; set; }
+    public string YoutubeLink { get; set; }
+    public string UploadFile {  get; set; }
+
     public int Id { get; set; }
 
     public int GroupId { get; set; }
