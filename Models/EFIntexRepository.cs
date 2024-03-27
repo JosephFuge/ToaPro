@@ -13,12 +13,12 @@ namespace ToaPro
             _toaProContext = toaProContext;
         }
 
-        public IEnumerable<Student> Students => (IEnumerable<Student>)_toaProContext;
-        public IEnumerable<Submission> Submissions => (IEnumerable<Submission>)_toaProContext;
-        public IEnumerable<Judge> Judges => (IEnumerable<Judge>)_toaProContext;
-        public IEnumerable<Presentation> Presentations => (IEnumerable<Presentation>)_toaProContext;
+        public IEnumerable<Student> Students => _toaProContext.Students.ToList();
+        public IEnumerable<Submission> Submissions => _toaProContext.Submissions.ToList();
+        public IEnumerable<Judge> Judges => _toaProContext.Judges.ToList();
+        public IEnumerable<Presentation> Presentations => _toaProContext.Presentations;
 
-        public IEnumerable<JudgeAvailability> JudgeAvailabilities => (IEnumerable<JudgeAvailability>)_toaProContext;
+        public IEnumerable<JudgeAvailability> JudgeAvailabilities => _toaProContext.JudgeAvailabilities;
 
         public void RequestAvailability(JudgeAvailability judgeAvailability)
         {
