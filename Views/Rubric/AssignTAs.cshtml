@@ -15,34 +15,47 @@ and allowing professors to edit/make assignments.
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Title Here</title>
-    <link rel="stylesheet" href="~/css/WebsiteStyling.css"> <!-- Linking your CSS file -->
 </head>
 <body>
 
     <header class="header">
         <div class="header-background"></div>
-        <div class="content">
+        <div class="content d-flex align-items-center justify-content-between">
             <img class="logo" src="https://via.placeholder.com/90x33" alt="Logo" />
             <div class="title">ToaPro</div>
         </div>
         <div class="separator"></div>
     </header>
 
-    <nav class="menu">
-        <div class="menu-item"><a href="#">Rubric</a></div>
-        <div class="menu-item"><a href="#">Grade</a></div>
-        <div class="menu-item"><a href="#">Dashboard</a></div>
-        <div class="menu-item"><a href="#">TA Assignments</a></div>
-        <div class="menu-item"><a href="#">Normalization</a></div>
+    <nav class="menu navbar navbar-expand-lg navbar-light bg-light">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Rubric</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Grade</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">TA Assignments</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Normalization</a>
+                </li>
+            </ul>
+        </div>
     </nav>
 
     <main class="main-content">
-        <div class="container1">
+        <div class="container container1">
             <div class="inner"></div>
             <img class="image" src="https://via.placeholder.com/576x119" alt="Placeholder Image" />
         </div>
 
-        <div class="container2">
+        <div class="container container2">
             <div class="inner"></div>
             <div class="text-container">
                 Assign TAs
@@ -54,9 +67,8 @@ and allowing professors to edit/make assignments.
             <div class="button-text">Add Row</div>
         </div>
 
-        <div class="table-container">
-            <!-- Your table content goes here -->
-            <table>
+        <div class="table-container container">
+            <table class="table">
                 <thead>
                     <tr>
                         <th>TA Name</th>
@@ -100,3 +112,4 @@ and allowing professors to edit/make assignments.
 
 </body>
 </html>
+
