@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AspNetCore;
+using System;
 using System.Collections.Generic;
 
 namespace ToaPro.Models;
@@ -16,4 +17,5 @@ public partial class Student
     public virtual ICollection<Submission> Submissions { get; set; } = new List<Submission>();
 
     public virtual ICollection<Group> Groups { get; set; } = new List<Group>();
+
 }
