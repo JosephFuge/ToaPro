@@ -4,11 +4,11 @@ namespace ToaPro.Controllers
 {
     public class GradingController : Controller
     {
-        private IRepoName _RepoName;
+        private IIntexRepository _gradeSummaryRepository;
 
-        public GradingController(IRepoName temp)
+        public GradingController(IIntexRepository temp)
         {
-            _RepoName = temp;
+            _gradeSummaryRepository = temp;
         }
         public IActionResult Index()
         {
