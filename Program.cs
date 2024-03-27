@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using ToaPro.Models;
+using ToaPro;
 
 // using ToaPro.Models;
 
@@ -35,6 +36,9 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LogoutPath = "/Identity/Logout";
     options.SlidingExpiration = true;
 });
+
+builder.Services.AddScoped<IIntexRepository, EFIntexRepository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

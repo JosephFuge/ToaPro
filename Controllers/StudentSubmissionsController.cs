@@ -1,9 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ToaPro.Models;
 
 namespace ToaPro.Controllers
 {
     public class StudentSubmissionsController : Controller
     {
+
+        private IIntexRepository _repo;
+
+        public StudentSubmissionsController(IIntexRepository temp) //Constructor
+        {
+            _repo = temp;
+        }
         public IActionResult Index()
         {
             return View();
@@ -19,10 +27,28 @@ namespace ToaPro.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult StudentSubmitFiles()
         {
-            return View();
+
+            return View("StudentSubmitFiles");
         }
+
+        //[HttpPost]
+        //public IActionResult StudentSubmitFiles(Submission response)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _repo.StudentSubmitFiles(response);
+
+        //        return View("StudentSubmitFilesConfirmation", response);
+        //    }
+        //    else
+        //    {
+        //        ViewBag.Categories = _repo.Categories.OrderBy(x => x.CategoryName).ToList();
+        //        return View(response);
+        //    }
+        //}
 
     }
 }
