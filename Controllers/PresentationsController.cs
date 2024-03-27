@@ -40,9 +40,9 @@ namespace ToaPro.Controllers
             return View(new JudgeAvailability());
         }
         [HttpPost]
-        public IActionResult RequestNewTime(JudgeAvailability availability)
+        public IActionResult RequestNewTime(JudgeAvailability availabilities)
         {
-            _repo.RequestAvailability(availability);
+            _repo.RequestAvailability(availabilities);
 
             return View(new JudgeAvailability());
         }
