@@ -8,9 +8,9 @@ namespace ToaPro.Controllers
 {
     public class RubricController : Controller
     {
-        private readonly IntexContext _context;
+        private readonly ToaProContext _context;
 
-        public RubricController(IntexContext context)
+        public RubricController(ToaProContext context)
         {
             _context = context;
         }
@@ -27,11 +27,11 @@ namespace ToaPro.Controllers
                 Class3Requirements = requirements.Where(r => r.ClassId == 3).ToList(),
                 Class4Requirements = requirements.Where(r => r.ClassId == 4).ToList()
             };
-            
+
             return View(viewModel);
         }
 
         public IActionResult AssignTAs() { return View(); }
-            
+
     }
 }
