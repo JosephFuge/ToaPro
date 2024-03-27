@@ -10,9 +10,10 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-custom-color border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ToaPro</a>
+                <img src="https://brightspotcdn.byu.edu/e4/0a/b679ee0a41d9b1675fc78cd03239/byu-logo-white-small.svg" class="img-fluid" alt="byu logo">
+                <a class="toa-pro-nav" asp-area="" asp-controller="Home" asp-action="Index">ToaPro</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -30,17 +31,22 @@
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+
+
+    <div class="content-wrapper">
+        <div class="container">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
     </div>
 
-    <footer class="border-top footer text-muted">
-        @* <div class="container"> *@
-        @*     &copy; 2024 - ToaPro - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> *@
-        @* </div> *@
+    <footer class="main-footer">
+        <h2>BRIGHAM YOUNG UNIVERSITY</h2>
+        <p>PROVO, UT | 84020 USA | 801-422-4636 | &copy; 2024 ALL RIGHTS RESERVED</p>
+        <p> Privacy Notice | Cookie Preferences</p>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
