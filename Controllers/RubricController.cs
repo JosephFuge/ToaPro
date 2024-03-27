@@ -30,5 +30,8 @@ namespace ToaPro.Controllers
 
             return View(viewModel);
         }
+
+        public IActionResult AssignTAs() { return View(); }
+            
     }
 }
