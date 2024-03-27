@@ -5,13 +5,13 @@ namespace ToaPro
 {
     public class EFIntexRepository : IIntexRepository
     {
-        private ToaProContext _intexContext;
+        private ToaProContext _toaProContext;
         public EFIntexRepository(ToaProContext TempDataDictionary) 
         {
-            _intexContext = TempDataDictionary;
+            _toaProContext = TempDataDictionary;
         }
 
-        public IEnumerable<Student> Students => (IEnumerable<Student>)_intexContext;
-        public IEnumerable<Submission> Submissions => (IEnumerable<Submission>)_intexContext;
+        public IEnumerable<Student> Students => (IEnumerable<Student>)_toaProContext;
+        public IEnumerable<Submission> Submissions => (IEnumerable<Submission>)_toaProContext;
     }
 }
