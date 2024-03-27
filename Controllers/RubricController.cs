@@ -27,11 +27,11 @@ namespace ToaPro.Controllers
                 Class3Requirements = requirements.Where(r => r.ClassId == 3).ToList(),
                 Class4Requirements = requirements.Where(r => r.ClassId == 4).ToList()
             };
-            
+
             return View(viewModel);
         }
 
         public IActionResult AssignTAs() { return View(); }
-            
+
     }
 }
