@@ -50,7 +50,20 @@ namespace ToaPro.Controllers
 
             return View(new JudgeAvailability());
         }
-        
+
+        [HttpGet]
+        public IActionResult StudentRequestNewTime()
+        {
+            return View(new StudentAvailability());
+        }
+        [HttpPost]
+        public IActionResult StudentRequestNewTime(StudentAvailability availabilities)
+        {
+            _repo.StudentRequestAvailability(availabilities);
+
+            return View(new StudentAvailability());
+        }
+
 
     }
 }
