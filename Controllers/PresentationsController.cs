@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ToaPro.Models;
 
 namespace ToaPro.Controllers
@@ -39,17 +40,30 @@ namespace ToaPro.Controllers
         }
 
         [HttpGet]
-        public IActionResult RequestNewTime() 
+        public IActionResult JudgeAvailability(int id)
         {
-            return View(new JudgeAvailability());
+            _repo.RequestAvailability();
+            return View("RequestNewTime");
         }
         [HttpPost]
-        public IActionResult RequestNewTime(JudgeAvailability availabilities)
+        public IActionResult JudgeAvailability(JudgeAvailability updatedInfo)
         {
-            _repo.RequestAvailability(availabilities);
+            _repo.UpdateAvailability();
 
-            return View(new JudgeAvailability());
+            return RedirectToAction("MovieList"); //instead of going to the view MovieList, it will go to the ACTION
         }
+        //[HttpGet]
+        //public IActionResult RequestNewTime() 
+        //{
+        //    return View(new JudgeAvailability());
+        //}
+        //[HttpPost]
+        //public IActionResult RequestNewTime(JudgeAvailability availabilities)
+        //{
+        //    _repo.RequestAvailability(availabilities);
+
+        //    return View(new JudgeAvailability());
+        //}
 
         [HttpGet]
         public IActionResult StudentRequestNewTime()
