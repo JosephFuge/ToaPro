@@ -373,12 +373,16 @@ public partial class ToaProContext : DbContext
             entity.Property(e => e.Id)
                 .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
-            entity.Property(e => e.Comments).HasColumnName("comments");
+            entity.Property(e => e.CommunicationComments).HasColumnName("communication_comments");
+            entity.Property(e => e.TechnologyComments).HasColumnName("technology_comments");
+            entity.Property(e => e.OverallComments).HasColumnName("overall_comments");
+            entity.Property(e => e.CommunicationPoints).HasColumnName("communication_points");
+            entity.Property(e => e.TechnologyPoints).HasColumnName("technology_points");
+            entity.Property(e => e.OverallPoints).HasColumnName("overall_points");
             entity.Property(e => e.GroupId).HasColumnName("group_id");
             entity.Property(e => e.JudgeId).HasColumnName("judge_id");
             entity.Property(e => e.Nomination).HasColumnName("nomination");
-            entity.Property(e => e.Points).HasColumnName("points");
-            entity.Property(e => e.Ranking1).HasColumnName("ranking");
+            entity.Property(e => e.TeamRanking).HasColumnName("team_ranking");
 
             entity.HasOne(d => d.Group).WithMany(p => p.Rankings)
                 .HasForeignKey(d => d.GroupId)
