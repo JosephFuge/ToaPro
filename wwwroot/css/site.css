@@ -18,5 +18,317 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: white; /* Set the background to white */
+    font-family: 'Public Sans', sans-serif;
+    font-size: 16px;
+}
+
+/*JULES STYLING*/
+/********************************************************************/
+
+
+
+/* Form Styling
+*******************************************************************
+*/
+.main-form {
+    /* No background */
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 200px;
+    padding: 5px;
+    border: 1px solid #0D64B5;
+    border-radius: 10px;
+}
+
+
+
+
+/* Navigation Bar
+*******************************************************************
+*/
+.toa-pro-nav {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    text-decoration: none;
+    font-size: 25px;
+    color: white !important;
+}
+
+.navbar .navbar-nav .nav-item .nav-link {
+    color: white !important;
+}
+
+.navbar .nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+
+/* Submenu specific styles */
+.navbar.bg-white .navbar-nav .nav-item .nav-link {
+    padding-top: 0px;
+    padding-bottom: 15px;
+    color: black !important;
+    height: 20px; /* Example fixed height, adjust as necessary */
+    display: flex;
+    align-items: center; /* This ensures the link's text is vertically centered */
+}
+
+/* Change the color on hover for submenu items */
+.navbar.bg-white .navbar-nav .nav-item .nav-link:hover {
+    color: #003369 !important;
+}
+
+
+
+
+
+/********************************************************************
+ * Header
+ *******************************************************************/
+body .main-header {
+    background-color: #E6E6E6;
+    padding-top: 35px;
+    padding-bottom: 30px; /* Adjusted to apply padding only vertically */
+    text-align: center;
+}
+
+
+
+/********************************************************************
+ * Footer
+ *******************************************************************/
+body, html {
+    height: 100%; /* Make sure the page height is at least the full viewport height */
+    margin: 0;
+}
+
+#wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Use viewport height (vh) to make the wrapper fill the screen */
+}
+
+.content-wrapper {
+    flex: 1; /* Causes the content to expand as needed, pushing the footer down */
+}
+
+.main-footer {
+    background-color: #002E5D;
+    color: white;
+    text-align: center;
+    padding: 13px 0;
+    margin-top: auto; /* Automatically pushes the footer to the bottom */
+}
+
+.main-footer h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    letter-spacing: 2.5px;
+}
+
+.main-footer p {
+    font-size: 12px;
+    margin: 0;
+    margin-bottom: 7px;
+}
+
+.bg-custom-color {
+    background-color: #002E5D;
+}
+
+
+/*END JULES STYLING*/
+
+
+/********************************************************************
+ * Buttons
+ *******************************************************************/
+
+.button {
+    background-color: #0D64B5;
+    color: white; /* White text */
+    border: none;
+    padding: 7px 14px; /* Padding inside the button */
+    font-size: 16px; /* Font size */
+    border-radius: 50px; /* Fully rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    user-select: none; /* Prevents text selection */
+    transition: background-color 0.3s, transform 0.3s; /* Smooth color and transform transition */
+}
+
+    .button:hover {
+        background-color: #003369; /* Darker blue background on hover */
+    }
+
+    .button:active {
+        transform: scale(0.95); /* Slight decrease in size on click */
+    }
+
+.ghostButton {
+    background-color: white; /* Blue background */
+    color: #0D64B5; /* blue text */
+    border: 2px solid #0D64B5; /* Darker blue border */
+    padding: 5px 12px; /* Padding inside the button */
+    font-size: 16px; /* Font size */
+    border-radius: 50px; /* Fully rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    outline: none; /* Removes the outline */
+    user-select: none; /* Prevents text selection */
+    transition: background-color 0.3s, transform 0.3s; /* Smooth color and transform transition */
+}
+
+    .ghostButton:hover {
+        background-color: #DBE8FC; /* light blue background on hover */
+    }
+
+    .ghostButton:active {
+        transform: scale(0.95); /* Slight decrease in size on click */
+    }
+
+.large-ghostButton {
+    background-color: white; /* Blue background */
+    color: #0D64B5; /* blue text */
+    border: 2px solid #0D64B5; /* Darker blue border */
+    padding: 15px 30px; /* Padding inside the button */
+    font-size: 20px; /* Font size */
+    border-radius: 50px; /* Fully rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    outline: none; /* Removes the outline */
+    user-select: none; /* Prevents text selection */
+    transition: background-color 0.3s, transform 0.3s; /* Smooth color and transform transition */
+}
+
+    .large-ghostButton:hover {
+        background-color: #DBE8FC; /* light blue background on hover */
+    }
+
+    .large-ghostButton:active {
+        transform: scale(0.95); /* Slight decrease in size on click */
+    }
+
+.large-button {
+    background-color: #0D64B5;
+    color: white; /* White text */
+    border: none;
+    padding: 17px 32px; /* Padding inside the button */
+    font-size: 20px; /* Font size */
+    border-radius: 50px; /* Fully rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    user-select: none; /* Prevents text selection */
+    transition: background-color 0.3s, transform 0.3s; /* Smooth color and transform transition */
+}
+
+    .large-button:hover {
+        background-color: #003369; /* Darker blue background on hover */
+    }
+
+    .large-button:active {
+        transform: scale(0.95); /* Slight decrease in size on click */
+    }
+
+
+/********************************************************************
+ * Fonts
+ *******************************************************************/
+body {
+    font-family: 'Public Sans', sans-serif;
+    font-size: 16px;
+}
+
+.normal-text {
+    font-weight: 400; /* Regular weight */
+}
+
+.bold-text {
+    font-weight: 700; /* Bold weight */
+}
+
+
+/********************************************************************
+ * Tables
+ *******************************************************************/
+table {
+    border-collapse: separate;
+    border-radius: 8px;
+    border-spacing: 0px;
+    overflow: hidden;
+}
+
+    table:not(.mse-no-border) {
+        border: 1px solid #C9C9C9;
+    }
+
+    table th:not(:last-child, .mse-no-border), table td:not(:last-child, .mse-no-border) {
+        border-right: 1px solid #D1D1D1;
+    }
+
+    table tr th {
+        vertical-align: middle;
+        padding: 0.5rem 1rem;
+    }
+
+    table tr td {
+        vertical-align: middle;
+        padding: 0.5rem 0.7rem;
+        min-width: 120px;
+    }
+
+    table tr p {
+        margin-bottom: 0;
+    }
+
+    table thead {
+        background-color: #002E5D;
+        color: #FFF;
+    }
+
+    table tbody tr:nth-of-type(2n) {
+        background-color: #EDF3FC;
+    }
+
+.mse-table-scroll, .mse-table-wrapped-no-header, .mse-table-wrapped {
+    max-width: 100%;
+    overflow-x: auto;
+    display: block;
+}
+
+    .mse-table-wrapped-no-header table, .mse-table-wrapped table {
+        width: 100%;
+    }
+
+@media (max-width: 768px) {
+    .mse-table-wrapped-no-header th, .mse-table-wrapped th {
+        display: none;
+    }
+
+    .mse-table-wrapped-no-header td, .mse-table-wrapped td {
+        padding: 2px;
+        display: grid;
+        grid-template-columns: 16ch auto;
+        border-right: none !important;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        overflow: auto;
+    }
+
+        .mse-table-wrapped-no-header td:first-child, .mse-table-wrapped td:first-child {
+            padding-top: 1rem;
+        }
+
+        .mse-table-wrapped-no-header td:last-child, .mse-table-wrapped td:last-child {
+            padding-bottom: 1rem;
+        }
 }
