@@ -4,8 +4,40 @@
 @{
 }
 @*
-    This is the Judge Request time view (Groups 4 & 8)
+    This is the Judge Request time view (Ryan, Lili, and Amy)
     Students will have an additional text area to add why they need to request a new time as well as
     a brief NOTE below the text area. Judges will not have the additional text area and notice.
     Be sure to include this in the formatting of the view.
 *@
+
+@model JudgeAvailability
+
+<h1>Request New Time</h1>
+
+<body>
+    <h2>Judge Availability Form</h2>
+    <form method="post">
+        <div>
+            <label asp-for="JudgeId">Judge ID:</label>
+            <input asp-for="JudgeId" />
+        </div>
+        <div>
+            <label asp-for="JudgeFName">First Name:</label>
+            <input asp-for="JudgeFName" />
+        </div>
+        <div>
+            <label asp-for="JudgeLName">Last Name:</label>
+            <input asp-for="JudgeLName" />
+        </div>
+        <div>
+            <label>Select times you WILL NOT be available</label><br />
+            <label><input type="checkbox" asp-for="TimeSlot1" value="false" />1:00 - 1:40</label><br />
+            <label><input type="checkbox" asp-for="TimeSlot2" value="false" />1:45 - 2:25</label><br />
+            <label><input type="checkbox" asp-for="TimeSlot3" value="false" />2:30 - 3:10</label><br />
+            <label><input type="checkbox" asp-for="TimeSlot4" value="false" />3:30 - 4:10</label><br />
+            <label><input type="checkbox" asp-for="TimeSlot5" value="false" />4:15 - 4:55</label><br />
+            <!-- Don't forget to put the stuff in the Home Controller-->
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+</body>
