@@ -1,6 +1,7 @@
 ﻿using ToaPro.Models;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace ToaPro
 {
@@ -18,18 +19,24 @@ namespace ToaPro
         public IEnumerable<Judge> Judges => _toaProContext.Judges.ToList();
         public IEnumerable<Presentation> Presentations => _toaProContext.Presentations;
 
-        public IEnumerable<JudgeAvailability> JudgeAvailabilities => _toaProContext.JudgeAvailabilities;
 
-        public void RequestAvailability(JudgeAvailability judgeAvailability)
+        public void RequestAvailability(Judge Id)
         {
-            _toaProContext.Add(judgeAvailability);
+            var recordToEdit = _toaProContext.Judges
+            .Single(x => x.Id == Id);
+
+            _toaProContext.SaveChanges();
+        }
+        public void UpdateAvailability(Judge updatedInfo)
+        {
+            _toaProContext.Update(updatedInfo);
             _toaProContext.SaveChanges();
         }
 
-        public void StudentRequestAvailability(StudentAvailability studentAvailability)
-        {
-            _toaProContext.Add(studentAvailability);
-            _toaProContext.SaveChanges();
-        }
+        //public void StudentRequestAvailability(StudentAvailability studentAvailability)
+        //{
+        //    _toaProContext.Add(studentAvailability);
+        //    _toaProContext.SaveChanges();
+        //}
     }
 }
