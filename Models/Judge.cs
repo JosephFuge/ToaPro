@@ -9,6 +9,8 @@ public partial class Judge
     [Key]
     public int Id { get; set; }
     public int user_id { get; set; }
+    public string FName { get; set; }
+    public string LName { get; set; }
     public int semester_id { get; set; }
 
     public string Affiliation { get; set; } = null!;
