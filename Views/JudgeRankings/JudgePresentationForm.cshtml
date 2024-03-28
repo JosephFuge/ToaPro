@@ -17,6 +17,15 @@
         width: 10%;
         margin: 50px;
     }
+        .rounded-btn:hover{
+            font-weight: bold;
+            color: white;
+        }
+
+    .navy-background {
+        background-color: #002e5d;
+        color: white;
+    }
 </style>
 <body>
     <div class="button-container">
@@ -24,15 +33,15 @@
     {
         @foreach (var presentation in judge.Presentations)
         {
-                <button type="button" class="btn btn-primary rounded-btn">Team @presentation.Group.Section - @presentation.GroupId</button>
+                <button type="button" class="btn navy-background rounded-btn">Team @presentation.Group.Section - @presentation.GroupId</button>
         }
     }
-    <button type="button" class="btn btn-primary rounded-btn">Rankings</button>
+    <button type="button" class="btn navy-background rounded-btn">Rankings</button>
     </div>
     <div class="container">
         <table class="table">
             <thead>
-                <tr>
+                <tr class="navy-background">
                     <th>Criteria</th>
                     <th>Grade</th>
                     <th>Comments</th>
