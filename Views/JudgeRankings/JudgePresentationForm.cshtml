@@ -4,23 +4,31 @@
 @{
 }
 @*Judge Submits Judging Form View (Groups 8 & 4)*@
-@model IEnumerable<Presentation>
+@model List<Judge>
 
-<body>
-    @foreach (var presentation in Model)
-    {
-        <p>Presentation ID: @presentation.Id</p>
-        <p>Location: @presentation.Location</p>
-        <p>Start Date: @presentation.StartDate</p>
 
-        <p>Judges:</p>
-        <ul>
-            @foreach (var judge in presentation.Judges)
-            {
-                <li>@judge.FName @judge.LName - Affiliation: @judge.Affiliation</li>
-            }
-        </ul>
+<style>
+    .button-container {
+        text-align: center;
     }
+
+    .rounded-btn {
+        border-radius: 20px;
+        width: 10%;
+        margin: 50px;
+    }
+</style>
+<body>
+    <div class="button-container">
+    @foreach (var judge in Model)
+    {
+        @foreach (var presentation in judge.Presentations)
+        {
+                <button type="button" class="btn btn-primary rounded-btn">Team @presentation.Group.Section - @presentation.GroupId</button>
+        }
+    }
+    <button type="button" class="btn btn-primary rounded-btn">Rankings</button>
+    </div>
     <div class="container">
         <table class="table">
             <thead>
@@ -94,6 +102,7 @@
                 </tr>
             </tbody>
         </table>
+        <br />
         <h3>Nomination for fun awards</h3>
         <p>We like to give the teams fun awards independent of their overall scores.  Please consider one or more creative and fun/funny awards for this team.</p>
         <p>(i.e., "The Extra Mile Award", "Best Analytics Award", "Best Dressed Award", "Thinking Outside the Box Award", "Most Colorful Slide Award", etc.)</p>

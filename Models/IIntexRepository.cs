@@ -8,8 +8,8 @@ namespace ToaPro
 
         IEnumerable<Submission> Submissions { get; }
 
-        IEnumerable<Judge> Judges { get; }
+        IQueryable<Judge> Judges { get; }
 
-        IEnumerable<Presentation> Presentations { get; }    
+        IQueryable<Presentation> Presentations { get; }    
     }
 }
