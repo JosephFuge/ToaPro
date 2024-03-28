@@ -1,0 +1,44 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@*
+    This is the Student Request time view (Ryan, Lili, and Amy)
+*@
+
+@model StudentAvailability
+
+<h1>Request New Time</h1>
+
+<body>
+    <h2>Student Availability Form</h2>
+    <form method="post">
+        <div>
+            <label asp-for="StudentId">Student ID:</label>
+            <input asp-for="StudentId" />
+        </div>
+        <div>
+            <label asp-for="StudentFName">First Name:</label>
+            <input asp-for="StudentFName" />
+        </div>
+        <div>
+            <label asp-for="StudentLName">Last Name:</label>
+            <input asp-for="StudentLName" />
+        </div>
+        <div>
+            <label>Select times you WILL NOT be available</label><br />
+            <label><input type="checkbox" asp-for="TimeSlot1" value="false" />1:00 - 1:40</label><br />
+            <label><input type="checkbox" asp-for="TimeSlot2" value="false" />1:45 - 2:25</label><br />
+            <label><input type="checkbox" asp-for="TimeSlot3" value="false" />2:30 - 3:10</label><br />
+            <label><input type="checkbox" asp-for="TimeSlot4" value="false" />3:30 - 4:10</label><br />
+            <label><input type="checkbox" asp-for="TimeSlot5" value="false" />4:15 - 4:55</label><br />
+            <!-- Don't forget to put the stuff in the Home Controller-->
+        </div>
+        <div>
+            <label asp-for="Reason">Reason:</label>
+            <input asp-for="Reason" style="height: 100px; width: 200px;" />
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+</body>
