@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ToaPro.Controllers
 {
@@ -18,8 +19,9 @@ namespace ToaPro.Controllers
         public IActionResult JudgePresentationForm()
         {
              var joinedData = _repo.Judges
-                .Where(x =>  x.Id == 1)
-                .SelectMany(x => x.Presentations)
+                .Where(x => x.Id == 1)
+                .Include(p => p.Presentations)
+                    .ThenInclude(g => g.Group)
                 .ToList();
 
             return View(joinedData);
