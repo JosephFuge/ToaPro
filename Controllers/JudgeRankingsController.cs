@@ -20,6 +20,7 @@ namespace ToaPro.Controllers
         {
              var joinedData = _repo.Judges
                 .Where(x => x.Id == 1)
+                .Include(r => r.Rankings)
                 .Include(p => p.Presentations)
                     .ThenInclude(g => g.Group)
                 .ToList();
