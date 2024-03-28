@@ -15,5 +15,6 @@ namespace ToaPro
         IEnumerable<JudgeAvailability> JudgeAvailabilities { get; }
 
         public void RequestAvailability(JudgeAvailability availabilities);
+        public void StudentRequestAvailability(StudentAvailability availabilities);
     }
 }
