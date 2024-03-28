@@ -120,19 +120,19 @@ and allowing professors to edit/make assignments.
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Rubric</a>
+                    <a class="nav-link" asp-controller="Rubric" asp-action="Rubric">Rubric</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Grade</a>
+                    <a class="nav-link" asp-controller="Grading" asp-action="GradingPage">Grade</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Dashboard</a>
+                    <a class="nav-link" asp-controller="Grading" asp-action="GradingSummaryPage">Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">TA Assignments</a>
+                    <a class="nav-link" asp-controller="Rubric" asp-action="AssignTAs">TA Assignments</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Normalization</a>
+                    <a class="nav-link" asp-controller="Grading" asp-action="ProfessorNormalizeGrades">Normalization</a>
                 </li>
             </ul>
         </div>
@@ -163,20 +163,11 @@ and allowing professors to edit/make assignments.
                     <tr>
                         <th>TA Name</th>
                         <th>Groups</th>
-                        <th>Rubric Objectives</th>
+                        <th>Requirements</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>John Doe</td>
-                        <td>Group A</td>
-                        <td>Objective 1, Objective 2</td>
-                    </tr>
-                    <tr>
-                        <td>Jane Smith</td>
-                        <td>Group B</td>
-                        <td>Objective 2, Objective 3</td>
-                    </tr>
+
                 </tbody>
             </table>
         </div>
