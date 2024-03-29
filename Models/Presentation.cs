@@ -16,4 +16,5 @@ public partial class Presentation
     public virtual Group Group { get; set; } = null!;
 
     public virtual ICollection<Judge> Judges { get; set; } = new List<Judge>();
+    public ICollection<Ranking> Rankings { get; set; } = new List<Ranking>();
 }

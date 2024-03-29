@@ -11,11 +11,15 @@ public partial class Ranking
 
     public int JudgeId { get; set; }
 
-    public float? Points { get; set; }
+    public int? TeamRanking { get; set; }
 
-    public int? Ranking1 { get; set; }
+    public int? CommunicationPoints { get; set; }
+    public int? TechnologyPoints { get; set; }
+    public int? OverallPoints { get; set; }
 
-    public string? Comments { get; set; }
+    public string? CommunicationComments { get; set; }
+    public string? TechnologyComments { get; set; }
+    public string? OverallComments { get; set; }
 
     public string? Nomination { get; set; }
 

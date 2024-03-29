@@ -1,0 +1,58 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model Ranking
+
+<style>
+    .button-container {
+        text-align: center;
+    }
+
+    .rounded-btn {
+        border-radius: 20px;
+        width: 10%;
+        margin: 50px;
+    }
+
+        .rounded-btn:hover {
+            font-weight: bold;
+            color: white;
+        }
+
+    .navy-background {
+        background-color: #002e5d;
+        color: white;
+    }
+
+    .white-button {
+        background-color: white;
+        color: #002e5d;
+        border: 2px solid #002e5d;
+    }
+
+        .white-button:hover {
+            background-color: #002e5d;
+            color: white;
+        }
+</style>
+<div class="button-container">
+    @foreach (Judge judge in ViewBag.joinedData)
+    {
+        @foreach (var presentation in judge.Presentations)
+        {
+            <a asp-controller="JudgeRankings" asp-action="JudgePresentationForm" asp-route-groupId="@presentation.GroupId"><button type="button" class="btn navy-background rounded-btn">Team @presentation.Group.Section - @presentation.Group.Number</button></a>
+        }
+    }
+    <a asp-controller="JudgeRankings" asp-action="TeamRankings"><button type="button" class="btn white-button rounded-btn">Rankings</button></a>
+</div>
+
+<!--
+    FOR CAMERON: ADD THE RANKING COMPARISON THING HERE
+
+    NOTES:
+    - Not sure how this will work, but when they hit the submit button, it needs to update the Rankings table "team_ranking" field with an integer of their rank (1 through 6) for each team
+
+-->
