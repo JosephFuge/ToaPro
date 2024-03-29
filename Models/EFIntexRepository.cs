@@ -16,7 +16,7 @@ namespace ToaPro
         public IEnumerable<Class> Classes => (IEnumerable<Class>)_toaProContext;
         public IEnumerable<Grade> Grades => (IEnumerable<Grade>)_toaProContext;
         public IEnumerable<Grader> Graders => (IEnumerable<Grader>)_toaProContext;
-        public IEnumerable<Group> Groups => (IEnumerable<Group>)_toaProContext;
+        public IEnumerable<Models.Group> Groups => (IEnumerable<Models.Group>)_toaProContext;
         public IEnumerable<Judge> Judges => (IEnumerable<Judge>)_toaProContext;
         public IEnumerable<Presentation> Presentations => (IEnumerable<Presentation>)_toaProContext;
         public IEnumerable<Ranking> Rankings => (IEnumerable<Ranking>)_toaProContext;
