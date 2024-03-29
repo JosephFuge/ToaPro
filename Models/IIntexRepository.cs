@@ -6,8 +6,8 @@ namespace ToaPro
     {
         IEnumerable<Student> Students { get; } 
         IEnumerable<Submission> Submissions { get; }
-        IEnumerable<Judge> Judges { get; }
-        IEnumerable<Presentation> Presentations { get; }
+        IQueryable<Judge> Judges { get; }
+        IQueryable<Presentation> Presentations { get; }
         IEnumerable<JudgeAvailability> JudgeAvailabilities { get; }
         IQueryable<Ranking> Rankings { get; }
         IQueryable<Group> Groups { get; }

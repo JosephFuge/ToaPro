@@ -15,22 +15,17 @@ namespace ToaPro
 
         public IEnumerable<Student> Students => _toaProContext.Students.ToList();
         public IEnumerable<Submission> Submissions => _toaProContext.Submissions.ToList();
-        public IEnumerable<Judge> Judges => _toaProContext.Judges.ToList();
-        public IEnumerable<Presentation> Presentations => _toaProContext.Presentations;
-
+        public IQueryable<Judge> Judges => _toaProContext.Judges;
+        public IQueryable<Presentation> Presentations => _toaProContext.Presentations;
         public IEnumerable<JudgeAvailability> JudgeAvailabilities => _toaProContext.JudgeAvailabilities;
+        public IQueryable<Ranking> Rankings => _toaProContext.Rankings;
+        public IQueryable<Group> Groups => _toaProContext.Groups;
 
         public void RequestAvailability(JudgeAvailability judgeAvailability)
         {
             _toaProContext.Add(judgeAvailability);
             _toaProContext.SaveChanges();
         }
-
-
-
-        public IQueryable<Ranking> Rankings => _toaProContext.Rankings;
-
-        public IQueryable<Group> Groups => _toaProContext.Groups;
 
         public void UpdateRanking(Ranking ranking)
         {
