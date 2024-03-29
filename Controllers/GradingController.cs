@@ -29,6 +29,14 @@ namespace ToaPro.Controllers
             return View();
         }
 
+        public IActionResult PeerEvalDetails()
+        {
+            //Only Professors and TAs have access to this page. Professors can view which TAs are assigned to which team.
+            //TAs are the only ones who can input grades--professors only have view capability when it comes to this.
+            //(TAs, Prof)
+            return View();
+        }
+
         public IActionResult StudentViewGrades()
         {
             return View();
