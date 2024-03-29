@@ -24,6 +24,8 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
 
     public virtual DbSet<Grader> Graders { get; set; }
 
+    public virtual DbSet<GraderAssignment> GraderAssignments { get; set; }
+
     public virtual DbSet<Group> Groups { get; set; }
 
     public virtual DbSet<Judge> Judges { get; set; }
@@ -113,10 +115,11 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
             entity.Property(e => e.RequirementId).HasColumnName("requirement_id");
             entity.Property(e => e.SubmissionId).HasColumnName("submission_id");
 
-            entity.HasOne(d => d.Grader).WithMany(p => p.Grades)
-                .HasForeignKey(d => d.GraderId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("grader_fk");
+            entity.HasOne(g => g.Grader)  // Define the navigation property
+                .WithMany()  // Omit the inverse navigation property as Grader does not have a collection of Grades
+                .HasForeignKey(g => g.GraderId)  // Define the foreign key property
+                .OnDelete(DeleteBehavior.ClientSetNull)  // Specify delete behavior if Grader is deleted
+                .HasConstraintName("grader_fk");  // Define the name of the foreign key constraint
 
             entity.HasOne(d => d.Group).WithMany(p => p.Grades)
                 .HasForeignKey(d => d.GroupId)
@@ -140,42 +143,19 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
 
             entity.ToTable("graders");
 
-            entity.HasIndex(e => e.ClassId, "IX_graders_class_id");
-
-            entity.HasIndex(e => new { e.ClassId }, "uniq_grader").IsUnique();
-
             entity.Property(e => e.Id)
                 .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
-            entity.Property(e => e.ClassId).HasColumnName("class_id");
+
             entity.Property(e => e.IsProfessor)
                 .HasDefaultValue(false)
                 .HasColumnName("is_professor");
 
-            entity.HasOne(d => d.Class).WithMany(p => p.Graders)
-                .HasForeignKey(d => d.ClassId)
+            entity.HasOne(d => d.ToaProUser)
+                .WithMany()
+                .HasForeignKey(d => d.ToaProUserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("class_fk");
-
-            entity.HasMany(d => d.Semesters).WithMany(p => p.Graders)
-                .UsingEntity<Dictionary<string, object>>(
-                    "SemesterGrader",
-                    r => r.HasOne<Semester>().WithMany()
-                        .HasForeignKey("SemesterId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("semester_fk"),
-                    l => l.HasOne<Grader>().WithMany()
-                        .HasForeignKey("GraderId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("grader_fk"),
-                    j =>
-                    {
-                        j.HasKey("GraderId", "SemesterId").HasName("semester_graders_pk");
-                        j.ToTable("semester_graders");
-                        j.HasIndex(new[] { "SemesterId" }, "IX_semester_graders_semester_id");
-                        j.IndexerProperty<int>("GraderId").HasColumnName("grader_id");
-                        j.IndexerProperty<int>("SemesterId").HasColumnName("semester_id");
-                    });
+                .HasConstraintName("toapro_user_fk");
         });
 
         modelBuilder.Entity<Group>(entity =>
@@ -408,5 +388,5 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
-    
+ 
 }
