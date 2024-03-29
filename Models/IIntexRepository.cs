@@ -13,6 +13,10 @@ namespace ToaPro
         IQueryable<Presentation> Presentations { get; }
         IQueryable<Ranking> Rankings { get; }
 
+        IQueryable<Group> Groups { get; }
+
         public void UpdateRanking(Ranking ranking);
+
+        public void AddRanking(Ranking ranking);
     }
 }

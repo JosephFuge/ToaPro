@@ -20,9 +20,17 @@ namespace ToaPro
 
         public IQueryable<Ranking> Rankings => _toaProContext.Rankings;
 
+        public IQueryable<Group> Groups => _toaProContext.Groups;
+
         public void UpdateRanking(Ranking ranking)
         {
             _toaProContext.Rankings.Update(ranking);
+            _toaProContext.SaveChanges();
+        }
+
+        public void AddRanking(Ranking ranking)
+        {
+            _toaProContext.Rankings.Add(ranking);
             _toaProContext.SaveChanges();
         }
     }

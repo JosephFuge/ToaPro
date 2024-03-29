@@ -33,7 +33,7 @@
     {
         @foreach (var presentation in judge.Presentations)
         {
-                <button type="button" class="btn navy-background rounded-btn" asp-route="">Team @presentation.Group.Section - @presentation.GroupId</button>
+                <a asp-controller="JudgeRankings" asp-action="JudgePresentationForm" asp-route-groupId="@presentation.GroupId"><button type="button" class="btn navy-background rounded-btn">Team @presentation.Group.Section - @presentation.Group.Number</button></a>
         }
     }
     <button type="button" class="btn navy-background rounded-btn">Rankings</button>
