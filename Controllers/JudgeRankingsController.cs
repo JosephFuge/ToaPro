@@ -96,7 +96,8 @@ namespace ToaPro.Controllers
         }
 
         public IActionResult CoordinatorAssignJudges()
-        {
+        { 
+
             return View();
         }
     }
