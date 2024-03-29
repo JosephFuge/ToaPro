@@ -22,5 +22,10 @@ namespace ToaPro.Controllers
         {
             return View();
         }
+
+        public IActionResult FunAwards2()
+        {
+            return View();
+        }
     }
 }
