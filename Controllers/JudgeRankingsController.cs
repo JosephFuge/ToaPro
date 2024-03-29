@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ToaPro.Models;
 
 namespace ToaPro.Controllers
 {
@@ -16,16 +17,28 @@ namespace ToaPro.Controllers
         {
             return View();
         }
-        public IActionResult JudgePresentationForm()
+
+        [HttpGet]
+        public IActionResult JudgePresentationForm(int Id = 1)
         {
-             var joinedData = _repo.Judges
+             ViewBag.joinedData = _repo.Judges
                 .Where(x => x.Id == 1)
                 .Include(r => r.Rankings)
                 .Include(p => p.Presentations)
                     .ThenInclude(g => g.Group)
                 .ToList();
 
-            return View(joinedData);
+            var recordToEdit = _repo.Rankings.Single(x => x.Id == Id);
+
+            return View(recordToEdit);
+        }
+
+        [HttpPost]
+        public IActionResult JudgePresentationForm(Ranking updatedInfo)
+        {
+            _repo.UpdateRanking(updatedInfo);
+
+            return RedirectToAction("JudgePresentationForm");
         }
 
         public IActionResult ProfessorViewAssignAwards()

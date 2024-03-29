@@ -17,5 +17,13 @@ namespace ToaPro
         public IQueryable<Judge> Judges => _toaProContext.Judges;
 
         public IQueryable<Presentation> Presentations => _toaProContext.Presentations;
+
+        public IQueryable<Ranking> Rankings => _toaProContext.Rankings;
+
+        public void UpdateRanking(Ranking ranking)
+        {
+            _toaProContext.Rankings.Update(ranking);
+            _toaProContext.SaveChanges();
+        }
     }
 }
