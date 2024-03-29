@@ -38,6 +38,13 @@
             color: white;
         }
 </style>
+@{
+    // You can set up any necessary data here
+    string title = "Presentation Form";
+    string user = "JudgeNav";
+}
+@await Component.InvokeAsync("NavBarTypes", new { user })
+@await Component.InvokeAsync("HeaderTypes", new { title })
 <div class="button-container">
     @foreach (Judge judge in ViewBag.joinedData)
     {
