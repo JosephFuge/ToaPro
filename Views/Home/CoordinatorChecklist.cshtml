@@ -17,11 +17,16 @@
             border-radius: 50%;
             display: inline-block;
             position: absolute;
-            left: 0; /* Align dot to the far left of the cell */
+            left: 10px; /* Align dot to the far left of the cell */
             top: 50%; /* Align dot vertically */
             transform: translateY(-50%);
-            margin-right: 20px; /* Space between dot and task text */
         }
+
+        .task-name {
+    display: inline-block;
+    margin-left: 25px; /* Adjust this value to align the text after the dot */
+    font-weight: bold; /* If you want the text to be bold */
+}
 
             .status-dot.not-started {
                 background-color: red;
@@ -36,7 +41,7 @@
             }
 
         .task-text {
-            padding-left: 50px; /* Adjust this value to fit the dot */
+            padding-left: 100px; /* Adjust this value to fit the dot */
         }
 
         .delete-btn {
@@ -63,31 +68,40 @@
         <h2>Task Manager</h2>
     </div>
     <div>
-        <select id="status-filter" class="form-control">
-            <option value="all">Filter by</option>
-            <option value="not-started">Not started</option>
-            <option value="in-progress">In progress, incomplete</option>
-            <option value="completed">Completed</option>
-        </select>
-        <table class="task-table">
-            <thead>
-                <tr>
-                    <th>Task</th>
-                </tr>
-            </thead>
-            <tbody id="task-list">
-                <!-- Task rows will be added here dynamically -->
-            </tbody>
-            <tfoot>
-                <tr id="new-task-row">
-                    <td>
-                        <div class="new-task-container">
-                            <input type="text" id="new-task-input" class="form-control" placeholder="+ Add New Task" onkeypress="handleEnterKeyPress(event)" />
-                        </div>
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
+        <div>
+            <select id="status-filter" class="form-control">
+                <option value="all">Filter by</option>
+                <option value="not-started">Not started</option>
+                <option value="in-progress">In progress, incomplete</option>
+                <option value="completed">Completed</option>
+            </select>
+
+        </div>
+        <br />
+
+        <div>
+
+            <table class="task-table" style="margin-left: auto; margin-right: auto;">
+                <thead>
+                    <tr>
+                        <th>Task</th>
+                    </tr>
+                </thead>
+                <tbody id="task-list">
+
+                    <!-- Task rows will be added here dynamically -->
+                </tbody>
+                <tfoot>
+                    <tr id="new-task-row">
+                        <td>
+                            <div class="new-task-container">
+                                <input type="text" id="new-task-input" class="form-control" placeholder="+ Add New Task" onkeypress="handleEnterKeyPress(event)" />
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
     </div>
 
     <script>
@@ -104,7 +118,7 @@
 
         function renderTasks(filter = 'all') {
             const taskList = document.getElementById('task-list');
-            taskList.innerHTML = '';
+            taskList.innerHTML = ' ';
             tasks.filter(task => filter === 'all' || task.status === filter).forEach((task, index) => {
                 const row = taskList.insertRow();
                 row.className = `task-item ${task.status}`;
