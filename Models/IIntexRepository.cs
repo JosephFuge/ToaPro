@@ -14,7 +14,16 @@ namespace ToaPro
         IEnumerable<Requirement> Requirements { get; }
         IEnumerable<Semester> Semesters { get; }
         IEnumerable<Student> Students { get; }
+        
         IEnumerable<Submission> Submissions { get; }
 
+        IEnumerable<Judge> Judges { get; }
+
+        IEnumerable<Presentation> Presentations { get; }
+
+        IEnumerable<JudgeAvailability> JudgeAvailabilities { get; }
+
+        public void RequestAvailability(JudgeAvailability availabilities);
+        public void StudentRequestAvailability(StudentAvailability availabilities);
     }
 }
