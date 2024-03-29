@@ -55,4 +55,16 @@
     NOTES:
     - Not sure how this will work, but when they hit the submit button, it needs to update the Rankings table "team_ranking" field with an integer of their rank (1 through 6) for each team
 
+
 -->
+
+<h2>Drag and Drop</h2>
+<p>Drag the box back and forth between the two div elements.</p>
+
+<div id="div1" style="float: left; width: 100px; height: 35px; margin: 10px; padding: 10px; border: 1px solid black;" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+<div id="div2" style="float: left; width: 100px; height: 35px; margin: 10px; padding: 10px; border: 1px solid black;" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+<div id="drag1" draggable="true" ondragstart="drag(event)" style="width: 50px; height: 50px; background-color: #ccc;"></div>
+
+<div id="drag2" draggable="true" ondragstart="drag(event)" style="width: 50px; height: 50px; background-color: #ccc;"></div>
