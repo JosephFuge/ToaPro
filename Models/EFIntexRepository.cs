@@ -10,7 +10,6 @@ namespace ToaPro
         {
             _toaProContext = TempDataDictionary;
         }
-
         public IEnumerable<Class> Classes => _toaProContext.Classes;
         //comment
         public IEnumerable<Grade> Grades => _toaProContext.Grades;
