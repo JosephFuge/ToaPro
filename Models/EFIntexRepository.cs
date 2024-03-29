@@ -12,6 +12,7 @@ namespace ToaPro
         }
 
         public IEnumerable<Class> Classes => _toaProContext.Classes;
+        //comment
         public IEnumerable<Grade> Grades => _toaProContext.Grades;
         public IEnumerable<Grader> Graders => _toaProContext.Graders;
         public IEnumerable<Group> Groups => _toaProContext.Groups;
