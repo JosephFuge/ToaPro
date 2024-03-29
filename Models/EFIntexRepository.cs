@@ -24,6 +24,7 @@ namespace ToaPro
         public IEnumerable<Semester> Semesters => _toaProContext.Semesters;
         public IEnumerable<Student> Students => _toaProContext.Students;
         public IEnumerable<Submission> Submissions => _toaProContext.Submissions;
+        public IEnumerable<JudgeAvailability> JudgeAvailabilities => _toaProContext.JudgeAvailabilities;
 
         public void RequestAvailability(JudgeAvailability judgeAvailability)
         {
@@ -31,5 +32,10 @@ namespace ToaPro
             _toaProContext.SaveChanges();
         }
 
+        public void StudentRequestAvailability(StudentAvailability studentAvailability)
+        {
+            _toaProContext.Add(studentAvailability);
+            _toaProContext.SaveChanges();
+        }
     }
 }
