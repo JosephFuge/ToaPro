@@ -1,6 +1,5 @@
 ﻿@{
     ViewData["Title"] = "Task Management Page";
-
 }
 
 <!DOCTYPE html>
@@ -9,117 +8,136 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Management</title>
+    <link rel="stylesheet" href="../wwwroot/css/site.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-        .task-table {
-            width: 100%;
-            border-collapse: collapse;
+        .status-dot {
+            height: 15px;
+            width: 15px;
+            border-radius: 50%;
+            display: inline-block;
+            position: absolute;
+            left: 0; /* Align dot to the far left of the cell */
+            top: 50%; /* Align dot vertically */
+            transform: translateY(-50%);
+            margin-right: 20px; /* Space between dot and task text */
         }
 
-            .task-table th, .task-table td {
-                text-align: left;
-                padding: 8px;
+            .status-dot.not-started {
+                background-color: red;
             }
 
-            .task-table th {
-                background-color: #007bff;
-                color: white;
+            .status-dot.in-progress {
+                background-color: orange;
             }
 
-            .task-table tr:nth-child(even) {
-                background-color: #f2f2f2;
+            .status-dot.completed {
+                background-color: green;
             }
 
-            .task-table tr.task-item td {
-                cursor: pointer;
-            }
-
-        .not-started {
-            color: red;
+        .task-text {
+            padding-left: 50px; /* Adjust this value to fit the dot */
         }
 
-        .in-progress {
-            color: orange;
-        }
-
-        .completed {
-            color: green;
-        }
-
-        #new-task-input {
-            padding: 10px;
-            margin-right: 10px;
-            width: 300px;
-        }
-
-        button {
-            padding: 10px 15px;
-            background-color: #007bff;
-            color: white;
+        .delete-btn {
             border: none;
+            background: transparent;
             cursor: pointer;
+            color: #888;
+            position: absolute;
+            right: 0;
         }
 
-            button:hover {
-                opacity: 0.9;
+            .delete-btn:hover {
+                color: #555;
             }
+
+        .task-item {
+            position: relative;
+            padding-right: 30px; /* Ensure space for the delete icon */
+        }
     </style>
 </head>
 <body>
-
     <div>
         <h2>Task Manager</h2>
-        <input type="text" id="new-task-input" placeholder="Enter a new task" />
-        <button onclick="addTask()">Add New Task</button>
-
+    </div>
+    <div>
+        <select id="status-filter" class="form-control">
+            <option value="all">Filter by</option>
+            <option value="not-started">Not started</option>
+            <option value="in-progress">In progress, incomplete</option>
+            <option value="completed">Completed</option>
+        </select>
         <table class="task-table">
             <thead>
                 <tr>
                     <th>Task</th>
-                    <th>Status</th>
                 </tr>
             </thead>
             <tbody id="task-list">
-                <!-- Tasks will be added here dynamically -->
+                <!-- Task rows will be added here dynamically -->
             </tbody>
+            <tfoot>
+                <tr id="new-task-row">
+                    <td>
+                        <div class="new-task-container">
+                            <input type="text" id="new-task-input" class="form-control" placeholder="+ Add New Task" onkeypress="handleEnterKeyPress(event)" />
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
         </table>
     </div>
 
     <script>
-        let tasks = JSON.parse(sessionStorage.getItem('tasks')) || [];
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+        document.getElementById('status-filter').addEventListener('change', function () {
+            renderTasks(this.value);
+        });
 
         function saveTasks() {
-            sessionStorage.setItem('tasks', JSON.stringify(tasks));
+            localStorage.setItem('tasks', JSON.stringify(tasks));
             renderTasks();
         }
 
-        function renderTasks() {
+        function renderTasks(filter = 'all') {
             const taskList = document.getElementById('task-list');
-            taskList.innerHTML = ''; // Clear the list
-            tasks.forEach((task, index) => {
+            taskList.innerHTML = '';
+            tasks.filter(task => filter === 'all' || task.status === filter).forEach((task, index) => {
                 const row = taskList.insertRow();
-                row.setAttribute('class', `task-item ${task.status}`);
-                row.setAttribute('data-index', index);
-
-                const taskCell = row.insertCell(0);
-                taskCell.textContent = task.name;
-                const statusCell = row.insertCell(1);
-                statusCell.textContent = task.status.replace('-', ' ').toUpperCase();
-                statusCell.style.textTransform = 'capitalize';
-
-                // Add click event to change the status
-                row.addEventListener('click', function () {
-                    const currentIndex = this.dataset.index;
-                    const currentStatus = tasks[currentIndex].status;
-                    if (currentStatus === 'not-started') {
-                        tasks[currentIndex].status = 'in-progress';
-                    } else if (currentStatus === 'in-progress') {
-                        tasks[currentIndex].status = 'completed';
-                    } else {
-                        tasks[currentIndex].status = 'not-started';
-                    }
-                    saveTasks();
-                });
+                row.className = `task-item ${task.status}`;
+                const cell = row.insertCell(0);
+                cell.innerHTML = `
+                            <span class="status-dot ${task.status}" onclick="changeStatus(${index})"></span>
+                            <span class="task-name"> ${task.name}</span>
+                            <button class="delete-btn" onclick="deleteTask(${index})"><i class="fas fa-trash"></i></button>
+                        `;
             });
+            if (tasks.length === 0 && filter === 'all') {
+                const row = taskList.insertRow();
+                const cell = row.insertCell(0);
+                cell.textContent = 'No tasks found';
+                cell.className = 'no-tasks';
+            }
+        }
+
+        function changeStatus(index) {
+            const task = tasks[index];
+            if (task.status === 'not-started') {
+                task.status = 'in-progress';
+            } else if (task.status === 'in-progress') {
+                task.status = 'completed';
+            } else {
+                task.status = 'not-started';
+            }
+            saveTasks();
+        }
+
+        function deleteTask(index) {
+            tasks.splice(index, 1);
+            saveTasks();
         }
 
         function addTask() {
@@ -128,13 +146,17 @@
             if (taskName) {
                 tasks.push({ name: taskName, status: 'not-started' });
                 saveTasks();
-                newTaskInput.value = ''; // Clear input field
+                newTaskInput.value = '';
+            }
+        }
+
+        function handleEnterKeyPress(event) {
+            if (event.key === 'Enter') {
+                addTask();
             }
         }
 
         renderTasks();
     </script>
-
 </body>
 </html>
-
