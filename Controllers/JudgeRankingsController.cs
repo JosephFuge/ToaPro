@@ -77,6 +77,19 @@ namespace ToaPro.Controllers
             return RedirectToAction("JudgePresentationForm", new { judgeId = judgeId, groupId = groupId });
         }
 
+        [HttpGet]
+        public IActionResult TeamRankings(int judgeId = 1)
+        {
+            ViewBag.joinedData = _repo.Judges
+                .Where(x => x.Id == judgeId)
+                .Include(r => r.Rankings)
+                .Include(p => p.Presentations)
+                    .ThenInclude(g => g.Group)
+                .ToList();
+
+            return View();
+        }
+
         public IActionResult ProfessorViewAssignAwards()
         {
             return View();
