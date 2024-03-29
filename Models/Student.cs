@@ -1,8 +1,4 @@
-﻿using AspNetCore;
-using System;
-using System.Collections.Generic;
-
-namespace ToaPro.Models;
+﻿namespace ToaPro.Models;
 
 public partial class Student
 {

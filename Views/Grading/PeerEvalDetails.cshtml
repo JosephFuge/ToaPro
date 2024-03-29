@@ -4,6 +4,7 @@
 @{
     ViewData["Title"] = "Peer Evaluation Group Details";
 }
+@model Evaluation
 
 <h1>Howdy - Peer Eval Details</h1>
 
@@ -25,5 +26,16 @@
     </tr>
     <!-- Add more rows as needed -->
 </table>
+
+
+@foreach (Evaluation e in Model.Evaluations)
+{
+    <ul>
+        <li>Project Type: @e.SubmissionId</li>
+        <li>Regional Program: @e.EvaluatedId</li>
+        <li>Impact: @e.PeerEvalGrade</li>
+        <li>Installation Date: @e.Comments</li>
+    </ul>
+}
 
 @*Grading View for professors and TAs (Groups 1, 10, & 12)*@

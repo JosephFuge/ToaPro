@@ -48,6 +48,8 @@ public partial class ToaProContext : DbContext
     public virtual DbSet<Student> Students { get; set; }
 
     public virtual DbSet<Submission> Submissions { get; set; }
+    //added this part for our model:
+    public virtual DbSet<Evaluation> Evaluations { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
