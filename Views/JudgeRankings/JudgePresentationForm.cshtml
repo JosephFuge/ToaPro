@@ -25,15 +25,46 @@
     .navy-background {
         background-color: #002e5d;
         color: white;
-    }
+    } 
+    .white-button {
+        background-color: white;
+        color: #002e5d;
+        border: 2px solid #002e5d;
+    }  
+        .white-button:hover {
+            background-color: #002e5d;
+            color: white;
+        }
 </style>
 <body>
+    <script>
+        function updateCommunicationValue(value) {
+            document.getElementById('communicationValue').textContent = value;
+        }
+    </script>
+    <script>
+        function updateTechnologyValue(value) {
+            document.getElementById('technologyValue').textContent = value;
+        }
+    </script>
+    <script>
+        function updateOverallValue(value) {
+            document.getElementById('overallValue').textContent = value;
+        }
+    </script>
     <div class="button-container">
     @foreach (Judge judge in ViewBag.joinedData)
     {
         @foreach (var presentation in judge.Presentations)
         {
+            if(Model.GroupId == presentation.GroupId)
+            {
+                <a asp-controller="JudgeRankings" asp-action="JudgePresentationForm" asp-route-groupId="@presentation.GroupId"><button type="button" class="btn white-button rounded-btn">Team @presentation.Group.Section - @presentation.Group.Number</button></a>
+            }
+            else
+            {
                 <a asp-controller="JudgeRankings" asp-action="JudgePresentationForm" asp-route-groupId="@presentation.GroupId"><button type="button" class="btn navy-background rounded-btn">Team @presentation.Group.Section - @presentation.Group.Number</button></a>
+            }
         }
     }
     <button type="button" class="btn navy-background rounded-btn">Rankings</button>
@@ -68,8 +99,16 @@
                             </ul>
                         </td>
                         <td>
-                            <input type="range" min="1" max="10" oninput="this.nextElementSibling.value = this.value" asp-for="CommunicationPoints">
-                            <output>10</output>
+                            @if (Model.CommunicationPoints is null)
+                            {
+                                <input type="range" id="communicationRange" value="10" name="CommunicationPoints" min="1" max="10" asp-for="CommunicationPoints" oninput="updateCommunicationValue(this.value)">
+                                <span id="communicationValue">10</span>
+                            }
+                            else
+                            {
+                                <input type="range" id="communicationRange" name="CommunicationPoints" min="1" max="10" asp-for="CommunicationPoints" oninput="updateCommunicationValue(this.value)">
+                                <span id="communicationValue">@Model.CommunicationPoints</span>
+                            }
                         </td>
                         <td>
                             <textarea class="form-control" rows="3" id="comments1" placeholder="Enter comments here..." asp-for="CommunicationComments"></textarea>
@@ -87,8 +126,16 @@
                             </ul>
                         </td>
                         <td>
-                            <input type="range" min="1" max="10" oninput="this.nextElementSibling.value = this.value" asp-for="TechnologyPoints">
-                            <output>10</output>
+                            @if (Model.TechnologyPoints is null)
+                            {
+                                <input type="range" id="technologyRange" value="10" name="TechnologyPoints" min="1" max="10" asp-for="TechnologyPoints" oninput="updateTechnologyValue(this.value)">
+                                <span id="technologyValue">10</span>
+                            }
+                            else
+                            {
+                                <input type="range" id="technologyRange" name="TechnologyPoints" min="1" max="10" asp-for="TechnologyPoints" oninput="updateTechnologyValue(this.value)">
+                                <span id="technologyValue">@Model.TechnologyPoints</span>
+                            }
                         </td>
                         <td>
                             <textarea class="form-control" rows="3" id="comments2" placeholder="Enter comments here..." asp-for="TechnologyComments"></textarea>
@@ -107,8 +154,16 @@
                             </ul>
                         </td>
                         <td>
-                            <input type="range" min="1" max="10" oninput="this.nextElementSibling.value = this.value" asp-for="OverallPoints">
-                            <output>10</output>
+                            @if (Model.OverallPoints is null)
+                            {
+                                <input type="range" id="overallRange" value="10" name="OverallPoints" min="1" max="10" asp-for="OverallPoints" oninput="updateOverallValue(this.value)">
+                                <span id="overallValue">10</span>
+                            }
+                            else
+                            {
+                                <input type="range" id="overallRange" name="OverallPoints" min="1" max="10" asp-for="OverallPoints" oninput="updateOverallValue(this.value)">
+                                <span id="overallValue">@Model.OverallPoints</span>
+                            }
                         </td>
                         <td>
                             <textarea class="form-control" rows="3" id="comments3" placeholder="Enter comments here..." asp-for="OverallComments"></textarea>
