@@ -30,7 +30,6 @@ namespace ToaPro
             _toaProContext.Add(judgeAvailability);
             _toaProContext.SaveChanges();
         }
-
         public IEnumerable<Class> Classes => _toaProContext.Classes;
         //comment
         public IEnumerable<Grade> Grades => _toaProContext.Grades;
