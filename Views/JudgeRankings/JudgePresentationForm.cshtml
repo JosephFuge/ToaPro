@@ -4,7 +4,7 @@
 @{
 }
 @*Judge Submits Judging Form View (Groups 8 & 4)*@
-@model List<Judge>
+@model Ranking
 
 
 <style>
@@ -29,7 +29,7 @@
 </style>
 <body>
     <div class="button-container">
-    @foreach (var judge in Model)
+    @foreach (Judge judge in ViewBag.joinedData)
     {
         @foreach (var presentation in judge.Presentations)
         {
@@ -39,8 +39,11 @@
     <button type="button" class="btn navy-background rounded-btn">Rankings</button>
     </div>
     <div class="container">
-        <form>
-            <input type="hidden" />
+        <form method="post">
+            <input type="hidden" asp-for="Id"/>
+            <input type="hidden" asp-for="GroupId"/>
+            <input type="hidden" asp-for="JudgeId" />
+            <input type="hidden" asp-for="TeamRanking" />
             <table class="table">
                 <thead>
                     <tr class="navy-background">
@@ -65,11 +68,11 @@
                             </ul>
                         </td>
                         <td>
-                            <input type="range" value="10" min="1" max="10" oninput="this.nextElementSibling.value = this.value">
+                            <input type="range" min="1" max="10" oninput="this.nextElementSibling.value = this.value" asp-for="CommunicationPoints">
                             <output>10</output>
                         </td>
                         <td>
-                            <textarea class="form-control" rows="3" id="comments1" placeholder="Enter comments here..."></textarea>
+                            <textarea class="form-control" rows="3" id="comments1" placeholder="Enter comments here..." asp-for="CommunicationComments"></textarea>
                         </td>
                     </tr>
                     <tr>
@@ -84,11 +87,11 @@
                             </ul>
                         </td>
                         <td>
-                            <input type="range" value="10" min="1" max="10" oninput="this.nextElementSibling.value = this.value">
+                            <input type="range" min="1" max="10" oninput="this.nextElementSibling.value = this.value" asp-for="TechnologyPoints">
                             <output>10</output>
                         </td>
                         <td>
-                            <textarea class="form-control" rows="3" id="comments2" placeholder="Enter comments here..."></textarea>
+                            <textarea class="form-control" rows="3" id="comments2" placeholder="Enter comments here..." asp-for="TechnologyComments"></textarea>
                         </td>
                     </tr>
                     <tr>
@@ -104,23 +107,23 @@
                             </ul>
                         </td>
                         <td>
-                            <input type="range" value="10" min="1" max="10" oninput="this.nextElementSibling.value = this.value">
+                            <input type="range" min="1" max="10" oninput="this.nextElementSibling.value = this.value" asp-for="OverallPoints">
                             <output>10</output>
                         </td>
                         <td>
-                            <textarea class="form-control" rows="3" id="comments3" placeholder="Enter comments here..."></textarea>
+                            <textarea class="form-control" rows="3" id="comments3" placeholder="Enter comments here..." asp-for="OverallComments"></textarea>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <button type="submit">Save</button>
 
-            <div asp-validation-summary="All"></div>
-        </form>
         <br />
         <h3>Nomination for fun awards</h3>
         <p>We like to give the teams fun awards independent of their overall scores.  Please consider one or more creative and fun/funny awards for this team.</p>
         <p>(i.e., "The Extra Mile Award", "Best Analytics Award", "Best Dressed Award", "Thinking Outside the Box Award", "Most Colorful Slide Award", etc.)</p>
-        <input class="form-control" type="text"/>
+        <input class="form-control" type="text" asp-for="Nomination"/>
+        <button class="btn navy-background rounded-btn" type="submit">Save</button>
+        <div asp-validation-summary="All"></div>
+        </form>
     </div>
 </body>

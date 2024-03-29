@@ -10,6 +10,9 @@ namespace ToaPro
 
         IQueryable<Judge> Judges { get; }
 
-        IQueryable<Presentation> Presentations { get; }    
+        IQueryable<Presentation> Presentations { get; }
+        IQueryable<Ranking> Rankings { get; }
+
+        public void UpdateRanking(Ranking ranking);
     }
 }
