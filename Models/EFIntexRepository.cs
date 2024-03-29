@@ -44,5 +44,11 @@ namespace ToaPro
             _toaProContext.Update(updatedInfo);
             _toaProContext.SaveChanges();
         }
+
+        public void UpdateJudgeAvailability(Judge updatedInfo)
+        {
+            _toaProContext.Update(updatedInfo);
+            _toaProContext.SaveChanges();
+        }
     }
 }

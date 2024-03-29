@@ -17,5 +17,7 @@ namespace ToaPro
 
         public void SRequestAvailability(int Id);
         public void SUpdateAvailability(Student updatedInfo);
+
+        public void UpdateJudgeAvailability(Judge updatedInfo);
     }
 }
