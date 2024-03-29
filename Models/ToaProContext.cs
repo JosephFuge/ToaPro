@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml;
 using Microsoft.EntityFrameworkCore;
 
 namespace ToaPro.Models;
@@ -485,4 +486,6 @@ public partial class ToaProContext : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+    
 }
