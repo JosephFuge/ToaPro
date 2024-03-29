@@ -36,13 +36,9 @@
             color: white;
         }
 </style>
-@{
-    // You can set up any necessary data here
-    string title = "Presentation Form";
-    string user = "JudgeNav";
-}
-@await Component.InvokeAsync("NavBarTypes", new { user })
-@await Component.InvokeAsync("HeaderTypes", new { title })
+<vc:nav-bar-types user="JudgeNav"></vc:nav-bar-types>
+<vc:submenu-types view="Default"></vc:submenu-types>
+<vc:header-types title="Presentation Form" />
 <body>
     <div>
         <vc:header-types />
