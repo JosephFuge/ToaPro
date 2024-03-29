@@ -1,4 +1,6 @@
-﻿namespace ToaPro.Models
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace ToaPro.Models
 {
     public class DataSeeder
     {
@@ -7,6 +9,93 @@
         public DataSeeder(ToaProContext tempContext)
         {
             _context = tempContext;
+        }
+
+        public async Task<bool> SeedUsers(UserManager<ToaProUser> userManager)
+        {
+            ToaProUser coordinator = new ToaProUser
+            {
+                UserName = "BrewmasterTaylor",
+                Email = "taylor@wells.com",
+                FirstName = "Taylor",
+                LastName = "Wells"
+            };
+
+            ToaProUser professorHilton = new ToaProUser
+            {
+                UserName = "SpencerHilton",
+                Email = "bigbossdog6@outlook.com",
+                FirstName = "Spencer",
+                LastName = "Hilton"
+            };
+
+            ToaProUser professorCutler = new ToaProUser
+            {
+                UserName = "LauraCutler",
+                Email = "laura@cutler.com",
+                FirstName = "Laura",
+                LastName = "Cutler"
+            };
+
+            ToaProUser taToa = new ToaProUser
+            {
+                UserName = "ToaTheGoat",
+                Email = "toa@example.com",
+                FirstName = "Toa",
+                LastName = "Pita"
+            };
+
+            ToaProUser studentHayden = new ToaProUser
+            {
+                UserName = "HaydenCowart",
+                Email = "hayden@cowart.com",
+                FirstName = "Hayden",
+                LastName = "Cowart"
+            };
+
+            ToaProUser studentLily = new ToaProUser
+            {
+                UserName = "LilianTsubaki",
+                Email = "lily@tsubaki.com",
+                FirstName = "Lilian",
+                LastName = "Tsubaki"
+            };
+
+            ToaProUser studentNick = new ToaProUser
+            {
+                UserName = "NicholasThomas",
+                Email = "nick@thomas.com",
+                FirstName = "Nicholas",
+                LastName = "Thomas"
+            };
+
+            bool userSeedingSuccessful = false;
+
+            userSeedingSuccessful = await SeedIndividualUser(userManager, coordinator, "Password123!", "Coordinator");
+            userSeedingSuccessful = await SeedIndividualUser(userManager, professorHilton, "Password123!", "Professor");
+            userSeedingSuccessful = await SeedIndividualUser(userManager, professorCutler, "Password123!", "Professor");
+            userSeedingSuccessful = await SeedIndividualUser(userManager, taToa, "Password123!", "TA");
+            userSeedingSuccessful = await SeedIndividualUser(userManager, studentHayden, "Password123!", "Student");
+            userSeedingSuccessful = await SeedIndividualUser(userManager, studentLily, "Password123!", "Student");
+            userSeedingSuccessful = await SeedIndividualUser(userManager, studentNick, "Password123!", "Student");
+
+            return userSeedingSuccessful;
+        }
+
+        public async Task<bool> SeedIndividualUser(UserManager<ToaProUser> userManager, ToaProUser user, String password, String role)
+        {
+            var result = await userManager.CreateAsync(user, password);
+
+            if (result.Succeeded)
+            {
+                var roleResult = await userManager.AddToRoleAsync(user, role);
+                if (roleResult.Succeeded)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public void SeedData()
@@ -41,7 +130,7 @@
 
             if (!_context.Requirements.ToList().Any())
             {
-                var classes = _context.Classes.ToList();
+                List<Class> classes = _context.Classes.ToList() ?? [];
 
                 _context.Requirements.AddRange(
                     new Requirement
