@@ -45,7 +45,7 @@ namespace ToaPro
             _toaProContext.SaveChanges();
         }
 
-        public void StudentRequestAvailability(StudentAvailability studentAvailability)
+        public void StudentRequestAvailability(Student studentAvailability)
         {
             _toaProContext.Add(studentAvailability);
             _toaProContext.SaveChanges();
