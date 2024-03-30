@@ -10,3 +10,27 @@
     The only additional functionality is for judges, who will only be able to request a change in thier assignment
     (see RequestNewTime.cshtml view).
 *@
+
+
+@model IEnumerable<Judge>
+
+@foreach (var m in Model)
+{
+    <div class="card m-1 p-1">
+        <h3>
+        
+            <span class="badge rounded-pill bg-primary text-white float-end"><small>@m.Id</small></span>
+        </h3>
+        <ul>
+            <li>First: @m.FName</li>
+            <li>Last: @m.LName</li>
+            <li>Affiliation: @m.Affiliation</li>
+
+            @*     These might be different cus they are lists?  *@
+           @*  <li>@m.Rankings</li>
+            <li>@m.Presentations</li> *@
+            @*  <@* li>Price: $@b.Price</li> *@
+        </ul>
+    </div>
+}
+
