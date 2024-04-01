@@ -86,10 +86,10 @@ input {
     align-items: center; /* This ensures the link's text is vertically centered */
 }
 
-    /* Change the color on hover for submenu items */
-    .navbar.bg-white .navbar-nav .nav-item .nav-link:hover {
-        color: #003369 !important;
-    }
+/* Change the color on hover for submenu items */
+.navbar.bg-white .navbar-nav .nav-item .nav-link:hover {
+    color: #003369 !important;
+}
 
 
 
@@ -133,17 +133,17 @@ body, html {
     margin-top: auto; /* Automatically pushes the footer to the bottom */
 }
 
-    .main-footer h2 {
-        font-size: 20px;
-        margin-bottom: 20px;
-        letter-spacing: 2.5px;
-    }
+.main-footer h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    letter-spacing: 2.5px;
+}
 
-    .main-footer p {
-        font-size: 12px;
-        margin: 0;
-        margin-bottom: 7px;
-    }
+.main-footer p {
+    font-size: 12px;
+    margin: 0;
+    margin-bottom: 7px;
+}
 
 .bg-custom-color {
     background-color: #002E5D;

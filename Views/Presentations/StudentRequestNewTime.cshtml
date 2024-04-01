@@ -4,31 +4,29 @@
 @{
 }
 @*
-    This is the Judge Request time view (Ryan, Lili, and Amy)
-    Students will have an additional text area to add why they need to request a new time as well as
-    a brief NOTE below the text area. Judges will not have the additional text area and notice.
-    Be sure to include this in the formatting of the view.
+    This is the Student Request time view (Ryan, Lili, and Amy)
 *@
 
-@model JudgeAvailability
+@model Student
 
 <h1>Request New Time</h1>
 
 <body>
-    <h2>Judge Availability Form</h2>
+    <h2>Student Availability Form</h2>
     <form method="post">
         <div>
-            <label asp-for="JudgeId">Judge ID:</label>
-            <input asp-for="JudgeId" />
+            <label asp-for="StudentId">Student ID:</label>
+            <input asp-for="StudentId" />
         </div>
         <div>
-            <label asp-for="JudgeFName">First Name:</label>
-            <input asp-for="JudgeFName" />
+            @* <label asp-for="FirstName">First Name:</label>
+            <input asp-for="FirstName" /> *@
+            @* <p>Name: @Model.ToaProUser.FirstName @Model.ToaProUser.LastName</p> *@
         </div>
-        <div>
-            <label asp-for="JudgeLName">Last Name:</label>
-            <input asp-for="JudgeLName" />
-        </div>
+        @* <div>
+            <label asp-for="LastName">Last Name:</label>
+            <input asp-for="LastName" />
+        </div> *@
         <div>
             <label>Select times you WILL NOT be available</label><br />
             <label><input type="checkbox" asp-for="TimeSlot1" value="false" />1:00 - 1:40</label><br />
@@ -37,6 +35,10 @@
             <label><input type="checkbox" asp-for="TimeSlot4" value="false" />3:30 - 4:10</label><br />
             <label><input type="checkbox" asp-for="TimeSlot5" value="false" />4:15 - 4:55</label><br />
             <!-- Don't forget to put the stuff in the Home Controller-->
+        </div>
+        <div>
+            <label asp-for="Reason">Reason:</label>
+            <input asp-for="Reason" style="height: 100px; width: 200px;" />
         </div>
         <button type="submit">Submit</button>
     </form>
