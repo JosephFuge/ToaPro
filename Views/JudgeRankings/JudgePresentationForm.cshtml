@@ -63,7 +63,7 @@
     <div class="button-container">
     @foreach (Judge judge in ViewBag.joinedData)
     {
-        @foreach (var presentation in judge.Presentations)
+        @foreach (var presentation in judge.Presentations.OrderBy(p => p.StartDate))
         {
             if(Model.GroupId == presentation.GroupId)
             {
