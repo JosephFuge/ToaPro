@@ -50,5 +50,11 @@ namespace ToaPro
             _toaProContext.Add(studentAvailability);
             _toaProContext.SaveChanges();
         }
+
+        public void AddSubmission(Submission submission)
+        {
+            _toaProContext.Submissions.Add(submission);
+            _toaProContext.SaveChanges();
+        }
     }
 }
