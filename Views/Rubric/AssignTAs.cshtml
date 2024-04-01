@@ -49,7 +49,14 @@ and allowing professors to edit/make assignments.
                     </tr>
                 </thead>
                 <tbody>
-                    
+                    @foreach (var x in Model.Class1Requirements)
+                    {
+                        <tr>
+                            <td>@x.grader_id</td>
+                            <td>@x.group_id</td>
+                            <td>@x.requirement_id</td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>
