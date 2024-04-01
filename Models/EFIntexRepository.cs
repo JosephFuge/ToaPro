@@ -26,6 +26,7 @@ namespace ToaPro
         public IEnumerable<Semester> Semesters => _toaProContext.Semesters;
         public IQueryable<Ranking> Rankings => _toaProContext.Rankings;
         public IQueryable<Models.Group> Groups => _toaProContext.Groups;
+        public IQueryable<ToaProUser> ToaProUsers => _toaProContext.ToaProUsers;
 
         //Change RequestAvailability to match the judge model when inputting their timeslots
         public void RequestAvailability(Judge judge)
@@ -46,7 +47,7 @@ namespace ToaPro
             _toaProContext.SaveChanges();
         }
 
-        public void RequestAvailability(Judge Id)
+        //public void RequestAvailability(Judge Id);
         public void StudentRequestAvailability(Student student)
         {
             var recordToEdit = _toaProContext.Judges
@@ -55,7 +56,7 @@ namespace ToaPro
             _toaProContext.Add(student);
             _toaProContext.SaveChanges();
         }
-        public void UpdateAvailability(Judge updatedInfo)
+        public void UpdateAvailability(Judge updatedInfo);
 
         public void AddSubmission(Submission submission)
         {

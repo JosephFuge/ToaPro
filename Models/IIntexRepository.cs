@@ -15,13 +15,14 @@ namespace ToaPro
         IQueryable<Presentation> Presentations { get; }
         IQueryable<Ranking> Rankings { get; }
         IQueryable<Group> Groups { get; }
+        IQueryable<ToaProUser> ToaProUsers { get; }
 
         public void RequestAvailability(Judge judge);
         public void StudentRequestAvailability(Student student);
 
-        public void RequestAvailability(Judge Id);
+        /*public void RequestAvailability(Judge Id);*/
         public void UpdateAvailability(Judge Id);
-        p/*ublic void StudentRequestAvailability(StudentAvailability availabilities);*/
+        /*public void StudentRequestAvailability(StudentAvailability availabilities);*/
         public void UpdateRanking(Ranking ranking);
 
         public void AddRanking(Ranking ranking);
