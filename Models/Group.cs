@@ -17,13 +17,12 @@ public partial class Group
 
     public short Number { get; set; }
 
+    public virtual Semester Semester { get; set; } = null!;
     public virtual ICollection<Grade> Grades { get; set; } = new List<Grade>();
 
     public virtual ICollection<Presentation> Presentations { get; set; } = new List<Presentation>();
 
     public virtual ICollection<Ranking> Rankings { get; set; } = new List<Ranking>();
-
-    public virtual Semester Semester { get; set; } = null!;
 
     public virtual ICollection<Submission> Submissions { get; set; } = new List<Submission>();
 

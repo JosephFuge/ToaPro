@@ -185,17 +185,15 @@ namespace ToaPro.Models
                 _context.Groups.AddRange(
                     new Group
                     {
-                        SemesterId = semesters.Where(x => x.Year == 2023 && x.Term == "Winter")
-                                     .Select(x => x.Id).FirstOrDefault(),
+                        SemesterId = semesters.FirstOrDefault(x => x.Year == 2023 && x.Term == "Winter").Id,
                         Section = 4,
                         Number = 12
                     },
                     new Group
                     {
-                        SemesterId = semesters.Where(x => x.Year == 2023 && x.Term == "Winter")
-                                     .Select(x => x.Id).FirstOrDefault(),
+                        SemesterId = semesters.FirstOrDefault(x => x.Year == 2023 && x.Term == "Winter").Id,
                         Section = 4,
-                        Number = 12
+                        Number = 1
                     }
                 );
 
@@ -243,13 +241,13 @@ namespace ToaPro.Models
                     {
                         GroupId = groups.FirstOrDefault(x => x.Id == 1).Id,
                         Location = "W322",
-                        StartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddDays(14)
+                        StartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddDays(14).ToUniversalTime(),
                     },
                     new Presentation
                     {
                         GroupId = groups.FirstOrDefault(x => x.Id == 2).Id,
                         Location = "5267",
-                        StartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddDays(14)
+                        StartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddDays(14).ToUniversalTime(),
                     }
                 );
 
@@ -300,7 +298,7 @@ namespace ToaPro.Models
                     {
                         FName = "Hayden",
                         LName = "Bro",
-                        NetId = "123 456 1234",
+                        NetId = "12345634",
                         TimeSlot1 = true,
                         TimeSlot2 = false,
                         TimeSlot3 = false,
@@ -313,7 +311,7 @@ namespace ToaPro.Models
                     {
                         FName = "Luke",
                         LName = "Forest",
-                        NetId = "123 478 3456",
+                        NetId = "12347834",
                         TimeSlot1 = false,
                         TimeSlot2 = false,
                         TimeSlot3 = false,
@@ -337,7 +335,7 @@ namespace ToaPro.Models
                     {
                         GroupId = groups.FirstOrDefault(x => x.Id == 1).Id,
                         StudentId = students.FirstOrDefault(x => x.Id == 1).Id,
-                        CreatedDate = DateTime.Now,
+                        CreatedDate = DateTime.Now.ToUniversalTime(),
                         GithubLink = "github",
                         YoutubeLink = "youtube",
                         UploadFile = "file string"
@@ -347,10 +345,51 @@ namespace ToaPro.Models
                     {
                         GroupId = groups.FirstOrDefault(x => x.Id == 2).Id,
                         StudentId = students.FirstOrDefault(x => x.Id == 2).Id,
-                        CreatedDate = DateTime.Now,
+                        CreatedDate = DateTime.Now.ToUniversalTime(),
                         GithubLink = "github",
                         YoutubeLink = "youtube",
                         UploadFile = "file string"
+                    }
+                );
+
+                _context.SaveChanges();
+            }
+
+            //Grade Seeding
+            if (!_context.Grades.ToList().Any())
+            {
+                List<Group> groups = _context.Groups.ToList() ?? [];
+                List<Requirement> requirements = _context.Requirements.ToList() ?? [];
+                List<Submission> submissions = _context.Submissions.ToList() ?? [];
+                List<Grader> graders = _context.Graders.ToList() ?? [];
+
+                _context.Grades.AddRange(
+                    new Grade
+                    {
+                        RequirementId = requirements.FirstOrDefault(x => x.Id == 1).Id,
+                        GroupId = groups.FirstOrDefault(x => x.Id == 1).Id,
+                        SubmissionId = submissions.FirstOrDefault(x => x.Id == 1).Id,
+                        GraderId = graders.FirstOrDefault(x => x.Id == 1).Id,
+                        Points = 99,
+                        Comments = "So cool"
+                    },
+                    new Grade
+                    {
+                        RequirementId = requirements.FirstOrDefault(x => x.Id == 2).Id,
+                        GroupId = groups.FirstOrDefault(x => x.Id == 1).Id,
+                        SubmissionId = submissions.FirstOrDefault(x => x.Id == 1).Id,
+                        GraderId = graders.FirstOrDefault(x => x.Id == 1).Id,
+                        Points = 62,
+                        Comments = "So *not* cool"
+                    },
+                    new Grade
+                    {
+                        RequirementId = requirements.FirstOrDefault(x => x.Id == 3).Id,
+                        GroupId = groups.FirstOrDefault(x => x.Id == 1).Id,
+                        SubmissionId = submissions.FirstOrDefault(x => x.Id == 1).Id,
+                        GraderId = graders.FirstOrDefault(x => x.Id == 2).Id,
+                        Points = 100,
+                        Comments = "Good job here, I loved the detail and comments"
                     }
                 );
 

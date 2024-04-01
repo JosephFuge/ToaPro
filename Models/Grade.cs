@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ToaPro.Models;
 
 public partial class Grade
 {
+    [Key]
     public int Id { get; set; }
-
+    [ForeignKey("Requirement")]
     public int RequirementId { get; set; }
-
+    [ForeignKey("Grader")]
     public int GraderId { get; set; }
-
+    [ForeignKey("Class")]
     public int GroupId { get; set; }
-
+    [ForeignKey("Submission")]
     public int SubmissionId { get; set; }
 
     public float? Points { get; set; }

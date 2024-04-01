@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ToaPro.Models;
 
 public partial class Semester
 {
+    [Key]
     public int Id { get; set; }
 
     public string Term { get; set; } = null!;
