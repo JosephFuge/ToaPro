@@ -39,8 +39,6 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
     public virtual DbSet<Student> Students { get; set; }
 
     public virtual DbSet<Submission> Submissions { get; set; }
-    public virtual DbSet<JudgeAvailability> JudgeAvailabilities { get; set; }
-    public virtual DbSet<StudentAvailability> StudentAvailabilities { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 

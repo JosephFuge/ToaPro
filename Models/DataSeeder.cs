@@ -210,20 +210,28 @@ namespace ToaPro.Models
                     {
                         FName = "James",
                         LName = "John",
-                        Affiliation = "KPMG"
+                        Affiliation = "KPMG",
+                        TimeSlot1 = true,
+                        TimeSlot2 =false,
+                        TimeSlot3 = true,
+                        TimeSlot4 = false,
+                        TimeSlot5 = false,
                     },
                     new Judge
                     {
                         FName = "Joseph",
                         LName = "Kit",
-                        Affiliation = "Disney Corp."
+                        Affiliation = "Disney Corp.",
+                        TimeSlot1 = true,
+                        TimeSlot2 = true,
+                        TimeSlot3 = true,
+                        TimeSlot4 = true,
+                        TimeSlot5 = true,
                     }
                 );
 
                 _context.SaveChanges();
             }
-
-            //Judge Availability Seeding?? Ask question about that model...
 
             //Presentation Seeding
             if (!_context.Presentations.ToList().Any())
@@ -233,11 +241,116 @@ namespace ToaPro.Models
                 _context.Presentations.AddRange(
                     new Presentation
                     {
-
+                        GroupId = groups.FirstOrDefault(x => x.Id == 1).Id,
+                        Location = "W322",
+                        StartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddDays(14)
                     },
                     new Presentation
                     {
+                        GroupId = groups.FirstOrDefault(x => x.Id == 2).Id,
+                        Location = "5267",
+                        StartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddDays(14)
+                    }
+                );
 
+                _context.SaveChanges();
+            }
+
+            //Ranking Seeding
+            if (!_context.Rankings.ToList().Any())
+            {
+                List<Group> groups = _context.Groups.ToList() ?? [];
+                List<Judge> judges = _context.Judges.ToList() ?? [];
+
+                _context.Rankings.AddRange(
+                    new Ranking
+                    {
+                        GroupId = groups.FirstOrDefault(x => x.Id == 1).Id,
+                        JudgeId = judges.FirstOrDefault(x => x.Id == 1).Id,
+                        TeamRanking = 2,
+                        CommunicationPoints = 4,
+                        CommunicationComments = "Needed more communication",
+                        TechnologyPoints = 10,
+                        TechnologyComments = "Great tech",
+                        OverallPoints = 14,
+                        Nomination = "Number 2 in INTEX"
+                    },
+                    new Ranking
+                    {
+                        GroupId = groups.FirstOrDefault(x => x.Id == 2).Id,
+                        JudgeId = judges.FirstOrDefault(x => x.Id == 2).Id,
+                        TeamRanking = 1,
+                        CommunicationPoints = 6,
+                        CommunicationComments = "Great communication",
+                        TechnologyPoints = 10,
+                        TechnologyComments = "Great tech",
+                        OverallPoints = 16,
+                        Nomination = "Number 1 in INTEX"
+                    }
+                );
+
+                _context.SaveChanges();
+            }
+
+            //Student Seeding
+            if (!_context.Students.ToList().Any())
+            {
+                _context.Students.AddRange(
+                    new Student
+                    {
+                        FName = "Hayden",
+                        LName = "Bro",
+                        NetId = "123 456 1234",
+                        TimeSlot1 = true,
+                        TimeSlot2 = false,
+                        TimeSlot3 = false,
+                        TimeSlot4 = false,
+                        TimeSlot5 = false,
+                        Reason = "I don't like mornings"
+
+                    },
+                    new Student
+                    {
+                        FName = "Luke",
+                        LName = "Forest",
+                        NetId = "123 478 3456",
+                        TimeSlot1 = false,
+                        TimeSlot2 = false,
+                        TimeSlot3 = false,
+                        TimeSlot4 = false,
+                        TimeSlot5 = true,
+                        Reason = "LOL"
+                    }
+                );
+
+                _context.SaveChanges();
+            }
+
+            //Submission Seeding
+            if (!_context.Submissions.ToList().Any())
+            {
+                List<Group> groups = _context.Groups.ToList() ?? [];
+                List<Student> students = _context.Students.ToList() ?? [];
+
+                _context.Submissions.AddRange(
+                    new Submission
+                    {
+                        GroupId = groups.FirstOrDefault(x => x.Id == 1).Id,
+                        StudentId = students.FirstOrDefault(x => x.Id == 1).Id,
+                        CreatedDate = DateTime.Now,
+                        GithubLink = "github",
+                        YoutubeLink = "youtube",
+                        UploadFile = "file string"
+
+                    },
+                    new Submission
+                    {
+                        GroupId = groups.FirstOrDefault(x => x.Id == 2).Id,
+                        StudentId = students.FirstOrDefault(x => x.Id == 2).Id,
+                        CreatedDate = DateTime.Now,
+                        GithubLink = "github",
+                        YoutubeLink = "youtube",
+                        UploadFile = "file string"
                     }
                 );
 
