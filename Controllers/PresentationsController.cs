@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ToaPro.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ToaPro.Controllers
 {
