@@ -7,44 +7,45 @@
 @*Group 11*@
 @model Submission
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Submission Form</title>
-</head>
-<body>
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
-    <div class="container">
-        <h2>Submission</h2>
-        <div class="submission-form">
-            <p>Please include the following in your submission:</p>
-            <form method="post">
-                <input type="hidden" asp-for="StudentId" />
-                <input type="hidden" asp-for="GroupId" />
-                
-                <label asp-for="GithubLink">GitHub Link:</label>
-                <p>Make sure your repository is public.</p>
-                <input type="text" id="GithubLink" asp-for="GithubLink">
-                <br />
-                <label asp-for="YoutubeLink">YouTube Link:</label>
-                <p>Explain how your project fulfills the rubric requirements  in 10 minutes or less. Showcase any extra features you’ve added.</p>
-                <input type="text" id="YoutubeLink" asp-for="YoutubeLink">
-                <br />
-                <label asp-for="UploadFile">Upload Files:</label>
-                <p>
-                    Include: readme file, data analysis, presentation, ERD, and normalization files
-                    Readme file requirements: website link with username and password
-                </p>
-                <input type="file" id="UploadFile" asp-for="UploadFile" directory webkitdirectory mozdirectory>
-                <br />
-                <br />
-                <button type="submit" class="btn">Submit</button>
-                <br />
-            </form>
+<vc:nav-bar-types user="Student"></vc:nav-bar-types>
+<vc:submenu-types view="Default"></vc:submenu-types>
+<vc:header-types title="Student Submission" />
+
+<div class="container">
+    <body>
+
+        <div class="container">
+            <h2>Submission</h2>
+            <div class="submission-form">
+                <p>Please include the following in your submission:</p>
+                <form method="post">
+                    <input type="hidden" asp-for="StudentId" />
+                    <input type="hidden" asp-for="GroupId" />
+
+                    <label asp-for="GithubLink">GitHub Link:</label>
+                    <p>Make sure your repository is public.</p>
+                    <input type="text" id="GithubLink" asp-for="GithubLink">
+                    <br />
+                    <label asp-for="YoutubeLink">YouTube Link:</label>
+                    <p>Explain how your project fulfills the rubric requirements  in 10 minutes or less. Showcase any extra features you’ve added.</p>
+                    <input type="text" id="YoutubeLink" asp-for="YoutubeLink">
+                    <br />
+                    <label asp-for="UploadFile">Upload Files:</label>
+                    <p>
+                        Include: readme file, data analysis, presentation, ERD, and normalization files
+                        Readme file requirements: website link with username and password
+                    </p>
+                    <input type="file" id="UploadFile" asp-for="UploadFile" directory webkitdirectory mozdirectory>
+                    <br />
+                    <br />
+                    <button type="submit" class="btn">Submit</button>
+                    <br />
+                </form>
+            </div>
         </div>
-    </div>
 
-</body>
-</html>
+    </body>
+</div>
