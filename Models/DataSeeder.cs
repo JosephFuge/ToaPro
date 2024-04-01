@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.Net.WebSockets;
 
 namespace ToaPro.Models
 {
@@ -134,7 +135,7 @@ namespace ToaPro.Models
                 var groupId = result.Entity.Id;
 
                 return groupId;
-            } catch(Exception ex)
+            } catch (Exception)
             {
                 return 0;
             }
@@ -199,7 +200,10 @@ namespace ToaPro.Models
                     {
                         Student newStudent = new Student
                         {
-                            StudentId = studentUserFullDetails.Id,
+                            FName = "studentFName" + i.ToString(),
+                            LName = "studentLName" + i.ToString(),
+                            NetId = "netId" + i.ToString(),
+                            Id = studentUserFullDetails.Id,
                             GroupId = groupId,
                             TimeSlot1 = true,
                             TimeSlot2 = true,
@@ -234,7 +238,7 @@ namespace ToaPro.Models
                     IS455
                 );
 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
 
             //Semester Seeding
@@ -244,7 +248,7 @@ namespace ToaPro.Models
             {
                 _context.Semesters.Add(winter2024Semester);
 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
 
             //Requirements seeding
@@ -271,75 +275,95 @@ namespace ToaPro.Models
                 );   
             }
 
-                _context.SaveChanges();
-            }
+            await _context.SaveChangesAsync();
 
             // Repeat for other tables, respecting foreign key dependencies
             //Grader Seeding
             if (!_context.Graders.ToList().Any())
             {
                 List<Class> classes = _context.Classes.ToList() ?? [];
+                var professorHilt = await _userManager.FindByNameAsync("SpencerHilton");
+                var professorCutler = await _userManager.FindByNameAsync("LauraCutler");
 
                 _context.Graders.AddRange(
                     new Grader
                     {
+                        Id = professorHilt.Id,
                         ClassId = classes.FirstOrDefault(x => x.Code == "413").Id,
                         IsProfessor = false
                     },
                     new Grader
                     {
+                        Id = professorCutler.Id,
                         ClassId = classes.FirstOrDefault(x => x.Code == "401").Id,
                         IsProfessor = true
                     }
                 );
 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
 
-            //Group Seeding
             if (!_context.Groups.ToList().Any())
             {
                 List<Semester> semesters = _context.Semesters.ToList() ?? [];
 
-                _context.Groups.AddRange(
-                    new Group
-                    {
-                        SemesterId = semesters.Where(x => x.Year == 2023 && x.Term == "Winter")
-                                     .Select(x => x.Id).FirstOrDefault(),
-                        Section = 4,
-                        Number = 12
-                    },
-                    new Group
-                    {
-                        SemesterId = semesters.Where(x => x.Year == 2023 && x.Term == "Winter")
-                                     .Select(x => x.Id).FirstOrDefault(),
-                        Section = 4,
-                        Number = 12
-                    }
-                );
-
-                _context.SaveChanges();
+                if (semesters.Any())
+                {
+                    await SeedGroupsAndStudents(semester: semesters.FirstOrDefault(x => x.Year == 2024 && x.Term == "Winter"));
+                }
             }
+
+            await _context.SaveChangesAsync();
+
+            ////Group Seeding
+            //if (!_context.Groups.ToList().Any())
+            //{
+            //    List<Semester> semesters = _context.Semesters.ToList() ?? [];
+
+            //    _context.Groups.AddRange(
+            //        new Group
+            //        {
+            //            SemesterId = semesters.Where(x => x.Year == 2023 && x.Term == "Winter")
+            //                         .Select(x => x.Id).FirstOrDefault(),
+            //            Section = 4,
+            //            Number = 12
+            //        },
+            //        new Group
+            //        {
+            //            SemesterId = semesters.Where(x => x.Year == 2023 && x.Term == "Winter")
+            //                         .Select(x => x.Id).FirstOrDefault(),
+            //            Section = 4,
+            //            Number = 12
+            //        }
+            //    );
+
+            //    await _context.SaveChangesAsync();
+            //}
 
             //Judge Seeding
             if (!_context.Judges.ToList().Any())
             {
+                var judgeUser1 = await _userManager.FindByNameAsync("JudyMcPherson");
+                var judgeUser2 = await _userManager.FindByNameAsync("PhoenixBrave");
+
                 _context.Judges.AddRange(
                     new Judge
                     {
-                        FName = "James",
-                        LName = "John",
+                        Id = judgeUser1.Id,
+                        FName = "randomjudgefirstname",
+                        LName = "randomjudgelastname",
                         Affiliation = "KPMG",
                         TimeSlot1 = true,
-                        TimeSlot2 =false,
+                        TimeSlot2 = false,
                         TimeSlot3 = true,
                         TimeSlot4 = false,
                         TimeSlot5 = false,
                     },
                     new Judge
                     {
-                        FName = "Joseph",
-                        LName = "Kit",
+                        Id = judgeUser2.Id,
+                        FName = "randomfirstname",
+                        LName = "randomlastname",
                         Affiliation = "Disney Corp.",
                         TimeSlot1 = true,
                         TimeSlot2 = true,
@@ -360,32 +384,32 @@ namespace ToaPro.Models
                 _context.Presentations.AddRange(
                     new Presentation
                     {
-                        GroupId = groups.FirstOrDefault(x => x.Id == 1).Id,
+                        GroupId = groups.FirstOrDefault(x => x.Section == 4 && x.Number == 8).Id,
                         Location = "W322",
-                        StartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddDays(14)
+                        StartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddDays(14).ToUniversalTime()
                     },
                     new Presentation
                     {
-                        GroupId = groups.FirstOrDefault(x => x.Id == 2).Id,
+                        GroupId = groups.FirstOrDefault(x => x.Section == 4 && x.Number == 1).Id,
                         Location = "5267",
-                        StartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddDays(14)
+                        StartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddDays(14).ToUniversalTime()
                     }
                 );
 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
 
             //Ranking Seeding
             if (!_context.Rankings.ToList().Any())
             {
-                List<Group> groups = _context.Groups.ToList() ?? [];
-                List<Judge> judges = _context.Judges.ToList() ?? [];
+                var groups = _context.Groups;
+                var judges = _context.Judges;
 
                 _context.Rankings.AddRange(
                     new Ranking
                     {
-                        GroupId = groups.FirstOrDefault(x => x.Id == 1).Id,
-                        JudgeId = judges.FirstOrDefault(x => x.Id == 1).Id,
+                        GroupId = groups.FirstOrDefault(x => x.Section == 4 && x.Number == 1).Id,
+                        JudgeId = judges.FirstOrDefault(x => x.Affiliation == "KPMG").Id,
                         TeamRanking = 2,
                         CommunicationPoints = 4,
                         CommunicationComments = "Needed more communication",
@@ -396,8 +420,8 @@ namespace ToaPro.Models
                     },
                     new Ranking
                     {
-                        GroupId = groups.FirstOrDefault(x => x.Id == 2).Id,
-                        JudgeId = judges.FirstOrDefault(x => x.Id == 2).Id,
+                        GroupId = groups.FirstOrDefault(x => x.Section == 4 && x.Number == 8).Id,
+                        JudgeId = judges.FirstOrDefault(x => x.Affiliation == "Disney Corp.").Id,
                         TeamRanking = 1,
                         CommunicationPoints = 6,
                         CommunicationComments = "Great communication",
@@ -408,15 +432,18 @@ namespace ToaPro.Models
                     }
                 );
 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
 
             //Student Seeding
             if (!_context.Students.ToList().Any())
             {
+                var student0 = await _userManager.FindByNameAsync("studentUserName0");
+                var student1 = await _userManager.FindByNameAsync("studentUserName1");
                 _context.Students.AddRange(
                     new Student
                     {
+                        Id = student0.Id,
                         FName = "Hayden",
                         LName = "Bro",
                         NetId = "123 456 1234",
@@ -430,7 +457,8 @@ namespace ToaPro.Models
                     },
                     new Student
                     {
-                        FName = "Luke",
+                        Id = student1.Id,
+                        FName = "Lily",
                         LName = "Forest",
                         NetId = "123 478 3456",
                         TimeSlot1 = false,
@@ -441,51 +469,40 @@ namespace ToaPro.Models
                         Reason = "LOL"
                     }
                 );
-            if (!_context.Groups.ToList().Any())
-            {
-                List<Semester> semesters = _context.Semesters.ToList() ?? [];
-
-                if (semesters.Any())
-                {
-                    await SeedGroupsAndStudents(semester: semesters.FirstOrDefault(x => x.Year == 2024 && x.Term == "Winter"));
-                }
-            }
-
-                _context.SaveChanges();
             }
 
             //Submission Seeding
-            if (!_context.Submissions.ToList().Any())
-            {
-                List<Group> groups = _context.Groups.ToList() ?? [];
-                List<Student> students = _context.Students.ToList() ?? [];
+            //    if (!_context.Submissions.ToList().Any())
+            //    {
+            //        List<Group> groups = _context.Groups.ToList() ?? [];
+            //        List<Student> students = _context.Students.ToList() ?? [];
 
-            await _context.SaveChangesAsync();
+            //    await _context.SaveChangesAsync();
 
-                _context.Submissions.AddRange(
-                    new Submission
-                    {
-                        GroupId = groups.FirstOrDefault(x => x.Id == 1).Id,
-                        StudentId = students.FirstOrDefault(x => x.Id == 1).Id,
-                        CreatedDate = DateTime.Now,
-                        GithubLink = "github",
-                        YoutubeLink = "youtube",
-                        UploadFile = "file string"
+            //        _context.Submissions.AddRange(
+            //            new Submission
+            //            {
+            //                GroupId = groups.FirstOrDefault(x => x.Id == 1).Id,
+            //                StudentId = students.FirstOrDefault(x => x.Id == 1).Id,
+            //                CreatedDate = DateTime.Now,
+            //                GithubLink = "github",
+            //                YoutubeLink = "youtube",
+            //                UploadFile = "file string"
 
-                    },
-                    new Submission
-                    {
-                        GroupId = groups.FirstOrDefault(x => x.Id == 2).Id,
-                        StudentId = students.FirstOrDefault(x => x.Id == 2).Id,
-                        CreatedDate = DateTime.Now,
-                        GithubLink = "github",
-                        YoutubeLink = "youtube",
-                        UploadFile = "file string"
-                    }
-                );
+            //            },
+            //            new Submission
+            //            {
+            //                GroupId = groups.FirstOrDefault(x => x.Id == 2).Id,
+            //                StudentId = students.FirstOrDefault(x => x.Id == 2).Id,
+            //                CreatedDate = DateTime.Now,
+            //                GithubLink = "github",
+            //                YoutubeLink = "youtube",
+            //                UploadFile = "file string"
+            //            }
+            //        );
 
-                _context.SaveChanges();
-            }
+            //        _context.SaveChanges();
+            //    }
         }
     }
 }

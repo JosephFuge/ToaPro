@@ -12,7 +12,7 @@ public partial class Submission
     [ForeignKey("Group")]
     public int GroupId { get; set; }
     [ForeignKey("Student")]
-    public int StudentId { get; set; }
+    public string StudentId { get; set; }
     public DateTime CreatedDate { get; set; }
     public string GithubLink { get; set; }
     public string YoutubeLink { get; set; }

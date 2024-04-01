@@ -12,7 +12,7 @@ public partial class Ranking
     [ForeignKey("Group")]
     public int GroupId { get; set; }
     [ForeignKey("Judge")]
-    public int JudgeId { get; set; }
+    public string JudgeId { get; set; }
 
     public int? TeamRanking { get; set; }
 
