@@ -225,20 +225,20 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
 
             entity.ToTable("judges");
 
-            entity.HasIndex(e => new { e.FName, e.LName, e.Affiliation }, "uniq_judge").IsUnique();
+            //entity.HasIndex(e => new { e.FName, e.LName, e.Affiliation }, "uniq_judge").IsUnique();
 
-            entity.Property(e => e.Id)
-                .UseIdentityAlwaysColumn()
-                .HasColumnName("id");
-            entity.Property(e => e.Affiliation)
-                .HasMaxLength(35)
-                .HasColumnName("affiliation");
-            entity.Property(e => e.FName)
-                .HasMaxLength(35)
-                .HasColumnName("f_name");
-            entity.Property(e => e.LName)
-                .HasMaxLength(35)
-                .HasColumnName("l_name");
+            //entity.Property(e => e.Id)
+            //    .UseIdentityAlwaysColumn()
+            //    .HasColumnName("id");
+            //entity.Property(e => e.Affiliation)
+            //    .HasMaxLength(35)
+            //    .HasColumnName("affiliation");
+            //entity.Property(e => e.FName)
+            //    .HasMaxLength(35)
+            //    .HasColumnName("f_name");
+            //entity.Property(e => e.LName)
+            //    .HasMaxLength(35)
+            //    .HasColumnName("l_name");
 
             entity.HasMany(d => d.Presentations).WithMany(p => p.Judges)
                 .UsingEntity<Dictionary<string, object>>(

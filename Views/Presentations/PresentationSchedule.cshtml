@@ -22,8 +22,9 @@
             <span class="badge rounded-pill bg-primary text-white float-end"><small>@m.Id</small></span>
         </h3>
         <ul>
-            <li>First: @m.FName</li>
-            <li>Last: @m.LName</li>
+            @* we have to access this via the join *@
+            <li>First: @m.FirstName</li>
+            <li>Last: @m.LastName</li>
             <li>Affiliation: @m.Affiliation</li>
 
             @*     These might be different cus they are lists?  *@
