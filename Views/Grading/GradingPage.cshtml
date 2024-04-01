@@ -31,14 +31,17 @@
             <th>Score</th>
             <th>Notes</th>
         </tr>
-
     </thead>
-    <tbody>
+
+    @foreach (var row in Model)
+    {
+        <tbody>
         <tr>
-            <th>Deployment</th>
-            <th>2</th>
-            <th>1</th>
-            <th>It kinda sucked bro</th>
+            <td>@row.</td>
+            <td>@row.</td>
+            <td></td>
+            <td></td>
         </tr>
     </tbody>
+    }
 </table>
