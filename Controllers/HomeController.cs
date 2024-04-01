@@ -48,5 +48,10 @@ namespace ToaPro.Controllers
             return View();
         }
 
+        public IActionResult ProfessorIndex()
+        {
+            return View();
+        }
+
     }
 }
