@@ -7,7 +7,7 @@
     This is the Student Request time view (Ryan, Lili, and Amy)
 *@
 
-@model StudentAvailability
+@model Student
 
 <h1>Request New Time</h1>
 
@@ -15,16 +15,16 @@
     <h2>Student Availability Form</h2>
     <form method="post">
         <div>
-            <label asp-for="StudentId">Student ID:</label>
-            <input asp-for="StudentId" />
+            <label asp-for="Id">Student ID:</label>
+            <input asp-for="Id" />
         </div>
         <div>
-            <label asp-for="StudentFName">First Name:</label>
-            <input asp-for="StudentFName" />
+            <label asp-for="FName">First Name:</label>
+            <input asp-for="FName" />
         </div>
         <div>
-            <label asp-for="StudentLName">Last Name:</label>
-            <input asp-for="StudentLName" />
+            <label asp-for="LName">Last Name:</label>
+            <input asp-for="LName" />
         </div>
         <div>
             <label>Select times you WILL NOT be available</label><br />

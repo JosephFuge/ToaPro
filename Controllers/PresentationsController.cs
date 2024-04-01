@@ -39,18 +39,19 @@ namespace ToaPro.Controllers
             return View();
         }
 
+        //Made some changes here with requesting new time (removed the judge availability model and placed its data inside the judge model).
+        //We did not need both models.
         [HttpGet]
         public IActionResult JudgeAvailability(int id)
         {
-            _repo.RequestAvailability();
-            return View("RequestNewTime");
+            return View(new Judge());
         }
         [HttpPost]
-        public IActionResult JudgeAvailability(JudgeAvailability updatedInfo)
+        public IActionResult RequestNewTime(Judge judge)
         {
-            _repo.UpdateAvailability();
+            _repo.RequestAvailability(judge);
 
-            return RedirectToAction("MovieList"); //instead of going to the view MovieList, it will go to the ACTION
+            return View(new Judge());
         }
         //[HttpGet]
         //public IActionResult RequestNewTime() 
@@ -65,17 +66,18 @@ namespace ToaPro.Controllers
         //    return View(new JudgeAvailability());
         //}
 
+        //If anything breaks here, note that I removed the student availability model and moved its data into the student model. We did not need both of them
         [HttpGet]
         public IActionResult StudentRequestNewTime()
         {
-            return View(new StudentAvailability());
+            return View(new Student());
         }
         [HttpPost]
-        public IActionResult StudentRequestNewTime(StudentAvailability availabilities)
+        public IActionResult StudentRequestNewTime(Student student)
         {
-            _repo.StudentRequestAvailability(availabilities);
+            _repo.StudentRequestAvailability(student);
 
-            return View(new StudentAvailability());
+            return View(new Student());
         }
 
 
