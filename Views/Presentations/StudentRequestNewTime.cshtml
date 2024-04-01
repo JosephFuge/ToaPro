@@ -15,18 +15,17 @@
     <h2>Student Availability Form</h2>
     <form method="post">
         <div>
-            <label asp-for="StudentId">Student ID:</label>
-            <input asp-for="StudentId" />
+            <label asp-for="Id">Student ID:</label>
+            <input asp-for="Id" />
         </div>
         <div>
-            @* <label asp-for="FirstName">First Name:</label>
-            <input asp-for="FirstName" /> *@
-            @* <p>Name: @Model.ToaProUser.FirstName @Model.ToaProUser.LastName</p> *@
+            <label asp-for="FName">First Name:</label>
+            <input asp-for="FName" />
         </div>
-        @* <div>
-            <label asp-for="LastName">Last Name:</label>
-            <input asp-for="LastName" />
-        </div> *@
+        <div>
+            <label asp-for="LName">Last Name:</label>
+            <input asp-for="LName" />
+        </div>
         <div>
             <label>Select times you WILL NOT be available</label><br />
             <label><input type="checkbox" asp-for="TimeSlot1" value="false" />1:00 - 1:40</label><br />

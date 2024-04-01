@@ -13,12 +13,11 @@ namespace ToaPro
         IEnumerable<Submission> Submissions { get; }
         IQueryable<Judge> Judges { get; }
         IQueryable<Presentation> Presentations { get; }
-        IEnumerable<JudgeAvailability> JudgeAvailabilities { get; }
         IQueryable<Ranking> Rankings { get; }
         IQueryable<Group> Groups { get; }
 
-        public void RequestAvailability(JudgeAvailability availabilities);
-        public void StudentRequestAvailability(Student availabilities);
+        public void RequestAvailability(Judge judge);
+        public void StudentRequestAvailability(Student student);
 
         public void UpdateRanking(Ranking ranking);
 
