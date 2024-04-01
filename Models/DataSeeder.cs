@@ -105,7 +105,7 @@ namespace ToaPro.Models
             Class IS414 = new Class { Code = "414", Description = "Cybersecurity; sleep with one eye open, you'll get social engineered out of your first-born child." };
             Class IS455 = new Class { Code = "455", Description = "Machine Learning with Dr. Keith, the man with the biggest heart and the fastest fingers in the west." };
 
-            // Check if data exists
+            // Check if data exists (class seeding)
             if (!_context.Classes.ToList().Any())
             {
                 _context.Classes.AddRange(
@@ -118,6 +118,7 @@ namespace ToaPro.Models
                 _context.SaveChanges();
             }
 
+            //Semester Seeding
             if (!_context.Semesters.ToList().Any())
             {
                 _context.Semesters.AddRange(
@@ -128,6 +129,7 @@ namespace ToaPro.Models
                 _context.SaveChanges();
             }
 
+            //Requirements seeding
             if (!_context.Requirements.ToList().Any())
             {
                 List<Class> classes = _context.Classes.ToList() ?? [];
@@ -150,12 +152,97 @@ namespace ToaPro.Models
                     }
                 );
 
-                
+                _context.SaveChanges();
             }
 
-            _context.SaveChanges();
-
             // Repeat for other tables, respecting foreign key dependencies
+            //Grader Seeding
+            if (!_context.Graders.ToList().Any())
+            {
+                List<Class> classes = _context.Classes.ToList() ?? [];
+
+                _context.Graders.AddRange(
+                    new Grader
+                    {
+                        ClassId = classes.FirstOrDefault(x => x.Code == "413").Id,
+                        IsProfessor = false
+                    },
+                    new Grader
+                    {
+                        ClassId = classes.FirstOrDefault(x => x.Code == "401").Id,
+                        IsProfessor = true
+                    }
+                );
+
+                _context.SaveChanges();
+            }
+
+            //Group Seeding
+            if (!_context.Groups.ToList().Any())
+            {
+                List<Semester> semesters = _context.Semesters.ToList() ?? [];
+
+                _context.Groups.AddRange(
+                    new Group
+                    {
+                        SemesterId = semesters.Where(x => x.Year == 2023 && x.Term == "Winter")
+                                     .Select(x => x.Id).FirstOrDefault(),
+                        Section = 4,
+                        Number = 12
+                    },
+                    new Group
+                    {
+                        SemesterId = semesters.Where(x => x.Year == 2023 && x.Term == "Winter")
+                                     .Select(x => x.Id).FirstOrDefault(),
+                        Section = 4,
+                        Number = 12
+                    }
+                );
+
+                _context.SaveChanges();
+            }
+
+            //Judge Seeding
+            if (!_context.Judges.ToList().Any())
+            {
+                _context.Judges.AddRange(
+                    new Judge
+                    {
+                        FName = "James",
+                        LName = "John",
+                        Affiliation = "KPMG"
+                    },
+                    new Judge
+                    {
+                        FName = "Joseph",
+                        LName = "Kit",
+                        Affiliation = "Disney Corp."
+                    }
+                );
+
+                _context.SaveChanges();
+            }
+
+            //Judge Availability Seeding?? Ask question about that model...
+
+            //Presentation Seeding
+            if (!_context.Presentations.ToList().Any())
+            {
+                List<Group> groups = _context.Groups.ToList() ?? [];
+
+                _context.Presentations.AddRange(
+                    new Presentation
+                    {
+
+                    },
+                    new Presentation
+                    {
+
+                    }
+                );
+
+                _context.SaveChanges();
+            }
         }
     }
 }

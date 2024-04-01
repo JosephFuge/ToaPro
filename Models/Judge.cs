@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ToaPro.Models;
 
 public partial class Judge
 {
+    [Key]
     public int Id { get; set; }
 
     public string FName { get; set; } = null!;
