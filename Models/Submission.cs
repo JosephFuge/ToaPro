@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ToaPro.Models;
 
 public partial class Submission
 {
+    [Required(ErrorMessage = "Please add a GitHub Link.")]
     public string GithubLink { get; set; }
+    [Required(ErrorMessage = "Please add a YouTube Link or write 'N/A")]
     public string YoutubeLink { get; set; }
-    public string UploadFile {  get; set; }
-
+    [Required(ErrorMessage = "Please upload any other needed files.")]
+    public string UploadFile { get; set; }
+    [Key]
     public int Id { get; set; }
 
     public int GroupId { get; set; }
