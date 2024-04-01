@@ -1,0 +1,75 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+<vc:nav-bar-types user="Professor"></vc:nav-bar-types>
+<vc:submenu-types view="Default"></vc:submenu-types>
+<vc:header-types title="Index" />
+
+<div class="container">
+    <a href="c:\users\bookw\source\repos\toapro\views\home\index.cshtml">c:\users\bookw\source\repos\toapro\views\home\index.cshtml</a>
+    @*  quick links for those groups who need it:  *@
+    <h1>Quick links: - scrolls to check out styling references. </h1>
+    <p class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+        <a class="nav-link text-dark" asp-area="" asp-controller="StudentSubmissions" asp-action="StudentSubmitFiles">Submit</a>
+    </p>
+
+    <a class="nav-link text-dark" asp-area="" asp-controller="Presentations" asp-action="PresentationSchedule">View Schedule</a>
+    <br />
+    <br />
+    <div class="main-form">
+        <form>
+            <div class="form-group">
+                <label for="username">Blank:</label>
+                <input type="text" id="username" name="username">
+            </div>
+            <div class="form-group">
+                <label for="password">Blank:</label>
+                <input type="password" id="password" name="password">
+            </div>
+            <button class="button">Submit</button>
+        </form>
+    </div>
+    <br>
+    <br>
+    <button class="button">Click Me</button>
+    <br>
+    <br>
+    <button class="ghostButton">Click Me</button>
+    <br>
+    <br>
+
+    <button class="large-ghostButton">Section 1</button>
+    <button class="large-ghostButton">Section 2</button>
+    <button class="large-ghostButton">Section 3</button>
+    <button class="large-button">Section 4</button>
+    <br>
+    <br>
+    <table>
+        <thead>
+            <tr>
+                <th>Header 1</th>
+                <th>Header 2</th>
+                <th>Header 3</th>
+            </tr>
+        </thead>
+        <tr>
+            <td>Row 1, Cell 1</td>
+            <td>Row 1, Cell 2</td>
+            <td>Row 1, Cell 3</td>
+        </tr>
+        <tr>
+            <td>Row 2, Cell 1</td>
+            <td>Row 2, Cell 2</td>
+            <td>Row 2, Cell 3</td>
+        </tr>
+        <tr>
+            <td>Row 3, Cell 1</td>
+            <td>Row 3, Cell 2</td>
+            <td>Row 3, Cell 3</td>
+        </tr>
+    </table>
+</div>
