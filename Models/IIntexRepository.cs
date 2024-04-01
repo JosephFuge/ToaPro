@@ -18,7 +18,7 @@ namespace ToaPro
         IQueryable<Group> Groups { get; }
 
         public void RequestAvailability(JudgeAvailability availabilities);
-        public void StudentRequestAvailability(StudentAvailability availabilities);
+        public void StudentRequestAvailability(Student availabilities);
 
         public void UpdateRanking(Ranking ranking);
 
