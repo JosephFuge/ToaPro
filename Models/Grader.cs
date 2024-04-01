@@ -8,13 +8,6 @@ public partial class Grader
     public int Id { get; set; }
 
     public int ClassId { get; set; }
-
-    public string FName { get; set; } = null!;
-
-    public string LName { get; set; } = null!;
-
-    public string NetId { get; set; } = null!;
-
     public bool IsProfessor { get; set; }
 
     public virtual Class Class { get; set; } = null!;
