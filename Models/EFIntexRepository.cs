@@ -23,13 +23,13 @@ namespace ToaPro
         public IEnumerable<Grader> Graders => _toaProContext.Graders;
         public IEnumerable<Requirement> Requirements => _toaProContext.Requirements;
         public IEnumerable<Semester> Semesters => _toaProContext.Semesters;
-        public IEnumerable<JudgeAvailability> JudgeAvailabilities => _toaProContext.JudgeAvailabilities;
         public IQueryable<Ranking> Rankings => _toaProContext.Rankings;
         public IQueryable<Models.Group> Groups => _toaProContext.Groups;
 
-        public void RequestAvailability(JudgeAvailability judgeAvailability)
+        //Change RequestAvailability to match the judge model when inputting their timeslots
+        public void RequestAvailability(Judge judge)
         {
-            _toaProContext.Add(judgeAvailability);
+            _toaProContext.Add(judge);
             _toaProContext.SaveChanges();
         }
 
@@ -45,9 +45,15 @@ namespace ToaPro
             _toaProContext.SaveChanges();
         }
 
-        public void StudentRequestAvailability(StudentAvailability studentAvailability)
+        public void StudentRequestAvailability(Student student)
         {
-            _toaProContext.Add(studentAvailability);
+            _toaProContext.Add(student);
+            _toaProContext.SaveChanges();
+        }
+
+        public void AddSubmission(Submission submission)
+        {
+            _toaProContext.Submissions.Add(submission);
             _toaProContext.SaveChanges();
         }
     }
