@@ -65,14 +65,14 @@ namespace ToaPro.Controllers
         public IActionResult JRequestNewTime(int id)
         {
             _repo.JRequestAvailability(id);
-            return View("RequestNewTime");
+            return View("JRequestNewTime");
         }
         [HttpPost]
         public IActionResult JRequestNewTime(Judge updatedInfo)
         {
             _repo.JUpdateAvailability(updatedInfo);
 
-            return RedirectToAction("RequestNewTime"); //instead of going to the view MovieList, it will go to the ACTION
+            return RedirectToAction("JRequestNewTime"); //instead of going to the view MovieList, it will go to the ACTION
         }
 
 

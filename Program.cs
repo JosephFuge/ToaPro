@@ -72,27 +72,27 @@ using (var scope = app.Services.CreateScope())
 }
 
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
-else
-{
-    // Seed the database with testing data if in development mode
-    using (var scope = app.Services.CreateScope())
-    {
-        var context = scope.ServiceProvider.GetRequiredService<ToaProContext>();
-        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ToaProUser>>();
-        var dataSeeder = new DataSeeder(context, userManager);
+//// Configure the HTTP request pipeline.
+//if (!app.Environment.IsDevelopment())
+//{
+//    app.UseExceptionHandler("/Home/Error");
+//    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+//    app.UseHsts();
+//}
+//else
+//{
+//    // Seed the database with testing data if in development mode
+//    using (var scope = app.Services.CreateScope())
+//    {
+//        var context = scope.ServiceProvider.GetRequiredService<ToaProContext>();
+//        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ToaProUser>>();
+//        var dataSeeder = new DataSeeder(context, userManager);
 
-        bool userSeedSuccess = await dataSeeder.SeedUsers();
+//        bool userSeedSuccess = await dataSeeder.SeedUsers();
 
-        await dataSeeder.SeedData();
-    }
-}
+//        await dataSeeder.SeedData();
+//    }
+//}
 
 
 

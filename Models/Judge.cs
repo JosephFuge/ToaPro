@@ -9,8 +9,8 @@ public partial class Judge
 {
     [Key]
     public int Id { get; set; }
-    public int user_id { get; set; }
-
+	[ForeignKey("ToaProUser")]
+	public int user_id { get; set; }
     public int semester_id { get; set; }
 
     public string Affiliation { get; set; } = null!;
