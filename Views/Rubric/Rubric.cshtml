@@ -56,103 +56,131 @@ For more information on enabling MVC for empty projects, visit https://go.micros
 </table>
 
 
-<h2>413 Enterprise Application Development</h2>
-<table class="table table-bordered table-hover table-striped">
-    <thead class="thead-dark">
-        <tr>
-            <th>Points</th>
-            <th>Objectives</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var x in Model.Class2Requirements)
-        {
+<div class="card m-1 p-1">
+    <h2 style="text-align:center">413 Enterprise Application Development</h2>
+    <table class="table table-bordered table-hover table-striped">
+        <thead class="thead-dark bg-dark text-white">
             <tr>
-                <td>@x.Points</td>
-                <td>@x.Description</td>
+                <th>Points</th>
+                <th>Objectives</th>
             </tr>
-        }
-    </tbody>
-</table>
-<table class="table table-bordered table-hover table-striped">
-    <thead class="thead-dark">
-        <tr>
-            <th>Low(0-30)</th>
-            <th>Medium(40-70)</th>
-            <th>High (80-100)</th>
-        </tr>
-    </thead>
-    <tbody>
-    <td>Lorem Ipsum</td>
-    <td>Lorem Ipsum</td>
-    <td>Lorem Ipsum</td>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var x in Model.Class2Requirements)
+            {
+                <tr>
+                    <td>@x.Points</td>
+                    <td>@x.Description</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <form asp-controller="Rubric" asp-action="Rubric" method="post">
+        <button type="submit" name="id" value="2" style="width: 150px;">Add Objective</button>
+    </form>
+    <br />
+    <br />
 
-<h2>414 Security</h2>
-<table class="table table-bordered table-hover table-striped">
-    <thead class="thead-dark">
-        <tr>
-            <th>Points</th>
-            <th>Objectives</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var x in Model.Class3Requirements)
-        {
+
+    <table class="table table-bordered table-hover table-striped">
+        <thead class="thead-dark bg-dark text-white">
             <tr>
-                <td>@x.Points</td>
-                <td>@x.Description</td>
+                <th>Low(0-30)</th>
+                <th>Medium(40-70)</th>
+                <th>High (80-100)</th>
             </tr>
-        }
-    </tbody>
-</table>
-<table class="table table-bordered table-hover table-striped">
-    <thead class="thead-dark">
-        <tr>
-            <th>Low(0-30)</th>
-            <th>Medium(40-70)</th>
-            <th>High (80-100)</th>
-        </tr>
-    </thead>
-    <tbody>
-    <td>Lorem Ipsum</td>
-    <td>Lorem Ipsum</td>
-    <td>Lorem Ipsum</td>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        <td>Lorem Ipsum</td>
+        <td>Lorem Ipsum</td>
+        <td>Lorem Ipsum</td>
+        </tbody>
+    </table>
+</div>
 
 
-
-<h2>455 Machine Learning</h2>
-<table class="table table-bordered table-hover table-striped">
-    <thead class="thead-dark">
-        <tr>
-            <th>Points</th>
-            <th>Objectives</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var x in Model.Class4Requirements)
-        {
+<div class="card m-1 p-1">
+    <h2 style="text-align:center">414 Security</h2>
+    <table class="table table-bordered table-hover table-striped">
+        <thead class="thead-dark bg-dark text-white">
             <tr>
-                <td>@x.Points</td>
-                <td>@x.Description</td>
+                <th>Points</th>
+                <th>Objectives</th>
             </tr>
-        }
-    </tbody>
-</table>
-<table class="table table-bordered table-hover table-striped">
-    <thead class="thead-dark">
-        <tr>
-            <th>Low(0-30)</th>
-            <th>Medium(40-70)</th>
-            <th>High (80-100)</th>
-        </tr>
-    </thead>
-    <tbody>
-    <td>Lorem Ipsum</td>
-    <td>Lorem Ipsum</td>
-    <td>Lorem Ipsum</td>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var x in Model.Class3Requirements)
+            {
+                <tr>
+                    <td>@x.Points</td>
+                    <td>@x.Description</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <form asp-controller="Rubric" asp-action="Rubric" method="post">
+        <button type="submit" name="id" value="3" style="width: 150px;">Add Objective</button>
+    </form>
+    <br />
+    <br />
+
+
+    <table class="table table-bordered table-hover table-striped">
+        <thead class="thead-dark bg-dark text-white">
+            <tr>
+                <th>Low(0-30)</th>
+                <th>Medium(40-70)</th>
+                <th>High (80-100)</th>
+            </tr>
+        </thead>
+        <tbody>
+        <td>Lorem Ipsum</td>
+        <td>Lorem Ipsum</td>
+        <td>Lorem Ipsum</td>
+        </tbody>
+    </table>
+</div>
+
+
+
+<div class="card m-1 p-1">
+    <h2 style="text-align:center">455 Machine Learning</h2>
+    <table class="table table-bordered table-hover table-striped">
+        <thead class="thead-dark bg-dark text-white">
+            <tr>
+                <th>Points</th>
+                <th>Objectives</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var x in Model.Class4Requirements)
+            {
+                <tr>
+                    <td>@x.Points</td>
+                    <td>@x.Description</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <form asp-controller="Rubric" asp-action="Rubric" method="post">
+        <button type="submit" name="id" value="4" style="width: 150px;">Add Objective</button>
+    </form>
+    <br />
+    <br />
+
+    <table class="table table-bordered table-hover table-striped">
+        <thead class="thead-dark bg-dark text-white">
+            <tr>
+                <th>Low(0-30)</th>
+                <th>Medium(40-70)</th>
+                <th>High (80-100)</th>
+            </tr>
+        </thead>
+        <tbody>
+        <td>Lorem Ipsum</td>
+        <td>Lorem Ipsum</td>
+        <td>Lorem Ipsum</td>
+        </tbody>
+    </table>
+</div>
+

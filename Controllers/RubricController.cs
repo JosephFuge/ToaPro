@@ -31,7 +31,33 @@ namespace ToaPro.Controllers
             return View(viewModel);
         }
 
-        public IActionResult AssignTAs() { return View(); }
+        public IActionResult AssignTAs()
+        {
+            return View();
+        }
+        [HttpGet]
+        public IActionResult AddObjective(int id)
+        {
+            var Requirement = new Requirement(); // Replace YourModel with the actual model type
+            Requirement.ClassId = id; // Set the ClassId property with the passed ID
+            return View(Requirement); // Pass the model to the view
+        }
+
+        [HttpPost]
+        public IActionResult Rubric(int id)
+        {
+            // Redirect to the AddObjective action method with the class ID as a route parameter
+            return RedirectToAction("AddObjective", new { id = id });
+        }
+
+        [HttpPost]
+        public IActionResult AddObjective(Requirement response)
+        {
+            _context.Requirements.Add(response);
+            
+
+            return RedirectToAction("AddObjective");
+        }
 
     }
 }
