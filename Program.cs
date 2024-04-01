@@ -7,9 +7,12 @@ using System.Runtime.ConstrainedExecution;
 // using ToaPro.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("ToaPro") ?? throw new InvalidOperationException("Connection string 'ToaProContextConnection' not found.");
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddRazorPages();
 
 builder.Services.AddDbContext<ToaProContext>(options =>{
     options.UseNpgsql(builder.Configuration["ConnectionStrings:ToaPro"]);
@@ -110,5 +113,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapRazorPages();
 
 app.Run();
