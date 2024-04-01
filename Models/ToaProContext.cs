@@ -136,7 +136,7 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
 
         modelBuilder.Entity<Grader>(entity =>
         {
-           /* entity.HasKey(e => e.Id).HasName("grader_pk");
+            entity.HasKey(e => e.Id).HasName("grader_pk");
 
             entity.ToTable("graders");
 
@@ -149,9 +149,7 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
                 .HasColumnName("id");
             entity.Property(e => e.ClassId).HasColumnName("class_id");
             entity.Property(e => e.IsProfessor)
-                .HasDefaultValue(false)Learn about building Web apps with ASP.NET Core.
-
-
+                .HasDefaultValue(false)
                 .HasColumnName("is_professor");
 
             entity.HasOne(d => d.Class).WithMany(p => p.Graders)
@@ -177,7 +175,7 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
                         j.HasIndex(new[] { "SemesterId" }, "IX_semester_graders_semester_id");
                         j.IndexerProperty<int>("GraderId").HasColumnName("grader_id");
                         j.IndexerProperty<int>("SemesterId").HasColumnName("semester_id");
-                    }); */
+                    });
         });
 
         modelBuilder.Entity<Group>(entity =>
