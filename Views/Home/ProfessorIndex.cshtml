@@ -1,20 +1,35 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<vc:nav-bar-types user="Professor"></vc:nav-bar-types>
+<vc:submenu-types view="Default"></vc:submenu-types>
+<vc:header-types title="Welcome Professor" />
+
+<div class="container">
+    <div class="row justify-content-center" style="padding: 20px;">
+        <div class="col-md-4">
+            <div class="dashboard-section" style="background-color: #DDDDDD; height: 0; padding-top: 80%; position: relative;">
+                <h3 style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">Box 1</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="dashboard-section" style="background-color: #DDDDDD; height: 0; padding-top: 80%; position: relative;">
+                <h3 style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">Box 2</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="dashboard-section" style="background-color: #DDDDDD; height: 0; padding-top: 80%; position: relative;">
+                <h3 style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">Box 3</h3>
+            </div>
+        </div>
+    </div>
 </div>
 
-@*
-    This index page will be associated with viewmodels (for each type of user)
-    There will be the following ViewModels:
-        CoordinatorHomepage
-        ProfHomepage
-        TAHomepage
-        StudentHomepage
-        JudgeHomepage
-    Each View will contain certain aspects that are needed for each type of user,
-    but have a basic layout.
-*@
+
+
+
+
+
