@@ -24,12 +24,6 @@ public partial class Judge
 
     public virtual ICollection<Presentation> Presentations { get; set; } = new List<Presentation>();
 
-    public bool TimeSlot1 { get; set; }
-    public bool TimeSlot2 { get; set; }
-    public bool TimeSlot3 { get; set; }
-    public bool TimeSlot4 { get; set; }
-    public bool TimeSlot5 { get; set; }
-
     //forein key relationship they are not in the judge table you have to pull them from the user table. 
     [ForeignKey("ToaProUser")]
     public string? FirstName { get; set; }
