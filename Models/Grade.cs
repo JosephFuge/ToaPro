@@ -7,13 +7,12 @@ namespace ToaPro.Models;
 
 public partial class Grade
 {
-    [Key]
-    public int Id { get; set; }
-    [ForeignKey("Requirement")]
+    public string Id { get; set; }
+
     public int RequirementId { get; set; }
-    [ForeignKey("Grader")]
-    public int GraderId { get; set; }
-    [ForeignKey("Class")]
+
+    public string GraderId { get; set; }
+
     public int GroupId { get; set; }
     [ForeignKey("Submission")]
     public int SubmissionId { get; set; }

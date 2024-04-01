@@ -8,7 +8,11 @@ namespace ToaPro.Models;
 public partial class Grader
 {
     [Key]
-    public int Id { get; set; }
+    [ForeignKey("ToaProUser")]
+    public string Id { get; set; }
+
+    public virtual ToaProUser ToaProUser { get; set; }
+
     [ForeignKey("Class")]
     public int ClassId { get; set; }
     public bool IsProfessor { get; set; }

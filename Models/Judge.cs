@@ -7,7 +7,7 @@ namespace ToaPro.Models;
 public partial class Judge
 {
     [Key]
-    public int Id { get; set; }
+    public string Id { get; set; }
     public string FName { get; set; } = null!;
     public string LName { get; set; } = null!;
     public string Affiliation { get; set; } = null!;
