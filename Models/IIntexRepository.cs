@@ -22,5 +22,6 @@ namespace ToaPro
         public void UpdateRanking(Ranking ranking);
 
         public void AddRanking(Ranking ranking);
+        public void AddSubmission(Submission submission);
     }
 }

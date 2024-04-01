@@ -29,7 +29,7 @@ namespace ToaPro.Controllers
                         join req in _gradeSummaryRepository.Requirements on cls.Id equals req.ClassId
                         join grd in _gradeSummaryRepository.Grades on req.Id equals grd.RequirementId
                         join sub in _gradeSummaryRepository.Submissions on grd.SubmissionId equals sub.Id
-                        join stu in _gradeSummaryRepository.Students on sub.StudentId equals stu.Id
+                        join stu in _gradeSummaryRepository.Students on sub.StudentId equals stu.StudentId
                         join grp in _gradeSummaryRepository.Groups on grd.GroupId equals grp.Id
                         join rank in _gradeSummaryRepository.Rankings on grp.Id equals rank.GroupId
                         select new
