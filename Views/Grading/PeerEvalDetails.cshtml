@@ -1,41 +1,57 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-    ViewData["Title"] = "Peer Evaluation Group Details";
-}
-@model Evaluation
+﻿@model Evaluation
 
-<h1>Howdy - Peer Eval Details</h1>
+<h2>Diagnostic View for Evaluation Model</h2>
 
-<table border="1">
-    <tr>
-        <th>Name</th>
-        <th>Age</th>
-        <th>Email</th>
-    </tr>
-    <tr>
-        <td>John Doe</td>
-        <td>30</td>
-        <td>john.doe@example.com</td>
-    </tr>
-    <tr>
-        <td>Jane Smith</td>
-        <td>25</td>
-        <td>jane.smith@example.com</td>
-    </tr>
-    <!-- Add more rows as needed -->
-</table>
-
-
-@foreach (Evaluation e in Model.Evaluations)
+@if (Model == null)
 {
-    <ul>
-        <li>Project Type: @e.SubmissionId</li>
-        <li>Regional Program: @e.EvaluatedId</li>
-        <li>Impact: @e.PeerEvalGrade</li>
-        <li>Installation Date: @e.Comments</li>
-    </ul>
+    <p>The model is null.</p>
+}
+else
+{
+    <p>The model is not null.</p>
+    <p>Evaluation ID: @Model.EvaluationId</p>
+    <p>Peer Evaluation Grade: @Model.PeerEvalGrade</p>
+    <p>Evaluated ID: @Model.EvaluatedId</p>
+    <p>Evaluation Comments: @Model.EvalComments</p>
+    <p>Submission ID: @Model.SubmissionId</p>
+    <p>Group ID: @(Model.GroupId.HasValue ? Model.GroupId.ToString() : "Not Set")</p>
+
+    <h3>Submission:</h3>
+    @if (Model.Submission == null)
+    {
+        <p>No submission data available.</p>
+    }
+    else
+    {
+        <p>Submission exists with ID: @Model.Submission.Id</p>
+        <!-- Output other Submission properties as needed -->
+    }
+
+    <h3>Group:</h3>
+    @if (Model.Group == null)
+    {
+        <p>No group data available.</p>
+    }
+    else
+    {
+        <p>Group exists with ID: @Model.Group.Id</p>
+        <!-- Output other Group properties as needed -->
+    }
+
+    <h3>Students:</h3>
+    @if (Model.Students == null || !Model.Students.Any())
+    {
+        <p>No student data available.</p>
+    }
+    else
+    {
+        <ul>
+            @foreach (var student in Model.Students)
+            {
+                <li>Student ID: @student.Id - Name: @student.FName @student.LName</li>
+            }
+        </ul>
+    }
 }
 
-@*Grading View for professors and TAs (Groups 1, 10, & 12)*@
+
