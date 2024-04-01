@@ -92,6 +92,7 @@ namespace ToaPro.Controllers
 
         public IActionResult ProfessorViewAssignAwards()
         {
+
             return View();
         }
 
@@ -100,5 +101,22 @@ namespace ToaPro.Controllers
 
             return View();
         }
+
+        public IActionResult FunAwards2()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult FunAwards2(Award updatedInfo)
+        {
+            _repo.UpdateAward(updatedInfo);
+
+            var groupId = updatedInfo.GroupId;
+            var awardId = updatedInfo.AwardId;
+
+            return View();
+        }
+
     }
 }

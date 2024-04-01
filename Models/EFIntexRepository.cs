@@ -25,6 +25,8 @@ namespace ToaPro
         public IEnumerable<Semester> Semesters => _toaProContext.Semesters;
         public IQueryable<Ranking> Rankings => _toaProContext.Rankings;
         public IQueryable<Models.Group> Groups => _toaProContext.Groups;
+        public IQueryable<Award> Awards => _toaProContext.Awards;
+
 
         //Change RequestAvailability to match the judge model when inputting their timeslots
         public void RequestAvailability(Judge judge)
@@ -54,6 +56,12 @@ namespace ToaPro
         public void AddSubmission(Submission submission)
         {
             _toaProContext.Submissions.Add(submission);
+            _toaProContext.SaveChanges();
+        }
+
+        public void UpdateAward(Award award)
+        {
+            _toaProContext.Awards.Update(award);
             _toaProContext.SaveChanges();
         }
     }

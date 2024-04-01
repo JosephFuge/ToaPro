@@ -15,6 +15,8 @@ namespace ToaPro
         IQueryable<Presentation> Presentations { get; }
         IQueryable<Ranking> Rankings { get; }
         IQueryable<Group> Groups { get; }
+        IQueryable<Award> Awards { get; }
+
 
         public void RequestAvailability(Judge judge);
         public void StudentRequestAvailability(Student student);
@@ -22,6 +24,10 @@ namespace ToaPro
         public void UpdateRanking(Ranking ranking);
 
         public void AddRanking(Ranking ranking);
+
+        public void UpdateAward(Award award);
+
         public void AddSubmission(Submission submission);
+
     }
 }
