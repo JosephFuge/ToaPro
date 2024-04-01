@@ -53,12 +53,18 @@ namespace ToaPro.Controllers
         [HttpPost]
         public IActionResult AddObjective(Requirement response)
         {
-            _context.Requirements.Add(response);
-            
-
-            return RedirectToAction("AddObjective");
+            if (ModelState.IsValid)
+            {
+                _context.Requirements.Add(response);
+                _context.SaveChanges(); // Save changes to the database
+                return RedirectToAction("Rubric");
+            }
+            // If ModelState is not valid, return the view with validation errors
+            return View(response);
         }
 
     }
+
 }
+
 
