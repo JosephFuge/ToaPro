@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ToaPro.Models;
 
@@ -8,10 +9,8 @@ public partial class Judge
 {
     [Key]
     public int Id { get; set; }
-    public int user_id { get; set; }
-    //forein key relationship they are not in the judge table you have to pull them from the user table. 
-    public string FName { get; set; }
-    public string LName { get; set; }
+	[ForeignKey("ToaProUser")]
+	public int user_id { get; set; }
     public int semester_id { get; set; }
 
     public string Affiliation { get; set; } = null!;
@@ -25,4 +24,9 @@ public partial class Judge
     public bool TimeSlot3 { get; set; }
     public bool TimeSlot4 { get; set; }
     public bool TimeSlot5 { get; set; }
+
+    //forein key relationship they are not in the judge table you have to pull them from the user table. 
+    [ForeignKey("ToaProUser")]
+    public string? FirstName { get; set; }
+    public string? LastName { get; set; }
 }
