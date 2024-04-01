@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ToaPro.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ToaPro.Controllers
 {
@@ -38,29 +39,31 @@ namespace ToaPro.Controllers
             return View();
         }
 
+        //Made some changes here with requesting new time (removed the judge availability model and placed its data inside the judge model).
+        //We did not need both models.
         [HttpGet]
         public IActionResult RequestNewTime() 
         {
-            return View(new JudgeAvailability());
+            return View(new Judge());
         }
         [HttpPost]
-        public IActionResult RequestNewTime(JudgeAvailability availabilities)
+        public IActionResult RequestNewTime(Judge judge)
         {
-            _repo.RequestAvailability(availabilities);
+            _repo.RequestAvailability(judge);
 
-            return View(new JudgeAvailability());
+            return View(new Judge());
         }
 
+        //If anything breaks here, note that I removed the student availability model and moved its data into the student model. We did not need both of them
         [HttpGet]
         public IActionResult StudentRequestNewTime()
         {
-            //Student stud = _repo.Students.FirstOrDefault(x => x.ToaProUser.UserName == "studentUserName0");
             return View(new Student());
         }
         [HttpPost]
-        public IActionResult StudentRequestNewTime(Student availabilities)
+        public IActionResult StudentRequestNewTime(Student student)
         {
-            _repo.StudentRequestAvailability(availabilities);
+            _repo.StudentRequestAvailability(student);
 
             return View(new Student());
         }

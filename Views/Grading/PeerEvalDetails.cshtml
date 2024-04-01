@@ -48,7 +48,7 @@ else
         <ul>
             @foreach (var student in Model.Students)
             {
-                <li>Student ID: @student.Id - Name: @student.FName @student.LName</li>
+                <li>Student ID: @student.Id - Name: @student.ToaProUser.FirstName @student.ToaProUser.LastName</li>
             }
         </ul>
     }
