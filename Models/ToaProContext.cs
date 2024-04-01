@@ -40,8 +40,6 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
 
     public virtual DbSet<Submission> Submissions { get; set; }
 
-    public virtual DbSet<JudgeAvailability> JudgeAvailabilities { get; set; }
-    public virtual DbSet<StudentAvailability> StudentAvailabilities { get; set; }
     public virtual DbSet<Award> Awards { get; set; }
     //inlcude a query section on Award
 

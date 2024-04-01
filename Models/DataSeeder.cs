@@ -200,8 +200,6 @@ namespace ToaPro.Models
                     {
                         Student newStudent = new Student
                         {
-                            FName = "studentFName" + i.ToString(),
-                            LName = "studentLName" + i.ToString(),
                             NetId = "netId" + i.ToString(),
                             Id = studentUserFullDetails.Id,
                             GroupId = groupId,
@@ -350,8 +348,6 @@ namespace ToaPro.Models
                     new Judge
                     {
                         Id = judgeUser1.Id,
-                        FName = "randomjudgefirstname",
-                        LName = "randomjudgelastname",
                         Affiliation = "KPMG",
                         TimeSlot1 = true,
                         TimeSlot2 = false,
@@ -362,8 +358,6 @@ namespace ToaPro.Models
                     new Judge
                     {
                         Id = judgeUser2.Id,
-                        FName = "randomfirstname",
-                        LName = "randomlastname",
                         Affiliation = "Disney Corp.",
                         TimeSlot1 = true,
                         TimeSlot2 = true,
@@ -444,8 +438,6 @@ namespace ToaPro.Models
                     new Student
                     {
                         Id = student0.Id,
-                        FName = "Hayden",
-                        LName = "Bro",
                         NetId = "123 456 1234",
                         TimeSlot1 = true,
                         TimeSlot2 = false,
@@ -458,8 +450,6 @@ namespace ToaPro.Models
                     new Student
                     {
                         Id = student1.Id,
-                        FName = "Lily",
-                        LName = "Forest",
                         NetId = "123 478 3456",
                         TimeSlot1 = false,
                         TimeSlot2 = false,
