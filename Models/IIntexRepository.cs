@@ -4,7 +4,7 @@ namespace ToaPro
 {
     public interface IIntexRepository
     {
-        IEnumerable<Class> Classes { get; }
+        IEnumerable<ClassInfo> Classes { get; }
         IEnumerable<Grade> Grades { get; }
         IEnumerable<Grader> Graders { get; }
         IEnumerable<Group> Groups { get; }

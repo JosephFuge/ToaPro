@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ToaPro.Models.ViewModels;
+using System.Threading.Tasks; // Add this namespace for asynchronous operations
 
 namespace ToaPro.Controllers
 {
@@ -25,14 +27,14 @@ namespace ToaPro.Controllers
             //Only Professors and TAs have access to this page. Only Professors can export the files.
             //(TAs, Prof)
 
-            var query = from cls in _gradeSummaryRepository.Classes
+            IEnumerable<GradingSummaryViewModel> query = from cls in _gradeSummaryRepository.Classes
                         join req in _gradeSummaryRepository.Requirements on cls.Id equals req.ClassId
                         join grd in _gradeSummaryRepository.Grades on req.Id equals grd.RequirementId
                         join sub in _gradeSummaryRepository.Submissions on grd.SubmissionId equals sub.Id
                         join stu in _gradeSummaryRepository.Students on sub.StudentId equals stu.Id
                         join grp in _gradeSummaryRepository.Groups on grd.GroupId equals grp.Id
                         join rank in _gradeSummaryRepository.Rankings on grp.Id equals rank.GroupId
-                        select new
+                        select new GradingSummaryViewModel
                         {
                             Class = cls,
                             Requirement = req,
@@ -42,8 +44,8 @@ namespace ToaPro.Controllers
                             Group = grp,
                             Rank = rank
                         };
-            //var result = query.ToList();
-            return View(query);
+            var result = query.ToList();
+            return View(result);
         }
 
         public IActionResult GradingPage()
