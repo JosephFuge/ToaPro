@@ -27,6 +27,8 @@ namespace ToaPro
         public IQueryable<Ranking> Rankings => _toaProContext.Rankings;
         public IQueryable<Models.Group> Groups => _toaProContext.Groups;
 
+        public IQueryable<ToaProUser> ToaProUsers => _toaProContext.ToaProUsers;
+
 
         public void JRequestAvailability(int id)
         {

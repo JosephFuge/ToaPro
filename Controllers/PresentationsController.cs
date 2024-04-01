@@ -25,26 +25,26 @@ namespace ToaPro.Controllers
                          on Judge.user_id equals ToaProUser.user_id
                          select new Judge
                          {
-                                Id = Judge.Id,
-                                user_id 
-                                semester_id 
-                                public string Affiliation { get; set; } = null!;
-                                public virtual ICollection<Ranking> Rankings { get; set; } = new List<Ranking>();
-                                public virtual ICollection<Presentation> Presentations { get; set; } = new List<Presentation>();
-                                public bool TimeSlot1 { get; set; }
-                                public bool TimeSlot2 { get; set; }
-                                public bool TimeSlot3 { get; set; }
-                                public bool TimeSlot4 { get; set; }
-                                public bool TimeSlot5 { get; set; }
-
-                                //forein key relationship they are not in the judge table you have to pull them from the user table. 
-                                [ForeignKey("ToaProUser")]
-                                public string? FirstName { get; set; }
-                                public string? LastName { get; set; }
-    }
+                             Id = Judge.Id,
+                             user_id = Judge.user_id,
+                             semester_id = Judge.semester_id,
+                             Affiliation = Judge.Affiliation,
+                             TimeSlot1 = Judge.TimeSlot1,
+                             TimeSlot2 = Judge.TimeSlot2,
+                             TimeSlot3 = Judge.TimeSlot3,
+                             TimeSlot4 = Judge.TimeSlot4,
+                             TimeSlot5 = Judge.TimeSlot5,
+                             FirstName = ToaProUser.FirstName,
+                             LastName = ToaProUser.FirstName
+                         };
+                                //idk how to do this part or what they do?
+                                //Ranking  = new List<Ranking>();
+                                //Presentation = new List<Presentation>();
                         //.Where(x => x.COLUM == value)
-                        .OrderBy(x => x.Id).ToList();
+                        //.OrderBy(x => x.Id).ToList();
+              
             return View(judges);
+            //return View(judges);
            
             //Croordinatior view shows Judges, Prof, Group, and rooms, times. Can edit table! 
 

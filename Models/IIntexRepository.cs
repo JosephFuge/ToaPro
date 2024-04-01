@@ -15,6 +15,8 @@ namespace ToaPro
         IQueryable<Presentation> Presentations { get; }
         IQueryable<Ranking> Rankings { get; }
         IQueryable<Group> Groups { get; }
+
+        IQueryable<ToaProUser> ToaProUsers { get; }
         public void UpdateRanking(Ranking ranking);
 
         public void JRequestAvailability(int Id);
