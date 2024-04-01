@@ -31,8 +31,8 @@ builder.Services.AddDefaultIdentity<ToaProUser>(options =>
     options.Password.RequireNonAlphanumeric = true;
     options.Password.RequiredUniqueChars = 2;
     options.User.RequireUniqueEmail = true;
-    options.SignIn.RequireConfirmedAccount = true;
-    options.SignIn.RequireConfirmedEmail = true;
+    options.SignIn.RequireConfirmedAccount = false;
+    options.SignIn.RequireConfirmedEmail = false;
 }).AddRoles<IdentityRole>().AddEntityFrameworkStores<ToaProContext>();
 
 builder.Services.ConfigureApplicationCookie(options =>
