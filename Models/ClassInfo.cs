@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ToaPro.Models;
 
-public partial class Class
+public partial class ClassInfo
 {
     public int Id { get; set; }
 

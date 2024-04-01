@@ -4,6 +4,13 @@ namespace ToaPro.Controllers
 {
     public class JudgeRankingsController : Controller
     {
+        private IIntexRepository _repo;
+        
+        public JudgeRankingsController(IIntexRepository temp)
+        {
+            _repo = temp;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -19,7 +26,8 @@ namespace ToaPro.Controllers
         }
 
         public IActionResult CoordinatorAssignJudges()
-        {
+        { 
+
             return View();
         }
     }

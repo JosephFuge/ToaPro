@@ -1,20 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using ToaPro.Models;
+﻿using ToaPro.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace ToaPro
 {
     public class EFIntexRepository : IIntexRepository
     {
         private ToaProContext _toaProContext;
-        public EFIntexRepository(ToaProContext TempDataDictionary) 
+
+        public EFIntexRepository(ToaProContext toaProContext)
         {
-            _toaProContext = TempDataDictionary;
+            _toaProContext = toaProContext;
         }
-        public IEnumerable<Class> Classes => _toaProContext.Classes;
-        //comment
+        public IEnumerable<ClassInfo> Classes => _toaProContext.Classes;
         public IEnumerable<Grade> Grades => _toaProContext.Grades;
         public IEnumerable<Grader> Graders => _toaProContext.Graders;
-        public IEnumerable<Group> Groups => _toaProContext.Groups;
+        public IEnumerable<Models.Group> Groups => _toaProContext.Groups;
         public IEnumerable<Judge> Judges => _toaProContext.Judges;
         public IEnumerable<Presentation> Presentations => _toaProContext.Presentations;
         public IEnumerable<Ranking> Rankings => _toaProContext.Rankings;
@@ -22,5 +24,18 @@ namespace ToaPro
         public IEnumerable<Semester> Semesters => _toaProContext.Semesters;
         public IEnumerable<Student> Students => _toaProContext.Students;
         public IEnumerable<Submission> Submissions => _toaProContext.Submissions;
+        public IEnumerable<JudgeAvailability> JudgeAvailabilities => _toaProContext.JudgeAvailabilities;
+
+        public void RequestAvailability(JudgeAvailability judgeAvailability)
+        {
+            _toaProContext.Add(judgeAvailability);
+            _toaProContext.SaveChanges();
+        }
+
+        public void StudentRequestAvailability(StudentAvailability studentAvailability)
+        {
+            _toaProContext.Add(studentAvailability);
+            _toaProContext.SaveChanges();
+        }
     }
 }
