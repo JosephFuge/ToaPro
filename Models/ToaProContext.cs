@@ -203,7 +203,7 @@ public partial class ToaProContext : DbContext
 
         modelBuilder.Entity<Grader>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("grader_pk");
+           /* entity.HasKey(e => e.Id).HasName("grader_pk");
 
             entity.ToTable("graders");
 
@@ -219,7 +219,9 @@ public partial class ToaProContext : DbContext
                 .HasMaxLength(35)
                 .HasColumnName("f_name");
             entity.Property(e => e.IsProfessor)
-                .HasDefaultValue(false)
+                .HasDefaultValue(false)Learn about building Web apps with ASP.NET Core.
+
+
                 .HasColumnName("is_professor");
             entity.Property(e => e.LName)
                 .HasMaxLength(35)
@@ -251,7 +253,7 @@ public partial class ToaProContext : DbContext
                         j.HasIndex(new[] { "SemesterId" }, "IX_semester_graders_semester_id");
                         j.IndexerProperty<int>("GraderId").HasColumnName("grader_id");
                         j.IndexerProperty<int>("SemesterId").HasColumnName("semester_id");
-                    });
+                    }); */
         });
 
         modelBuilder.Entity<Group>(entity =>
