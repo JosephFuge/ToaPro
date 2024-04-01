@@ -104,7 +104,7 @@ namespace ToaPro.Controllers
         }
 
         [HttpGet]
-        public IActionResult TeamRankings(int judgeId = 1)
+        public IActionResult TeamRankings(string judgeId = "")
         {
             ViewBag.joinedData = _repo.Judges
                 .Where(x => x.Id == judgeId)
@@ -118,6 +118,7 @@ namespace ToaPro.Controllers
 
         public IActionResult ProfessorViewAssignAwards()
         {
+
             return View();
         }
 
@@ -131,5 +132,17 @@ namespace ToaPro.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public IActionResult FunAwards2(Award updatedInfo)
+        {
+            _repo.UpdateAward(updatedInfo);
+
+            var groupId = updatedInfo.GroupId;
+            var awardId = updatedInfo.AwardId;
+
+            return View();
+        }
+
     }
 }

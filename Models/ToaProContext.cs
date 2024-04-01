@@ -39,10 +39,14 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
     public virtual DbSet<Student> Students { get; set; }
 
     public virtual DbSet<Submission> Submissions { get; set; }
+
     public virtual DbSet<JudgeAvailability> JudgeAvailabilities { get; set; }
     public virtual DbSet<StudentAvailability> StudentAvailabilities { get; set; }
+    public virtual DbSet<Award> Awards { get; set; }
+    //inlcude a query section on Award
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+
+    /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
         => optionsBuilder.UseNpgsql("Host=127.0.0.1;Port=5432;Database=ToaPro;Username=postgres;Password=postgres;");
 
@@ -103,9 +107,6 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
 
             entity.HasIndex(e => new { e.RequirementId, e.GraderId, e.GroupId, e.SubmissionId }, "uniq_grade").IsUnique();
 
-            entity.Property(e => e.Id)
-                .UseIdentityAlwaysColumn()
-                .HasColumnName("id");
             entity.Property(e => e.Comments).HasColumnName("comments");
             entity.Property(e => e.GraderId).HasColumnName("grader_id");
             entity.Property(e => e.GroupId).HasColumnName("group_id");
@@ -144,9 +145,6 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
 
             entity.HasIndex(e => new { e.ClassId }, "uniq_grader").IsUnique();
 
-            entity.Property(e => e.Id)
-                .UseIdentityAlwaysColumn()
-                .HasColumnName("id");
             entity.Property(e => e.ClassId).HasColumnName("class_id");
             entity.Property(e => e.IsProfessor)
                 .HasDefaultValue(false)
@@ -157,25 +155,25 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("class_fk");
 
-            entity.HasMany(d => d.Semesters).WithMany(p => p.Graders)
-                .UsingEntity<Dictionary<string, object>>(
-                    "SemesterGrader",
-                    r => r.HasOne<Semester>().WithMany()
-                        .HasForeignKey("SemesterId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("semester_fk"),
-                    l => l.HasOne<Grader>().WithMany()
-                        .HasForeignKey("GraderId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("grader_fk"),
-                    j =>
-                    {
-                        j.HasKey("GraderId", "SemesterId").HasName("semester_graders_pk");
-                        j.ToTable("semester_graders");
-                        j.HasIndex(new[] { "SemesterId" }, "IX_semester_graders_semester_id");
-                        j.IndexerProperty<int>("GraderId").HasColumnName("grader_id");
-                        j.IndexerProperty<int>("SemesterId").HasColumnName("semester_id");
-                    });
+            //entity.HasMany(d => d.Semesters).WithMany(p => p.Graders)
+            //    .UsingEntity<Dictionary<string, object>>(
+            //        "SemesterGrader",
+            //        r => r.HasOne<Semester>().WithMany()
+            //            .HasForeignKey("SemesterId")
+            //            .OnDelete(DeleteBehavior.ClientSetNull)
+            //            .HasConstraintName("semester_fk"),
+            //        l => l.HasOne<Grader>().WithMany()
+            //            .HasForeignKey("GraderId")
+            //            .OnDelete(DeleteBehavior.ClientSetNull)
+            //            .HasConstraintName("grader_fk"),
+            //        j =>
+            //        {
+            //            j.HasKey("GraderId", "SemesterId").HasName("semester_graders_pk");
+            //            j.ToTable("semester_graders");
+            //            j.HasIndex(new[] { "SemesterId" }, "IX_semester_graders_semester_id");
+            //            j.IndexerProperty<int>("GraderId").HasColumnName("grader_id");
+            //            j.IndexerProperty<int>("SemesterId").HasColumnName("semester_id");
+            //        });
         });
 
         modelBuilder.Entity<Group>(entity =>
@@ -198,25 +196,25 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("semester_fk");
 
-            entity.HasMany(d => d.Students).WithMany(p => p.Groups)
-                .UsingEntity<Dictionary<string, object>>(
-                    "StudentGroup",
-                    r => r.HasOne<Student>().WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("student_fk"),
-                    l => l.HasOne<Group>().WithMany()
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("group_fk"),
-                    j =>
-                    {
-                        j.HasKey("GroupId", "StudentId").HasName("student_groups_pk");
-                        j.ToTable("student_groups");
-                        j.HasIndex(new[] { "StudentId" }, "IX_student_groups_student_id");
-                        j.IndexerProperty<int>("GroupId").HasColumnName("group_id");
-                        j.IndexerProperty<int>("StudentId").HasColumnName("student_id");
-                    });
+            //entity.HasMany(d => d.Students).WithOne(p => p.Group)
+            //    .UsingEntity<Dictionary<string, object>>(
+            //        "StudentGroup",
+            //        r => r.HasOne<Student>().WithMany()
+            //            .HasForeignKey("StudentId")
+            //            .OnDelete(DeleteBehavior.ClientSetNull)
+            //            .HasConstraintName("student_fk"),
+            //        l => l.HasOne<Group>().WithMany()
+            //            .HasForeignKey("GroupId")
+            //            .OnDelete(DeleteBehavior.ClientSetNull)
+            //            .HasConstraintName("group_fk"),
+            //        j =>
+            //        {
+            //            j.HasKey("GroupId", "StudentId").HasName("student_groups_pk");
+            //            j.ToTable("student_groups");
+            //            j.HasIndex(new[] { "StudentId" }, "IX_student_groups_student_id");
+            //            j.IndexerProperty<int>("GroupId").HasColumnName("group_id");
+            //            j.IndexerProperty<int>("StudentId").HasColumnName("student_id");
+            //        });
         });
 
         modelBuilder.Entity<Judge>(entity =>
@@ -227,9 +225,6 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
 
             entity.HasIndex(e => new { e.FName, e.LName, e.Affiliation }, "uniq_judge").IsUnique();
 
-            entity.Property(e => e.Id)
-                .UseIdentityAlwaysColumn()
-                .HasColumnName("id");
             entity.Property(e => e.Affiliation)
                 .HasMaxLength(35)
                 .HasColumnName("affiliation");
@@ -363,20 +358,8 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
 
             entity.ToTable("students");
 
-            entity.HasIndex(e => new { e.FName, e.LName, e.NetId }, "uniq_student").IsUnique();
-
             entity.Property(e => e.Id)
-                .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
-            entity.Property(e => e.FName)
-                .HasMaxLength(35)
-                .HasColumnName("f_name");
-            entity.Property(e => e.LName)
-                .HasMaxLength(35)
-                .HasColumnName("l_name");
-            entity.Property(e => e.NetId)
-                .HasMaxLength(8)
-                .HasColumnName("net_id");
         });
 
         modelBuilder.Entity<Submission>(entity =>
@@ -410,7 +393,7 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
         OnModelCreatingPartial(modelBuilder);
     }
 
-    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);*/
 
     
 }
