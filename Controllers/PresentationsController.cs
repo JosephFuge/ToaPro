@@ -54,14 +54,15 @@ namespace ToaPro.Controllers
         [HttpGet]
         public IActionResult StudentRequestNewTime()
         {
-            return View(new StudentAvailability());
+            //Student stud = _repo.Students.FirstOrDefault(x => x.ToaProUser.UserName == "studentUserName0");
+            return View(new Student());
         }
         [HttpPost]
-        public IActionResult StudentRequestNewTime(StudentAvailability availabilities)
+        public IActionResult StudentRequestNewTime(Student availabilities)
         {
             _repo.StudentRequestAvailability(availabilities);
 
-            return View(new StudentAvailability());
+            return View(new Student());
         }
 
 
