@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations.Schema;
 using ToaPro.Models;
 
 namespace ToaPro.Controllers
@@ -20,31 +18,10 @@ namespace ToaPro.Controllers
 
         public IActionResult PresentationSchedule()
         {
-            var judges = from Judge in _repo.Judges
-                         join ToaProUser in _repo.ToaProUsers
-                         on Judge.user_id equals ToaProUser.user_id
-                         select new Judge
-                         {
-                             Id = Judge.Id,
-                             user_id = Judge.user_id,
-                             semester_id = Judge.semester_id,
-                             Affiliation = Judge.Affiliation,
-                             TimeSlot1 = Judge.TimeSlot1,
-                             TimeSlot2 = Judge.TimeSlot2,
-                             TimeSlot3 = Judge.TimeSlot3,
-                             TimeSlot4 = Judge.TimeSlot4,
-                             TimeSlot5 = Judge.TimeSlot5,
-                             FirstName = ToaProUser.FirstName,
-                             LastName = ToaProUser.FirstName
-                         };
-                                //idk how to do this part or what they do?
-                                //Ranking  = new List<Ranking>();
-                                //Presentation = new List<Presentation>();
+            var judges = _repo.Judges.ToList()
                         //.Where(x => x.COLUM == value)
-                        //.OrderBy(x => x.Id).ToList();
-              
+                        .OrderBy(x => x.Id).ToList();
             return View(judges);
-            //return View(judges);
            
             //Croordinatior view shows Judges, Prof, Group, and rooms, times. Can edit table! 
 
@@ -61,18 +38,33 @@ namespace ToaPro.Controllers
             return View();
         }
 
+        //Made some changes here with requesting new time (removed the judge availability model and placed its data inside the judge model).
+        //We did not need both models.
         [HttpGet]
-        public IActionResult JRequestNewTime(int id)
+        public IActionResult RequestNewTime() 
         {
-            _repo.JRequestAvailability(id);
-            return View("JRequestNewTime");
+            return View(new Judge());
         }
         [HttpPost]
-        public IActionResult JRequestNewTime(Judge updatedInfo)
+        public IActionResult RequestNewTime(Judge judge)
         {
-            _repo.JUpdateAvailability(updatedInfo);
+            _repo.RequestAvailability(judge);
 
-            return RedirectToAction("JRequestNewTime"); //instead of going to the view MovieList, it will go to the ACTION
+            return View(new Judge());
+        }
+
+        //If anything breaks here, note that I removed the student availability model and moved its data into the student model. We did not need both of them
+        [HttpGet]
+        public IActionResult StudentRequestNewTime()
+        {
+            return View(new Student());
+        }
+        [HttpPost]
+        public IActionResult StudentRequestNewTime(Student student)
+        {
+            _repo.StudentRequestAvailability(student);
+
+            return View(new Student());
         }
 
 

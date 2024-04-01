@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Microsoft.EntityFrameworkCore;
 
 namespace ToaPro
 {
@@ -27,19 +26,10 @@ namespace ToaPro
         public IQueryable<Ranking> Rankings => _toaProContext.Rankings;
         public IQueryable<Models.Group> Groups => _toaProContext.Groups;
 
-        public IQueryable<ToaProUser> ToaProUsers => _toaProContext.ToaProUsers;
-
-
-        public void JRequestAvailability(int id)
+        //Change RequestAvailability to match the judge model when inputting their timeslots
+        public void RequestAvailability(Judge judge)
         {
-            var recordToEdit = _toaProContext.Judges
-            .Single(x => x.Id == id);
-
-            _toaProContext.SaveChanges();
-        }
-        public void JUpdateAvailability(Judge updatedInfo)
-        {
-            _toaProContext.Update(updatedInfo);
+            _toaProContext.Add(judge);
             _toaProContext.SaveChanges();
         }
 
@@ -54,9 +44,10 @@ namespace ToaPro
             _toaProContext.Rankings.Add(ranking);
             _toaProContext.SaveChanges();
         }
-        public void UpdateJudgeAvailability(Judge updatedInfo)
+
+        public void StudentRequestAvailability(Student student)
         {
-            _toaProContext.Update(updatedInfo);
+            _toaProContext.Add(student);
             _toaProContext.SaveChanges();
         }
 

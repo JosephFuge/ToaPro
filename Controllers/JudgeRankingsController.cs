@@ -19,7 +19,7 @@ namespace ToaPro.Controllers
         }
 
         [HttpGet]
-        public IActionResult JudgePresentationForm(int judgeId = 1, int groupId = 0)
+        public IActionResult JudgePresentationForm(string judgeId = "", int groupId = 0)
         {
             if (groupId == 0)
             {
@@ -78,7 +78,7 @@ namespace ToaPro.Controllers
         }
 
         [HttpGet]
-        public IActionResult TeamRankings(int judgeId = 1)
+        public IActionResult TeamRankings(string judgeId = "")
         {
             ViewBag.joinedData = _repo.Judges
                 .Where(x => x.Id == judgeId)

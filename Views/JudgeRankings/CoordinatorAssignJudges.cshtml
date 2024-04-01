@@ -4,7 +4,7 @@
 @{
 }
 @*Assign Judges View (Groups 7 & 5)*@
-
+@model Judge
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -46,7 +46,7 @@
                 <h2>Judge Assignment</h2>
                 <!-- Dropdown for Judges -->
                 <div class="form-group">
-                    <label for="judgeDropdown">Select Judge:</label>
+                    <label asp-for="@Model.Id">Select Judge:</label>
                     <select class="form-control" id="judgeDropdown">
                         <option>Judge 1</option>
                         <option>Judge 2</option>
