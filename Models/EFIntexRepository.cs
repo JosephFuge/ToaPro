@@ -24,11 +24,8 @@ namespace ToaPro
         public IEnumerable<Grader> Graders => _toaProContext.Graders;
         public IEnumerable<Requirement> Requirements => _toaProContext.Requirements;
         public IEnumerable<Semester> Semesters => _toaProContext.Semesters;
-        public IEnumerable<JudgeAvailability> JudgeAvailabilities => _toaProContext.JudgeAvailabilities;
         public IQueryable<Ranking> Rankings => _toaProContext.Rankings;
         public IQueryable<Models.Group> Groups => _toaProContext.Groups;
-        public IEnumerable<Judge> Judges => _toaProContext.Judges.ToList();
-        public IEnumerable<Presentation> Presentations => _toaProContext.Presentations;
 
 
         public void JRequestAvailability(int id)
@@ -55,8 +52,6 @@ namespace ToaPro
             _toaProContext.Rankings.Add(ranking);
             _toaProContext.SaveChanges();
         }
-
-        public void StudentRequestAvailability(Student studentAvailability)
         public void UpdateJudgeAvailability(Judge updatedInfo)
         {
             _toaProContext.Update(updatedInfo);
