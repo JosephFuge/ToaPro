@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ToaPro.Models;
 
 public partial class Group
 {
+    [Key]
     public int Id { get; set; }
 
+    [ForeignKey("Semester")]
     public int SemesterId { get; set; }
 
     public short Section { get; set; }

@@ -1,4 +1,5 @@
-﻿//using Microsoft.AspNetCore.Identity；
+﻿using Microsoft.AspNetCore.Identity;
+using System.Net.WebSockets;
 
 //namespace ToaPro.Models
 //{
@@ -133,12 +134,12 @@
 
 //                var groupId = result.Entity.Id;
 
-//                return groupId;
-//            } catch(Exception ex)
-//            {
-//                return 0;
-//            }
-//        }
+                return groupId;
+            } catch (Exception)
+            {
+                return 0;
+            }
+        }
 
 //        public async Task<bool> SeedGroupsAndStudents(Semester semester)
 //        {
@@ -195,19 +196,22 @@
 //                {
 //                    ToaProUser studentUserFullDetails = await _userManager.FindByNameAsync(userName: newStudentUser.UserName);
 
-//                    if (studentUserFullDetails != null)
-//                    {
-//                        Student newStudent = new Student
-//                        {
-//                            StudentId = studentUserFullDetails.Id,
-//                            GroupId = groupId,
-//                            TimeSlot1 = true,
-//                            TimeSlot2 = true,
-//                            TimeSlot3 = true,
-//                            TimeSlot4 = true,
-//                            TimeSlot5 = true,
-//                            Reason = "",
-//                        };
+                    if (studentUserFullDetails != null)
+                    {
+                        Student newStudent = new Student
+                        {
+                            FName = "studentFName" + i.ToString(),
+                            LName = "studentLName" + i.ToString(),
+                            NetId = "netId" + i.ToString(),
+                            Id = studentUserFullDetails.Id,
+                            GroupId = groupId,
+                            TimeSlot1 = true,
+                            TimeSlot2 = true,
+                            TimeSlot3 = true,
+                            TimeSlot4 = true,
+                            TimeSlot5 = true,
+                            Reason = "",
+                        };
 
 //                        _context.Add(newStudent);
 //                    }
@@ -224,31 +228,33 @@
 //            Class IS414 = new Class { Code = "414", Description = "Cybersecurity; sleep with one eye open, you'll get social engineered out of your first-born child." };
 //            Class IS455 = new Class { Code = "455", Description = "Machine Learning with Dr. Keith, the man with the biggest heart and the fastest fingers in the west." };
 
-//            // Check if data exists
-//            if (!_context.Classes.ToList().Any())
-//            {
-//                _context.Classes.AddRange(
-//                    IS401,
-//                    IS413,
-//                    IS414,
-//                    IS455
-//                );
+            // Check if data exists (class seeding)
+            if (!_context.Classes.ToList().Any())
+            {
+                _context.Classes.AddRange(
+                    IS401,
+                    IS413,
+                    IS414,
+                    IS455
+                );
 
-//                _context.SaveChanges();
-//            }
+                await _context.SaveChangesAsync();
+            }
 
-//            Semester winter2024Semester = new Semester { Term = "Winter", Year = 2024 };
+            //Semester Seeding
+            Semester winter2024Semester = new Semester { Term = "Winter", Year = 2024 };
 
 //            if (!_context.Semesters.ToList().Any())
 //            {
 //                _context.Semesters.Add(winter2024Semester);
 
-//                _context.SaveChanges();
-//            }
+                await _context.SaveChangesAsync();
+            }
 
-//            if (!_context.Requirements.ToList().Any())
-//            {
-//                List<Class> classes = _context.Classes.ToList() ?? [];
+            //Requirements seeding
+            if (!_context.Requirements.ToList().Any())
+            {
+                List<Class> classes = _context.Classes.ToList() ?? [];
 
 //                _context.Requirements.AddRange(
 //                    new Requirement
@@ -269,20 +275,234 @@
 //                );   
 //            }
 
-//            if (!_context.Groups.ToList().Any())
-//            {
-//                List<Semester> semesters = _context.Semesters.ToList() ?? [];
+            await _context.SaveChangesAsync();
 
-//                if (semesters.Any())
-//                {
-//                    await SeedGroupsAndStudents(semester: semesters.FirstOrDefault(x => x.Year == 2024 && x.Term == "Winter"));
-//                }
-//            }
+            // Repeat for other tables, respecting foreign key dependencies
+            //Grader Seeding
+            if (!_context.Graders.ToList().Any())
+            {
+                List<Class> classes = _context.Classes.ToList() ?? [];
+                var professorHilt = await _userManager.FindByNameAsync("SpencerHilton");
+                var professorCutler = await _userManager.FindByNameAsync("LauraCutler");
 
+                _context.Graders.AddRange(
+                    new Grader
+                    {
+                        Id = professorHilt.Id,
+                        ClassId = classes.FirstOrDefault(x => x.Code == "413").Id,
+                        IsProfessor = false
+                    },
+                    new Grader
+                    {
+                        Id = professorCutler.Id,
+                        ClassId = classes.FirstOrDefault(x => x.Code == "401").Id,
+                        IsProfessor = true
+                    }
+                );
 
-//            await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
+            }
 
-//            // Repeat for other tables, respecting foreign key dependencies
-//        }
-//    }
-//}
+            if (!_context.Groups.ToList().Any())
+            {
+                List<Semester> semesters = _context.Semesters.ToList() ?? [];
+
+                if (semesters.Any())
+                {
+                    await SeedGroupsAndStudents(semester: semesters.FirstOrDefault(x => x.Year == 2024 && x.Term == "Winter"));
+                }
+            }
+
+            await _context.SaveChangesAsync();
+
+            ////Group Seeding
+            //if (!_context.Groups.ToList().Any())
+            //{
+            //    List<Semester> semesters = _context.Semesters.ToList() ?? [];
+
+            //    _context.Groups.AddRange(
+            //        new Group
+            //        {
+            //            SemesterId = semesters.Where(x => x.Year == 2023 && x.Term == "Winter")
+            //                         .Select(x => x.Id).FirstOrDefault(),
+            //            Section = 4,
+            //            Number = 12
+            //        },
+            //        new Group
+            //        {
+            //            SemesterId = semesters.Where(x => x.Year == 2023 && x.Term == "Winter")
+            //                         .Select(x => x.Id).FirstOrDefault(),
+            //            Section = 4,
+            //            Number = 12
+            //        }
+            //    );
+
+            //    await _context.SaveChangesAsync();
+            //}
+
+            //Judge Seeding
+            if (!_context.Judges.ToList().Any())
+            {
+                var judgeUser1 = await _userManager.FindByNameAsync("JudyMcPherson");
+                var judgeUser2 = await _userManager.FindByNameAsync("PhoenixBrave");
+
+                _context.Judges.AddRange(
+                    new Judge
+                    {
+                        Id = judgeUser1.Id,
+                        FName = "randomjudgefirstname",
+                        LName = "randomjudgelastname",
+                        Affiliation = "KPMG",
+                        TimeSlot1 = true,
+                        TimeSlot2 = false,
+                        TimeSlot3 = true,
+                        TimeSlot4 = false,
+                        TimeSlot5 = false,
+                    },
+                    new Judge
+                    {
+                        Id = judgeUser2.Id,
+                        FName = "randomfirstname",
+                        LName = "randomlastname",
+                        Affiliation = "Disney Corp.",
+                        TimeSlot1 = true,
+                        TimeSlot2 = true,
+                        TimeSlot3 = true,
+                        TimeSlot4 = true,
+                        TimeSlot5 = true,
+                    }
+                );
+
+                _context.SaveChanges();
+            }
+
+            //Presentation Seeding
+            if (!_context.Presentations.ToList().Any())
+            {
+                List<Group> groups = _context.Groups.ToList() ?? [];
+
+                _context.Presentations.AddRange(
+                    new Presentation
+                    {
+                        GroupId = groups.FirstOrDefault(x => x.Section == 4 && x.Number == 8).Id,
+                        Location = "W322",
+                        StartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddDays(14).ToUniversalTime()
+                    },
+                    new Presentation
+                    {
+                        GroupId = groups.FirstOrDefault(x => x.Section == 4 && x.Number == 1).Id,
+                        Location = "5267",
+                        StartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddDays(14).ToUniversalTime()
+                    }
+                );
+
+                await _context.SaveChangesAsync();
+            }
+
+            //Ranking Seeding
+            if (!_context.Rankings.ToList().Any())
+            {
+                var groups = _context.Groups;
+                var judges = _context.Judges;
+
+                _context.Rankings.AddRange(
+                    new Ranking
+                    {
+                        GroupId = groups.FirstOrDefault(x => x.Section == 4 && x.Number == 1).Id,
+                        JudgeId = judges.FirstOrDefault(x => x.Affiliation == "KPMG").Id,
+                        TeamRanking = 2,
+                        CommunicationPoints = 4,
+                        CommunicationComments = "Needed more communication",
+                        TechnologyPoints = 10,
+                        TechnologyComments = "Great tech",
+                        OverallPoints = 14,
+                        Nomination = "Number 2 in INTEX"
+                    },
+                    new Ranking
+                    {
+                        GroupId = groups.FirstOrDefault(x => x.Section == 4 && x.Number == 8).Id,
+                        JudgeId = judges.FirstOrDefault(x => x.Affiliation == "Disney Corp.").Id,
+                        TeamRanking = 1,
+                        CommunicationPoints = 6,
+                        CommunicationComments = "Great communication",
+                        TechnologyPoints = 10,
+                        TechnologyComments = "Great tech",
+                        OverallPoints = 16,
+                        Nomination = "Number 1 in INTEX"
+                    }
+                );
+
+                await _context.SaveChangesAsync();
+            }
+
+            //Student Seeding
+            if (!_context.Students.ToList().Any())
+            {
+                var student0 = await _userManager.FindByNameAsync("studentUserName0");
+                var student1 = await _userManager.FindByNameAsync("studentUserName1");
+                _context.Students.AddRange(
+                    new Student
+                    {
+                        Id = student0.Id,
+                        FName = "Hayden",
+                        LName = "Bro",
+                        NetId = "123 456 1234",
+                        TimeSlot1 = true,
+                        TimeSlot2 = false,
+                        TimeSlot3 = false,
+                        TimeSlot4 = false,
+                        TimeSlot5 = false,
+                        Reason = "I don't like mornings"
+
+                    },
+                    new Student
+                    {
+                        Id = student1.Id,
+                        FName = "Lily",
+                        LName = "Forest",
+                        NetId = "123 478 3456",
+                        TimeSlot1 = false,
+                        TimeSlot2 = false,
+                        TimeSlot3 = false,
+                        TimeSlot4 = false,
+                        TimeSlot5 = true,
+                        Reason = "LOL"
+                    }
+                );
+            }
+
+            //Submission Seeding
+            //    if (!_context.Submissions.ToList().Any())
+            //    {
+            //        List<Group> groups = _context.Groups.ToList() ?? [];
+            //        List<Student> students = _context.Students.ToList() ?? [];
+
+            //    await _context.SaveChangesAsync();
+
+            //        _context.Submissions.AddRange(
+            //            new Submission
+            //            {
+            //                GroupId = groups.FirstOrDefault(x => x.Id == 1).Id,
+            //                StudentId = students.FirstOrDefault(x => x.Id == 1).Id,
+            //                CreatedDate = DateTime.Now,
+            //                GithubLink = "github",
+            //                YoutubeLink = "youtube",
+            //                UploadFile = "file string"
+
+            //            },
+            //            new Submission
+            //            {
+            //                GroupId = groups.FirstOrDefault(x => x.Id == 2).Id,
+            //                StudentId = students.FirstOrDefault(x => x.Id == 2).Id,
+            //                CreatedDate = DateTime.Now,
+            //                GithubLink = "github",
+            //                YoutubeLink = "youtube",
+            //                UploadFile = "file string"
+            //            }
+            //        );
+
+            //        _context.SaveChanges();
+            //    }
+        }
+    }
+}

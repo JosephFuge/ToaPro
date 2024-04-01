@@ -7,19 +7,16 @@ namespace ToaPro.Models;
 
 public partial class Submission
 {
-    public string GithubLink { get; set; }
-    public string YoutubeLink { get; set; }
-    public string UploadFile {  get; set; }
-    
     [Key]
     public int Id { get; set; }
-
+    [ForeignKey("Group")]
     public int GroupId { get; set; }
-
     [ForeignKey("Student")]
     public string StudentId { get; set; }
-
     public DateTime CreatedDate { get; set; }
+    public string GithubLink { get; set; }
+    public string YoutubeLink { get; set; }
+    public string UploadFile { get; set; }
 
     public virtual ICollection<Grade> Grades { get; set; } = new List<Grade>();
 

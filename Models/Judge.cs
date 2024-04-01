@@ -14,6 +14,11 @@ public partial class Judge
     public int semester_id { get; set; }
 
     public string Affiliation { get; set; } = null!;
+    public bool TimeSlot1 { get; set; }
+    public bool TimeSlot2 { get; set; }
+    public bool TimeSlot3 { get; set; }
+    public bool TimeSlot4 { get; set; }
+    public bool TimeSlot5 { get; set; }
 
     public virtual ICollection<Ranking> Rankings { get; set; } = new List<Ranking>();
 

@@ -61,6 +61,8 @@ namespace ToaPro.Controllers
             return View();
         }
 
+        //Made some changes here with requesting new time (removed the judge availability model and placed its data inside the judge model).
+        //We did not need both models.
         [HttpGet]
         public IActionResult JRequestNewTime(int id)
         {
