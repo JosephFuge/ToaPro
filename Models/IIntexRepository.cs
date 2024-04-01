@@ -12,8 +12,12 @@ namespace ToaPro
 
         IEnumerable<Presentation> Presentations { get; }
 
-        public void RequestAvailability(Judge Id);
-        public void UpdateAvailability(Judge Id);
-        p/*ublic void StudentRequestAvailability(StudentAvailability availabilities);*/
+        public void RequestAvailability(int Id);
+        public void UpdateAvailability(Judge updatedInfo);
+
+        public void SRequestAvailability(int Id);
+        public void SUpdateAvailability(Student updatedInfo);
+
+        public void UpdateJudgeAvailability(Judge updatedInfo);
     }
 }

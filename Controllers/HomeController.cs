@@ -43,5 +43,10 @@ namespace ToaPro.Controllers
             return View();
         }
 
+        public IActionResult CoodinatorAssignJudges()
+        {
+            return View();
+        }
+
     }
 }

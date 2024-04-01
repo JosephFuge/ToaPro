@@ -20,10 +20,10 @@ namespace ToaPro
         public IEnumerable<Presentation> Presentations => _toaProContext.Presentations;
 
 
-        public void RequestAvailability(Judge Id)
+        public void RequestAvailability(int id)
         {
             var recordToEdit = _toaProContext.Judges
-            .Single(x => x.Id == Id);
+            .Single(x => x.Id == id);
 
             _toaProContext.SaveChanges();
         }
@@ -32,11 +32,23 @@ namespace ToaPro
             _toaProContext.Update(updatedInfo);
             _toaProContext.SaveChanges();
         }
+        public void SRequestAvailability(int id)
+        {
+            var recordToEdit = _toaProContext.Students
+            .Single(x => x.Id == id);
 
-        //public void StudentRequestAvailability(StudentAvailability studentAvailability)
-        //{
-        //    _toaProContext.Add(studentAvailability);
-        //    _toaProContext.SaveChanges();
-        //}
+            _toaProContext.SaveChanges();
+        }
+        public void SUpdateAvailability(Student updatedInfo)
+        {
+            _toaProContext.Update(updatedInfo);
+            _toaProContext.SaveChanges();
+        }
+
+        public void UpdateJudgeAvailability(Judge updatedInfo)
+        {
+            _toaProContext.Update(updatedInfo);
+            _toaProContext.SaveChanges();
+        }
     }
 }

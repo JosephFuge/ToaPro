@@ -40,42 +40,31 @@ namespace ToaPro.Controllers
         }
 
         [HttpGet]
-        public IActionResult JudgeAvailability(int id)
+        public IActionResult RequestNewTime(int id)
         {
-            _repo.RequestAvailability();
+            _repo.RequestAvailability(id);
             return View("RequestNewTime");
         }
         [HttpPost]
-        public IActionResult JudgeAvailability(JudgeAvailability updatedInfo)
+        public IActionResult RequestNewTime(Judge updatedInfo)
         {
-            _repo.UpdateAvailability();
+            _repo.UpdateAvailability(updatedInfo);
 
-            return RedirectToAction("MovieList"); //instead of going to the view MovieList, it will go to the ACTION
+            return RedirectToAction("RequestNewTime"); //instead of going to the view MovieList, it will go to the ACTION
         }
-        //[HttpGet]
-        //public IActionResult RequestNewTime() 
-        //{
-        //    return View(new JudgeAvailability());
-        //}
-        //[HttpPost]
-        //public IActionResult RequestNewTime(JudgeAvailability availabilities)
-        //{
-        //    _repo.RequestAvailability(availabilities);
-
-        //    return View(new JudgeAvailability());
-        //}
 
         [HttpGet]
-        public IActionResult StudentRequestNewTime()
+        public IActionResult StudentRequestNewTime(int id)
         {
-            return View(new StudentAvailability());
+            _repo.SRequestAvailability(id);
+            return View("StudentRequestNewTime");
         }
         [HttpPost]
-        public IActionResult StudentRequestNewTime(StudentAvailability availabilities)
+        public IActionResult StudentRequestNewTime(Student updatedInfo)
         {
-            _repo.StudentRequestAvailability(availabilities);
+            _repo.SUpdateAvailability(updatedInfo);
 
-            return View(new StudentAvailability());
+            return RedirectToAction("StudentRequestNewTime"); //instead of going to the view MovieList, it will go to the ACTION
         }
 
 

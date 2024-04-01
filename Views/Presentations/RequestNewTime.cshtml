@@ -10,7 +10,7 @@
     Be sure to include this in the formatting of the view.
 *@
 
-@model JudgeAvailability
+@model Judge
 
 <h1>Request New Time</h1>
 
@@ -18,16 +18,7 @@
     <h2>Judge Availability Form</h2>
     <form method="post">
         <div>
-            <label asp-for="JudgeId">Judge ID:</label>
-            <input asp-for="JudgeId" />
-        </div>
-        <div>
-            <label asp-for="JudgeFName">First Name:</label>
-            <input asp-for="JudgeFName" />
-        </div>
-        <div>
-            <label asp-for="JudgeLName">Last Name:</label>
-            <input asp-for="JudgeLName" />
+            <input type="hidden" asp-for="Id" />
         </div>
         <div>
             <label>Select times you WILL NOT be available</label><br />

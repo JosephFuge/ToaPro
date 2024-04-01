@@ -7,6 +7,8 @@ public partial class Student
 {
     public int Id { get; set; }
     public int user_id { get; set; }
+    public string FName { get; set; }
+    public string LName { get; set; }
 
     public string NetId { get; set; } = null!;
 

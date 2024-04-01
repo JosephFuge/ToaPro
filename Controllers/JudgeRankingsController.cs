@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ToaPro.Models;
 
 namespace ToaPro.Controllers
 {
@@ -25,9 +26,18 @@ namespace ToaPro.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult CoordinatorAssignJudges()
-        { 
+        {
+            var Judges = _repo.Judges
+                .OrderBy(x => x.Id).ToList();
+            return View(Judges);
+        }
 
+        [HttpPost]
+        public IActionResult CoordinatorAssignJudges(Judge updatedInfo) // this would be for if the user decide to update a detail
+        {
+            _repo.UpdateJudgeAvailability(updatedInfo);
             return View();
         }
     }
