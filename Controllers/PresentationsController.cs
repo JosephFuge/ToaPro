@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ToaPro.Models;
 
 namespace ToaPro.Controllers
@@ -18,7 +19,7 @@ namespace ToaPro.Controllers
 
         public IActionResult PresentationSchedule()
         {
-            var judges = _repo.Judges.ToList()
+            var judges = _repo.Judges.Include(j => j.ToaProUser).ToList()
                         //.Where(x => x.COLUM == value)
                         .OrderBy(x => x.Id).ToList();
             return View(judges);

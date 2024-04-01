@@ -56,5 +56,11 @@ namespace ToaPro
             _toaProContext.Submissions.Add(submission);
             _toaProContext.SaveChanges();
         }
+        //PLS FIX THIS TEAM :) 
+        public void UpdateJudgeAvailability(Judge judge)
+        {
+            _toaProContext.Judges.Add(judge);
+            _toaProContext.SaveChanges();
+        }
     }
 }

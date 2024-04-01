@@ -346,12 +346,12 @@ namespace ToaPro.Models
                 var judgeUser1 = await _userManager.FindByNameAsync("JudyMcPherson");
                 var judgeUser2 = await _userManager.FindByNameAsync("PhoenixBrave");
 
+
                 _context.Judges.AddRange(
                     new Judge
                     {
                         Id = judgeUser1.Id,
-                        FName = "randomjudgefirstname",
-                        LName = "randomjudgelastname",
+                     
                         Affiliation = "KPMG",
                         TimeSlot1 = true,
                         TimeSlot2 = false,
@@ -362,8 +362,7 @@ namespace ToaPro.Models
                     new Judge
                     {
                         Id = judgeUser2.Id,
-                        FName = "randomfirstname",
-                        LName = "randomlastname",
+                      
                         Affiliation = "Disney Corp.",
                         TimeSlot1 = true,
                         TimeSlot2 = true,
