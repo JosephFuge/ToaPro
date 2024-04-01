@@ -39,6 +39,8 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
     public virtual DbSet<Student> Students { get; set; }
 
     public virtual DbSet<Submission> Submissions { get; set; }
+    //added this part for our model:
+    public virtual DbSet<Evaluation> Evaluations { get; set; }
 
     public virtual DbSet<Award> Awards { get; set; }
     //inlcude a query section on Award
@@ -143,6 +145,9 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
 
             entity.HasIndex(e => new { e.ClassId }, "uniq_grader").IsUnique();
 
+            entity.Property(e => e.Id)
+                .UseIdentityAlwaysColumn()
+                .HasColumnName("id");
             entity.Property(e => e.ClassId).HasColumnName("class_id");
             entity.Property(e => e.IsProfessor)
                 .HasDefaultValue(false)
@@ -223,6 +228,9 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
 
             entity.HasIndex(e => new { e.FName, e.LName, e.Affiliation }, "uniq_judge").IsUnique();
 
+            entity.Property(e => e.Id)
+                .UseIdentityAlwaysColumn()
+                .HasColumnName("id");
             entity.Property(e => e.Affiliation)
                 .HasMaxLength(35)
                 .HasColumnName("affiliation");
