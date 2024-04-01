@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using ToaPro.Models;
 using ToaPro;
@@ -85,15 +86,12 @@ else
     using (var scope = app.Services.CreateScope())
     {
         var context = scope.ServiceProvider.GetRequiredService<ToaProContext>();
-        var dataSeeder = new DataSeeder(context);
-
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ToaProUser>>();
-        bool userSeedSuccess = await dataSeeder.SeedUsers(userManager);
+        var dataSeeder = new DataSeeder(context, userManager);
 
-        if (userSeedSuccess)
-        {
-            dataSeeder.SeedData();
-        }
+        bool userSeedSuccess = await dataSeeder.SeedUsers();
+
+        await dataSeeder.SeedData();
     }
 }
 
