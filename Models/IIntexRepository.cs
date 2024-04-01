@@ -16,6 +16,8 @@ namespace ToaPro
         IEnumerable<JudgeAvailability> JudgeAvailabilities { get; }
         IQueryable<Ranking> Rankings { get; }
         IQueryable<Group> Groups { get; }
+        IQueryable<Award> Awards { get; }
+
 
         public void RequestAvailability(JudgeAvailability availabilities);
         public void StudentRequestAvailability(StudentAvailability availabilities);
@@ -23,5 +25,8 @@ namespace ToaPro
         public void UpdateRanking(Ranking ranking);
 
         public void AddRanking(Ranking ranking);
+
+        public void UpdateAward(Award award);
+
     }
 }

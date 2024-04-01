@@ -26,6 +26,8 @@ namespace ToaPro
         public IEnumerable<JudgeAvailability> JudgeAvailabilities => _toaProContext.JudgeAvailabilities;
         public IQueryable<Ranking> Rankings => _toaProContext.Rankings;
         public IQueryable<Models.Group> Groups => _toaProContext.Groups;
+        public IQueryable<Award> Awards => _toaProContext.Awards;
+
 
         public void RequestAvailability(JudgeAvailability judgeAvailability)
         {
@@ -48,6 +50,12 @@ namespace ToaPro
         public void StudentRequestAvailability(StudentAvailability studentAvailability)
         {
             _toaProContext.Add(studentAvailability);
+            _toaProContext.SaveChanges();
+        }
+
+        public void UpdateAward(Award award)
+        {
+            _toaProContext.Awards.Update(award);
             _toaProContext.SaveChanges();
         }
     }
