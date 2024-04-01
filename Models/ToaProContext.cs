@@ -18,7 +18,7 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
     {
     }
 
-    public virtual DbSet<Class> Classes { get; set; }
+    public virtual DbSet<ClassInfo> Classes { get; set; }
 
     public virtual DbSet<Grade> Grades { get; set; }
 
@@ -52,7 +52,7 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
         
         modelBuilder.HasPostgresExtension("pg_catalog", "adminpack");
 
-        modelBuilder.Entity<Class>(entity =>
+        modelBuilder.Entity<ClassInfo>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("class_pk");
 
@@ -75,7 +75,7 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
                         .HasForeignKey("SemesterId")
                         .OnDelete(DeleteBehavior.ClientSetNull)
                         .HasConstraintName("semester_fk"),
-                    l => l.HasOne<Class>().WithMany()
+                    l => l.HasOne<ClassInfo>().WithMany()
                         .HasForeignKey("ClassId")
                         .OnDelete(DeleteBehavior.ClientSetNull)
                         .HasConstraintName("class_fk"),

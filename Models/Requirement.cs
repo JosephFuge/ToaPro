@@ -16,7 +16,7 @@ public partial class Requirement
 
     public float Points { get; set; }
 
-    public virtual Class Class { get; set; } = null!;
+    public virtual ClassInfo Class { get; set; } = null!;
 
     public virtual ICollection<Grade> Grades { get; set; } = new List<Grade>();
 }

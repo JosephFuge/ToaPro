@@ -10,7 +10,7 @@ public partial class Grader
     public int ClassId { get; set; }
     public bool IsProfessor { get; set; }
 
-    public virtual Class Class { get; set; } = null!;
+    public virtual ClassInfo Class { get; set; } = null!;
 
     public virtual ICollection<Grade> Grades { get; set; } = new List<Grade>();
 
