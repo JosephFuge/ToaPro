@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 using ToaPro.Models;
 
 namespace ToaPro.Controllers
@@ -19,7 +20,28 @@ namespace ToaPro.Controllers
 
         public IActionResult PresentationSchedule()
         {
-            var judges = _repo.Judges.ToList()
+            var judges = from Judge in _repo.Judges
+                         join ToaProUser in _repo.ToaProUsers
+                         on Judge.user_id equals ToaProUser.user_id
+                         select new Judge
+                         {
+                                Id = Judge.Id,
+                                user_id 
+                                semester_id 
+                                public string Affiliation { get; set; } = null!;
+                                public virtual ICollection<Ranking> Rankings { get; set; } = new List<Ranking>();
+                                public virtual ICollection<Presentation> Presentations { get; set; } = new List<Presentation>();
+                                public bool TimeSlot1 { get; set; }
+                                public bool TimeSlot2 { get; set; }
+                                public bool TimeSlot3 { get; set; }
+                                public bool TimeSlot4 { get; set; }
+                                public bool TimeSlot5 { get; set; }
+
+                                //forein key relationship they are not in the judge table you have to pull them from the user table. 
+                                [ForeignKey("ToaProUser")]
+                                public string? FirstName { get; set; }
+                                public string? LastName { get; set; }
+    }
                         //.Where(x => x.COLUM == value)
                         .OrderBy(x => x.Id).ToList();
             return View(judges);
@@ -40,31 +62,17 @@ namespace ToaPro.Controllers
         }
 
         [HttpGet]
-        public IActionResult RequestNewTime(int id)
+        public IActionResult JRequestNewTime(int id)
         {
-            _repo.RequestAvailability(id);
-            return View("RequestNewTime");
+            _repo.JRequestAvailability(id);
+            return View("JRequestNewTime");
         }
         [HttpPost]
-        public IActionResult RequestNewTime(Judge updatedInfo)
+        public IActionResult JRequestNewTime(Judge updatedInfo)
         {
-            _repo.UpdateAvailability(updatedInfo);
+            _repo.JUpdateAvailability(updatedInfo);
 
-            return RedirectToAction("RequestNewTime"); //instead of going to the view MovieList, it will go to the ACTION
-        }
-
-        [HttpGet]
-        public IActionResult StudentRequestNewTime(int id)
-        {
-            _repo.SRequestAvailability(id);
-            return View("StudentRequestNewTime");
-        }
-        [HttpPost]
-        public IActionResult StudentRequestNewTime(Student updatedInfo)
-        {
-            _repo.SUpdateAvailability(updatedInfo);
-
-            return RedirectToAction("StudentRequestNewTime"); //instead of going to the view MovieList, it will go to the ACTION
+            return RedirectToAction("JRequestNewTime"); //instead of going to the view MovieList, it will go to the ACTION
         }
 
 
