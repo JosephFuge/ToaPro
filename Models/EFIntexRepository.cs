@@ -1,17 +1,35 @@
-﻿using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using ToaPro.Models;
+﻿using ToaPro.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ToaPro
 {
     public class EFIntexRepository : IIntexRepository
     {
-        private ToaProContext _toaProContext;
-        public EFIntexRepository(ToaProContext TempDataDictionary) 
+        private readonly ToaProContext _toaProContext;
+
+        public EFIntexRepository(ToaProContext toaProContext)
         {
-            _toaProContext = TempDataDictionary;
+            _toaProContext = toaProContext;
         }
 
-        public IEnumerable<Student> Students => (IEnumerable<Student>)_toaProContext;
-        public IEnumerable<Submission> Submissions => (IEnumerable<Submission>)_toaProContext;
+        public IEnumerable<Student> Students => _toaProContext.Students.ToList();
+        public IEnumerable<Submission> Submissions => _toaProContext.Submissions.ToList();
+        public IEnumerable<Judge> Judges => _toaProContext.Judges.ToList();
+        public IEnumerable<Presentation> Presentations => _toaProContext.Presentations;
+
+        public IEnumerable<JudgeAvailability> JudgeAvailabilities => _toaProContext.JudgeAvailabilities;
+
+        public void RequestAvailability(JudgeAvailability judgeAvailability)
+        {
+            _toaProContext.Add(judgeAvailability);
+            _toaProContext.SaveChanges();
+        }
+
+        public void StudentRequestAvailability(StudentAvailability studentAvailability)
+        {
+            _toaProContext.Add(studentAvailability);
+            _toaProContext.SaveChanges();
+        }
     }
 }
