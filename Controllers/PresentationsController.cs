@@ -40,31 +40,17 @@ namespace ToaPro.Controllers
         }
 
         [HttpGet]
-        public IActionResult RequestNewTime(int id)
+        public IActionResult JRequestNewTime(int id)
         {
-            _repo.RequestAvailability(id);
+            _repo.JRequestAvailability(id);
             return View("RequestNewTime");
         }
         [HttpPost]
-        public IActionResult RequestNewTime(Judge updatedInfo)
+        public IActionResult JRequestNewTime(Judge updatedInfo)
         {
-            _repo.UpdateAvailability(updatedInfo);
+            _repo.JUpdateAvailability(updatedInfo);
 
             return RedirectToAction("RequestNewTime"); //instead of going to the view MovieList, it will go to the ACTION
-        }
-
-        [HttpGet]
-        public IActionResult StudentRequestNewTime(int id)
-        {
-            _repo.SRequestAvailability(id);
-            return View("StudentRequestNewTime");
-        }
-        [HttpPost]
-        public IActionResult StudentRequestNewTime(Student updatedInfo)
-        {
-            _repo.SUpdateAvailability(updatedInfo);
-
-            return RedirectToAction("StudentRequestNewTime"); //instead of going to the view MovieList, it will go to the ACTION
         }
 
 
