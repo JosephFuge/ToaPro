@@ -8,16 +8,14 @@ namespace ToaPro.Models
     public class Student
     {
         [Key]
+        [ForeignKey("ToaProUser")]
         public string Id { get; set; }
+
+        public ToaProUser ToaProUser { get; set; }
         [ForeignKey("Group")]
         public int GroupId { get; set; }
 
         public virtual Group Group { get; set; }
-
-        public string FName { get; set; }
-
-        public string LName { get; set; }
-
         public string NetId { get; set; } = null!;
         public bool TimeSlot1 { get; set; }
         public bool TimeSlot2 { get; set; }
