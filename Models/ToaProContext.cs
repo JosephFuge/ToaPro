@@ -39,9 +39,9 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
     public virtual DbSet<Student> Students { get; set; }
 
     public virtual DbSet<Submission> Submissions { get; set; }
+    //added this part for our model:
+    public virtual DbSet<Evaluation> Evaluations { get; set; }
 
-    public virtual DbSet<JudgeAvailability> JudgeAvailabilities { get; set; }
-    public virtual DbSet<StudentAvailability> StudentAvailabilities { get; set; }
     public virtual DbSet<Award> Awards { get; set; }
     //inlcude a query section on Award
 
@@ -145,6 +145,9 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
 
             entity.HasIndex(e => new { e.ClassId }, "uniq_grader").IsUnique();
 
+            entity.Property(e => e.Id)
+                .UseIdentityAlwaysColumn()
+                .HasColumnName("id");
             entity.Property(e => e.ClassId).HasColumnName("class_id");
             entity.Property(e => e.IsProfessor)
                 .HasDefaultValue(false)
@@ -221,41 +224,41 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
         {
             entity.HasKey(e => e.Id).HasName("judge_pk");
 
-            entity.ToTable("judges");
+        //    entity.ToTable("judges");
 
-            entity.HasIndex(e => new { e.FName, e.LName, e.Affiliation }, "uniq_judge").IsUnique();
+        //    entity.HasIndex(e => new { e.FName, e.LName, e.Affiliation }, "uniq_judge").IsUnique();
 
-            entity.Property(e => e.Affiliation)
-                .HasMaxLength(35)
-                .HasColumnName("affiliation");
-            entity.Property(e => e.FName)
-                .HasMaxLength(35)
-                .HasColumnName("f_name");
-            entity.Property(e => e.LName)
-                .HasMaxLength(35)
-                .HasColumnName("l_name");
+        //    entity.Property(e => e.Affiliation)
+        //        .HasMaxLength(35)
+        //        .HasColumnName("affiliation");
+        //    entity.Property(e => e.FName)
+        //        .HasMaxLength(35)
+        //        .HasColumnName("f_name");
+        //    entity.Property(e => e.LName)
+        //        .HasMaxLength(35)
+        //        .HasColumnName("l_name");
 
-            entity.HasMany(d => d.Presentations).WithMany(p => p.Judges)
-                .UsingEntity<Dictionary<string, object>>(
-                    "JudgePresentation",
-                    r => r.HasOne<Presentation>().WithMany()
-                        .HasForeignKey("PresentationId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("presentation_fk"),
-                    l => l.HasOne<Judge>().WithMany()
-                        .HasForeignKey("JudgeId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("judge_fk"),
-                    j =>
-                    {
-                        j.HasKey("JudgeId", "PresentationId").HasName("judge_presentations_pk");
-                        j.ToTable("judge_presentations");
-                        j.HasIndex(new[] { "PresentationId" }, "IX_judge_presentations_presentation_id");
-                        j.IndexerProperty<int>("JudgeId").HasColumnName("judge_id");
-                        j.IndexerProperty<int>("PresentationId").HasColumnName("presentation_id");
-                    });
-        });
-
+        //    entity.HasMany(d => d.Presentations).WithMany(p => p.Judges)
+        //        .UsingEntity<Dictionary<string, object>>(
+        //            "JudgePresentation",
+        //            r => r.HasOne<Presentation>().WithMany()
+        //                .HasForeignKey("PresentationId")
+        //                .OnDelete(DeleteBehavior.ClientSetNull)
+        //                .HasConstraintName("presentation_fk"),
+        //            l => l.HasOne<Judge>().WithMany()
+        //                .HasForeignKey("JudgeId")
+        //                .OnDelete(DeleteBehavior.ClientSetNull)
+        //                .HasConstraintName("judge_fk"),
+        //            j =>
+        //            {
+        //                j.HasKey("JudgeId", "PresentationId").HasName("judge_presentations_pk");
+        //                j.ToTable("judge_presentations");
+        //                j.HasIndex(new[] { "PresentationId" }, "IX_judge_presentations_presentation_id");
+        //                j.IndexerProperty<int>("JudgeId").HasColumnName("judge_id");
+        //                j.IndexerProperty<int>("PresentationId").HasColumnName("presentation_id");
+        //            });
+        //
+});
         modelBuilder.Entity<Presentation>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("presentation_pk");

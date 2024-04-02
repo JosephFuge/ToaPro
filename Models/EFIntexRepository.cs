@@ -14,7 +14,7 @@ namespace ToaPro
             _toaProContext = toaProContext;
         }
 
-        public IEnumerable<Student> Students => _toaProContext.Students.ToList();
+        public IQueryable<Student> Students => _toaProContext.Students;
         public IEnumerable<Submission> Submissions => _toaProContext.Submissions.ToList();
         public IQueryable<Judge> Judges => _toaProContext.Judges;
         public IQueryable<Presentation> Presentations => _toaProContext.Presentations;
@@ -62,6 +62,12 @@ namespace ToaPro
         public void UpdateAward(Award award)
         {
             _toaProContext.Awards.Update(award);
+            _toaProContext.SaveChanges();
+        }
+        //PLS FIX THIS TEAM :) 
+        public void UpdateJudgeAvailability(Judge judge)
+        {
+            _toaProContext.Judges.Add(judge);
             _toaProContext.SaveChanges();
         }
     }
