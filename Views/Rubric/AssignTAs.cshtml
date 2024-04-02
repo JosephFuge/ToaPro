@@ -8,61 +8,149 @@ This view will need to contain functionality to disallow TAs from editing their 
 and allowing professors to edit/make assignments.
 *@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <style>
-        /* Additional or override styles if needed */
-    </style>
+<vc:nav-bar-types user="Professor"></vc:nav-bar-types>
+<vc:submenu-types view="Default"></vc:submenu-types>
+<vc:header-types title="Assign TAs" />
 
-</head>
-<body>
+<div class="container">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Assign TAs</title> <!-- Corrected page title -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            /* Custom CSS for specific styling */
+            .header {
+                position: relative;
+                padding: 1rem 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
 
-    <vc:nav-bar-types user="Professor"></vc:nav-bar-types>
-    <vc:submenu-types view="Grading"></vc:submenu-types>
-    <vc:header-types title="Assign TAs" />
+            .header-background {
+                background-color: #007bff;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+            }
 
-    <main class="container mt-4">
-        <div class="button-container mt-4 mb-4 d-flex justify-content-end">
-            <div class="d-inline-flex align-items-center mr-4">
-                <button class="ghostButton">Edit</button>
-            </div>
+            .content {
+                color: white;
+            }
 
-            <div class="d-inline-flex align-items-center">
-                <button class="button">Add Row</button>
-            </div>
+            .logo {
+                width: 90px;
+                height: 33px;
+            }
+
+            .separator {
+                border-bottom: 1px solid #ddd;
+                margin-bottom: 1rem;
+            }
+
+            .menu {
+                margin-bottom: 1rem;
+            }
+
+            .main-content {
+                padding: 1rem 0;
+            }
+
+            .container1,
+            .container2,
+            .table-container,
+            .button-container,
+            .sidebar,
+            .footer {
+                margin-bottom: 1rem;
+            }
+
+            .inner {
+                padding: 0.5rem;
+            }
+
+            /* Align buttons to the right */
+            .button-container {
+                display: flex;
+                justify-content: flex-end;
+            }
+
+                /* Margin between buttons */
+                .button-container .btn {
+                    margin-left: 10px;
+                }
+
+            /* Right align labels in the header */
+            .header .labels {
+                display: flex;
+                align-items: center;
+            }
+
+            /* Style for labels */
+            .header .label {
+                margin-left: 20px;
+                color: white;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div>
+            <vc:header-types />
         </div>
+        <main class="main-content">
+            <div class="container container1 bg-light">
+                <div class="inner"></div>
+                <img class="image" src="https://via.placeholder.com/576x119" alt="Placeholder Image" />
+            </div>
 
+            <div class="container container2 bg-light">
+                <div class="inner"></div>
+                <div class="text-container">
+                    Assign TAs
+                </div>
+            </div>
 
-        <div class="table-container">
-            <table class="table">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>TA Name</th>
-                        <th>Groups</th>
-                        <th>Requirements</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var x in Model.Class1Requirements)
-                    {
+            <div class="container button-container">
+                <div class="inner"></div>
+                <button class="btn btn-primary">Edit</button>
+                <button class="btn btn-primary">Add Row</button>
+            </div>
+
+            <div class="container table-container">
+                <table class="table">
+                    <thead>
                         <tr>
-                            <td>@x.grader_id</td>
-                            <td>@x.group_id</td>
-                            <td>@x.requirement_id</td>
+                            <th>TA Name</th>
+                            <th>Groups</th>
+                            <th>Requirements</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    </main>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </main>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+        <aside class="sidebar bg-light">
+            <div class="label">Grading</div>
+            <div class="label">Presentation</div>
+            <div class="label">Permissions</div>
+            <div class="separator-vertical"></div>
+            <div class="container button-container2">
+                <div class="inner"></div>
+                <!-- Placeholder for buttons on the sidebar -->
+            </div>
+        </aside>
+
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </body>
+</div>
+
+
+
+
