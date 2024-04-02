@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using ToaPro.Models;
 using ToaPro;
@@ -72,7 +73,7 @@ using (var scope = app.Services.CreateScope())
 }
 
 
-// Configure the HTTP request pipeline.
+//// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");

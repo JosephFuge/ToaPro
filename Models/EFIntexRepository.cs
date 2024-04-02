@@ -14,7 +14,7 @@ namespace ToaPro
             _toaProContext = toaProContext;
         }
 
-        public IEnumerable<Student> Students => _toaProContext.Students.ToList();
+        public IQueryable<Student> Students => _toaProContext.Students;
         public IEnumerable<Submission> Submissions => _toaProContext.Submissions.ToList();
         public IQueryable<Judge> Judges => _toaProContext.Judges;
         public IQueryable<Presentation> Presentations => _toaProContext.Presentations;
@@ -23,13 +23,15 @@ namespace ToaPro
         public IEnumerable<Grader> Graders => _toaProContext.Graders;
         public IEnumerable<Requirement> Requirements => _toaProContext.Requirements;
         public IEnumerable<Semester> Semesters => _toaProContext.Semesters;
-        public IEnumerable<JudgeAvailability> JudgeAvailabilities => _toaProContext.JudgeAvailabilities;
         public IQueryable<Ranking> Rankings => _toaProContext.Rankings;
         public IQueryable<Models.Group> Groups => _toaProContext.Groups;
+        public IQueryable<Award> Awards => _toaProContext.Awards;
 
-        public void RequestAvailability(JudgeAvailability judgeAvailability)
+
+        //Change RequestAvailability to match the judge model when inputting their timeslots
+        public void RequestAvailability(Judge judge)
         {
-            _toaProContext.Add(judgeAvailability);
+            _toaProContext.Add(judge);
             _toaProContext.SaveChanges();
         }
 
@@ -45,15 +47,27 @@ namespace ToaPro
             _toaProContext.SaveChanges();
         }
 
-        public void StudentRequestAvailability(Student studentAvailability)
+        public void StudentRequestAvailability(Student student)
         {
-            _toaProContext.Add(studentAvailability);
+            _toaProContext.Add(student);
             _toaProContext.SaveChanges();
         }
 
         public void AddSubmission(Submission submission)
         {
             _toaProContext.Submissions.Add(submission);
+            _toaProContext.SaveChanges();
+        }
+
+        public void UpdateAward(Award award)
+        {
+            _toaProContext.Awards.Update(award);
+            _toaProContext.SaveChanges();
+        }
+        //PLS FIX THIS TEAM :) 
+        public void UpdateJudgeAvailability(Judge judge)
+        {
+            _toaProContext.Judges.Add(judge);
             _toaProContext.SaveChanges();
         }
     }

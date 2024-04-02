@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ToaPro.Models;
 
 public partial class Group
 {
+    [Key]
     public int Id { get; set; }
 
+    [ForeignKey("Semester")]
     public int SemesterId { get; set; }
 
     public short Section { get; set; }
@@ -24,4 +28,10 @@ public partial class Group
     public virtual ICollection<Submission> Submissions { get; set; } = new List<Submission>();
 
     public virtual ICollection<Student> Students { get; set; } = new List<Student>();
+
+	public bool TimeSlot1 { get; set; }
+	public bool TimeSlot2 { get; set; }
+	public bool TimeSlot3 { get; set; }
+	public bool TimeSlot4 { get; set; }
+	public bool TimeSlot5 { get; set; }
 }
