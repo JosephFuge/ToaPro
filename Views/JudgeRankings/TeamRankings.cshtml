@@ -9,6 +9,8 @@
 <style>
     .button-container {
         text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
     }
 
     .rounded-btn {
@@ -38,15 +40,18 @@
             color: white;
         }
 </style>
+<vc:nav-bar-types user="JudgeNav"></vc:nav-bar-types>
+<vc:submenu-types view="Default"></vc:submenu-types>
+<vc:header-types title="Presentation Form" />
 <div class="button-container">
     @foreach (Judge judge in ViewBag.joinedData)
     {
         @foreach (var presentation in judge.Presentations)
         {
-            <a asp-controller="JudgeRankings" asp-action="JudgePresentationForm" asp-route-groupId="@presentation.GroupId"><button type="button" class="btn navy-background rounded-btn">Team @presentation.Group.Section - @presentation.Group.Number</button></a>
+            <a asp-controller="JudgeRankings" asp-action="JudgePresentationForm" asp-route-groupId="@presentation.GroupId"><button type="button" class="large-button">Team @presentation.Group.Section - @presentation.Group.Number</button></a>
         }
     }
-    <a asp-controller="JudgeRankings" asp-action="TeamRankings"><button type="button" class="btn white-button rounded-btn">Rankings</button></a>
+    <a asp-controller="JudgeRankings" asp-action="TeamRankings"><button type="button" class="large-ghostButton">Rankings</button></a>
 </div>
 
 <!--

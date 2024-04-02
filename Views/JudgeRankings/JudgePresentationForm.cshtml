@@ -10,6 +10,8 @@
 <style>
     .button-container {
         text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
     }
 
     .rounded-btn {
@@ -36,13 +38,9 @@
             color: white;
         }
 </style>
-@{
-    // You can set up any necessary data here
-    string title = "Presentation Form";
-    string user = "JudgeNav";
-}
-@await Component.InvokeAsync("NavBarTypes", new { user })
-@await Component.InvokeAsync("HeaderTypes", new { title })
+<vc:nav-bar-types user="JudgeNav"></vc:nav-bar-types>
+<vc:submenu-types view="Default"></vc:submenu-types>
+<vc:header-types title="Presentation Form" />
 <body>
     <div>
         <vc:header-types />
@@ -69,15 +67,15 @@
         {
             if(Model.GroupId == presentation.GroupId)
             {
-                <a asp-controller="JudgeRankings" asp-action="JudgePresentationForm" asp-route-groupId="@presentation.GroupId"><button type="button" class="btn white-button rounded-btn">Team @presentation.Group.Section - @presentation.Group.Number</button></a>
+                <a asp-controller="JudgeRankings" asp-action="JudgePresentationForm" asp-route-groupId="@presentation.GroupId"><button type="button" class="large-ghostButton">Team @presentation.Group.Section - @presentation.Group.Number</button></a>
             }
             else
             {
-                <a asp-controller="JudgeRankings" asp-action="JudgePresentationForm" asp-route-groupId="@presentation.GroupId"><button type="button" class="btn navy-background rounded-btn">Team @presentation.Group.Section - @presentation.Group.Number</button></a>
+                <a asp-controller="JudgeRankings" asp-action="JudgePresentationForm" asp-route-groupId="@presentation.GroupId"><button type="button" class="large-button">Team @presentation.Group.Section - @presentation.Group.Number</button></a>
             }
         }
     }
-        <a asp-controller="JudgeRankings" asp-action="TeamRankings"><button type="button" class="btn navy-background rounded-btn">Rankings</button></a>
+        <a asp-controller="JudgeRankings" asp-action="TeamRankings"><button type="button" class="large-button">Rankings</button></a>
     </div>
     <div class="container">
         <form method="post">
@@ -187,7 +185,8 @@
         <p>We like to give the teams fun awards independent of their overall scores.  Please consider one or more creative and fun/funny awards for this team.</p>
         <p>(i.e., "The Extra Mile Award", "Best Analytics Award", "Best Dressed Award", "Thinking Outside the Box Award", "Most Colorful Slide Award", etc.)</p>
         <input class="form-control" type="text" asp-for="Nomination"/>
-        <button class="btn navy-background rounded-btn" type="submit">Save</button>
+        <br />
+        <button class="button" type="submit">Save</button>
         <div asp-validation-summary="All"></div>
         </form>
     </div>
