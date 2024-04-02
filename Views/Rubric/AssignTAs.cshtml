@@ -46,8 +46,10 @@ and allowing professors to edit/make assignments.
                 <tbody>
                     @foreach (var ta in Model)
                     {
-                    <td>@(ta.ToaProUser.FirstName + " " + ta.ToaProUser.LastName) </td>
-                        <td>@ta</td>
+                        <tr>
+                            <td>@(ta.ToaProUser.FirstName + " " + ta.ToaProUser.LastName)</td>
+                            <td>@ta</td>
+                        </tr>
                     }
                 </tbody>
             </table>
