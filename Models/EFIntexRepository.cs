@@ -64,5 +64,11 @@ namespace ToaPro
             _toaProContext.Awards.Update(award);
             _toaProContext.SaveChanges();
         }
+        //PLS FIX THIS TEAM :) 
+        public void UpdateJudgeAvailability(Judge judge)
+        {
+            _toaProContext.Judges.Add(judge);
+            _toaProContext.SaveChanges();
+        }
     }
 }

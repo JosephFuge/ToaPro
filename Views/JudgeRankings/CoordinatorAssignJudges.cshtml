@@ -4,3 +4,164 @@
 @{
 }
 @*Assign Judges View (Groups 7 & 5)*@
+@model List<Judge>
+@{
+    ViewData["Title"] = "Home Page";
+}
+<vc:nav-bar-types user="Professor"></vc:nav-bar-types>
+<vc:header-types title="Assign Judges" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Judge Assignment</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Style for the grid */
+        .grid-container {
+            display: grid;
+            grid-template-columns: auto repeat(6, 1fr); /* First column auto width, then 6 timeslots */
+            gap: 1px; /* Gap between grid cells */
+        }
+
+        .grid-item {
+            border: 1px solid #ccc; /* Border for each grid cell */
+            padding: 10px;
+            text-align: center;
+        }
+        /* Style to highlight header cells */
+        .grid-header {
+            font-weight: bold;
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Left Column (1/4th of the screen) -->
+            <div class="col-lg-3">
+                <h2>Judge Assignment</h2>
+                <!-- Dropdown for Judges -->
+                <div class="form-group">
+                    
+                    <label asp-for="@Model.FirstOrDefault().Id">Select Judge:</label>
+                    <select class="form-control" id="judgeDropdown">
+                        @foreach (Judge j in Model)
+                        {
+                         <option value="@j.Id">@j.ToaProUser.FirstName @j.ToaProUser.LastName</option>
+                        }
+                    </select>
+                </div>
+                <!-- Current Assignments Box -->
+                <div class="card">
+                    <div class="card-header">Current Assignments</div>
+                    <div class="card-body">
+                        <!-- Display current assignments here -->
+                        <p>No assignments yet.</p>
+                    </div>
+                </div>
+                <!-- Not Available Times Box -->
+                <div class="card mt-3">
+                    <div class="card-header">Not Available During These Times</div>
+                    <div class="card-body">
+                        <!-- Display not available times here -->
+                        <p>No specified unavailable times.</p>
+                    </div>
+                </div>
+                <!-- Assign New Assignment Box -->
+                <div class="card mt-3">
+                    <div class="card-header">Assign New Assignment</div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="roomDropdown">Room:</label>
+                            <select class="form-control" id="roomDropdown">
+                                <option>Room 1</option>
+                                <option>Room 2</option>
+                                <option>Room 3</option>
+                                <option>Room 4</option>
+                                <option>Room 5</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="timeDropdown">Time:</label>
+                            <select class="form-control" id="timeDropdown">
+                                <option>12:30</option>
+                                <option>1:00</option>
+                                <option>1:30</option>
+                                <option>2:00</option>
+                                <option>2:30</option>
+                                <option>3:00</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-primary">Assign</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Right Column (Remaining 3/4ths of the screen) -->
+            <div class="col-lg-9">
+                <!-- Grid for rooms and timeslots -->
+                <div class="grid-container">
+                    <!-- Header row for timeslots -->
+                    <div class="grid-item grid-header">ROOM #</div>
+                    <div class="grid-item grid-header">12:30</div>
+                    <div class="grid-item grid-header">1:00</div>
+                    <div class="grid-item grid-header">1:30</div>
+                    <div class="grid-item grid-header">2:00</div>
+                    <div class="grid-item grid-header">2:30</div>
+                    <div class="grid-item grid-header">3:00</div>
+                    <!-- Rows for each room -->
+                    <div class="grid-item">Room 1</div>
+                    <div class="grid-item">Content</div>
+                    <div class="grid-item">Content</div>
+                    <div class="grid-item">Content</div>
+                    <div class="grid-item">Content</div>
+                    <div class="grid-item">Content</div>
+                    <div class="grid-item">Content</div>
+                    <!-- Content for Room 1 -->
+                    <!-- Repeat for Room 2 to Room 5 -->
+                    <div class="grid-item">Room 2</div>
+                    <div class="grid-item">Content</div>
+                    <div class="grid-item">Content</div>
+                    <div class="grid-item">Content</div>
+                    <div class="grid-item">Content</div>
+                    <div class="grid-item">Content</div>
+                    <div class="grid-item">Content</div>
+                    <!-- Content for Room 2 -->
+                    <div class="grid-item">Room 3</div>
+                    <div class="grid-item">Content</div>
+                    <div class="grid-item">Content</div>
+                    <div class="grid-item">Content</div>
+                    <div class="grid-item">Content</div>
+                    <div class="grid-item">Content</div>
+                    <div class="grid-item">Content</div>
+                    <!-- Content for Room 3 -->
+                    <div class="grid-item">Room 4</div>
+                    <div class="grid-item">Content</div>
+                    <div class="grid-item">Content</div>
+                    <div class="grid-item">Content</div>
+                    <div class="grid-item">Content</div>
+                    <div class="grid-item">Content</div>
+                    <div class="grid-item">Content</div>
+                    <!-- Content for Room 4 -->
+                    <div class="grid-item">Room 5</div>
+                    <div class="grid-item">Content</div>
+                    <div class="grid-item">Content</div>
+                    <div class="grid-item">Content</div>
+                    <div class="grid-item">Content</div>
+                    <div class="grid-item">Content</div>
+                    <div class="grid-item">Content</div>
+                    <!-- Content for Room 5 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS (Optional, if needed) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
