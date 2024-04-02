@@ -33,7 +33,12 @@ namespace ToaPro.Controllers
 
         public IActionResult AssignTAs()
         {
-            return View();
+            var TAAssignmentList = _context.Graders
+                .Include(x => x.ToaProUser)
+                .Where(x => x.IsProfessor == false)
+                .ToList();
+
+            return View(TAAssignmentList);
         }
         [HttpGet]
         public IActionResult AddObjective(int id)
