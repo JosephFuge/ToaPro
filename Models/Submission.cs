@@ -16,7 +16,7 @@ public partial class Submission
     public DateTime CreatedDate { get; set; }
     public string GithubLink { get; set; }
     public string YoutubeLink { get; set; }
-    public string UploadFile { get; set; }
+    public string? UploadFile { get; set; }
 
     public virtual ICollection<Grade> Grades { get; set; } = new List<Grade>();
 

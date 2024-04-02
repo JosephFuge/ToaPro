@@ -60,12 +60,12 @@ namespace ToaPro.Controllers
             {
                 _repo.AddSubmission(response); // Corrected line
 
-                return View("StudentSubmitFilesConfirmation", response);
+                return RedirectToPage("StudentSubmitFilesConfirmation", response);
             }
             else
             {
                 ViewBag.Categories = _repo.Submissions.ToList();
-                return View("Submission", response); // Corrected to return the right view
+                return View("StudentSubmitFiles", response); // Corrected to return the right view
             }
         }
 

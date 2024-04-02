@@ -17,36 +17,39 @@
 <div class="container">
     <body>
 
-        <div class="container center">
+        <div class="container center m-100">
             <div class="submission-form">
                 <br />
                 <br />
                 <h2 class="text-center bold-text">Please include the following in your submission:</h2>
-                <form method="post">
+                <form method="post" asp-controller="StudentSubmissions" asp-action="StudentSubmitFilesConfirmation">
                     <input type="hidden" asp-for="StudentId" />
                     <input type="hidden" asp-for="GroupId" />
+                    <input type="hidden" asp-for="CreatedDate" />
 
                     <br />
                     <br />
                     <label asp-for="GithubLink" class="bold-text">GitHub Link:</label>
                     <p>Make sure your repository is public.</p>
-                    <input type="text" id="GithubLink" asp-for="GithubLink">
+                    <input type="text" id="GithubLink" asp-for="GithubLink" style="width: 80%;">
                     <br />
                     <br />
                     <label asp-for="YoutubeLink" class="bold-text">YouTube Link:</label>
                     <p>Explain how your project fulfills the rubric requirements  in 10 minutes or less. Showcase any extra features you’ve added.</p>
-                    <input type="text" id="YoutubeLink" asp-for="YoutubeLink">
+                    <input type="text" id="YoutubeLink" asp-for="YoutubeLink" style="width: 80%;">
                     <br />
                     <br />
                     <label asp-for="UploadFile" class="bold-text">Upload Files:</label>
                     <p>
-                        Include: readme file, data analysis, presentation, ERD, and normalization files
+                        Include: readme file, data analysis, presentation, ERD, and normalization files <br>
                         Readme file requirements: website link with username and password
                     </p>
-                    <input type="file" id="UploadFile" asp-for="UploadFile" directory webkitdirectory mozdirectory>
+                    <input type="file" id="UploadFile" asp-for="UploadFile" directory webkitdirectory mozdirectory style="width: 250px;">
                     <br />
                     <br />
-                    <button type="submit" class="button">Submit</button>
+                    <div style="text-align: center;">
+                        <button type="submit" class="button">Submit</button>
+                    </div>
                     <br />
                 </form>
             </div>
