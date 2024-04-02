@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ToaPro.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ToaPro.Controllers
 {
@@ -19,7 +20,7 @@ namespace ToaPro.Controllers
 
         public IActionResult PresentationSchedule()
         {
-            var judges = _repo.Judges.ToList()
+            var judges = _repo.Judges.Include(j => j.ToaProUser).ToList()
                         //.Where(x => x.COLUM == value)
                         .OrderBy(x => x.Id).ToList();
             return View(judges);
@@ -39,32 +40,33 @@ namespace ToaPro.Controllers
             return View();
         }
 
+        //Made some changes here with requesting new time (removed the judge availability model and placed its data inside the judge model).
+        //We did not need both models.
         [HttpGet]
-        public IActionResult RequestNewTime(int id)
+        public IActionResult JudgeRequestNewTime() 
         {
-            _repo.RequestAvailability(id);
-            return View("RequestNewTime");
+            return View(new Judge());
         }
         [HttpPost]
-        public IActionResult RequestNewTime(Judge updatedInfo)
+        public IActionResult JudgeRequestNewTime(Judge judge)
         {
-            _repo.UpdateAvailability(updatedInfo);
+            _repo.RequestAvailability(judge);
 
-            return RedirectToAction("RequestNewTime"); //instead of going to the view MovieList, it will go to the ACTION
+            return View(new Judge());
         }
 
+        //If anything breaks here, note that I removed the student availability model and moved its data into the student model. We did not need both of them
         [HttpGet]
-        public IActionResult StudentRequestNewTime(int id)
+        public IActionResult StudentRequestNewTime()
         {
-            _repo.SRequestAvailability(id);
-            return View("StudentRequestNewTime");
+            return View(new Student());
         }
         [HttpPost]
-        public IActionResult StudentRequestNewTime(Student updatedInfo)
+        public IActionResult StudentRequestNewTime(Student student)
         {
-            _repo.SUpdateAvailability(updatedInfo);
+            _repo.StudentRequestAvailability(student);
 
-            return RedirectToAction("StudentRequestNewTime"); //instead of going to the view MovieList, it will go to the ACTION
+            return View(new Student());
         }
 
 

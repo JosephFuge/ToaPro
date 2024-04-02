@@ -4,3 +4,74 @@
 @{
 }
 @*Professors Assign actual rankings, this page will also display the Judges nominations from the JudgePresentationForm.cshtml View (Groups 3 & 6)*@
+@* team 4-8 *@
+
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+<vc:nav-bar-types user="Professor"></vc:nav-bar-types>
+<vc:submenu-types view="Default"></vc:submenu-types>
+<vc:header-types title="Awards Table" />
+
+<div class="container">
+    <div>
+        <vc:header-types />
+    </div>
+    <div>
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>Placement Awards</th>
+                <th>Team</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>First Place:</td>
+                <td>Model.teamNumber</td>
+            </tr>
+            <tr>
+                <td>Second Place:</td>
+                <td>Model.teamNumber</td>
+            </tr>
+            <tr>
+                <td>Third Place:</td>
+                <td>Model.teamNumber</td>
+            </tr>
+            <tr>
+                <td>Fourth Place:</td>
+                <td>Model.teamNumber</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div>
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>Fun awards</th>
+                <th>Team</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>I'd hire them as consultants</td>
+                <td>Model.teamNumber</td>
+            </tr>
+            <tr>
+                <td>Duct tape award for live debugging</td>
+                <td>Model.teamNumber</td>
+            </tr>
+            <tr>
+                <td>Mary Poppins Presentation award</td>
+                <td>Model.teamNumber</td>
+            </tr>
+            <tr>
+                <td>Swipe right award</td>
+                <td>Model.teamNumber</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    
+</div>
