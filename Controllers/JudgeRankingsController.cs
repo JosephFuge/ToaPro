@@ -100,6 +100,7 @@ namespace ToaPro.Controllers
         public IActionResult CoordinatorAssignJudges()
         {
             var Judges = _repo.Judges
+                .Include(x => x.ToaProUser)
                 .OrderBy(x => x.Id).ToList();
             return View(Judges);
         }
