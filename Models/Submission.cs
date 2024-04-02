@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ToaPro.Models;
 
@@ -9,13 +11,16 @@ public partial class Submission
     public string YoutubeLink { get; set; }
     public string UploadFile { get; set; }
 
+    [Key]
     public int Id { get; set; }
-
+    [ForeignKey("Group")]
     public int GroupId { get; set; }
-
-    public int StudentId { get; set; }
-
+    [ForeignKey("Student")]
+    public string StudentId { get; set; }
     public DateTime CreatedDate { get; set; }
+    public string GithubLink { get; set; }
+    public string YoutubeLink { get; set; }
+    public string UploadFile { get; set; }
 
     public virtual ICollection<Grade> Grades { get; set; } = new List<Grade>();
 

@@ -5,18 +5,32 @@ namespace ToaPro
     public interface IIntexRepository
     {
         IEnumerable<ClassInfo> Classes { get; }
+        IQueryable<Student> Students { get; } 
+        IEnumerable<Class> Classes { get; }
         IEnumerable<Grade> Grades { get; }
         IEnumerable<Grader> Graders { get; }
-        IEnumerable<Group> Groups { get; }
-        IEnumerable<Judge> Judges { get; }
-        IEnumerable<Presentation> Presentations { get; }
-        IEnumerable<Ranking> Rankings { get; }
         IEnumerable<Requirement> Requirements { get; }
         IEnumerable<Semester> Semesters { get; }
-        IEnumerable<Student> Students { get; }
         IEnumerable<Submission> Submissions { get; }
-        IEnumerable<JudgeAvailability> JudgeAvailabilities { get; }
-        public void RequestAvailability(JudgeAvailability availabilities);
-        public void StudentRequestAvailability(StudentAvailability availabilities);
+        IQueryable<Judge> Judges { get; }
+        IQueryable<Presentation> Presentations { get; }
+        IQueryable<Ranking> Rankings { get; }
+        IQueryable<Group> Groups { get; }
+        IQueryable<Award> Awards { get; }
+
+
+        public void RequestAvailability(Judge judge);
+        public void StudentRequestAvailability(Student student);
+
+        public void UpdateRanking(Ranking ranking);
+
+        public void AddRanking(Ranking ranking);
+
+        public void UpdateAward(Award award);
+
+        public void AddSubmission(Submission submission);
+
+
+        public void UpdateJudgeAvailability (Judge judge);
     }
 }
