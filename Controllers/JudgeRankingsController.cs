@@ -19,13 +19,13 @@ namespace ToaPro.Controllers
         }
 
         [HttpGet]
-        public IActionResult JudgePresentationForm(int judgeId = 2, int groupId = 0)
+        public IActionResult JudgePresentationForm(string judgeId = "736ab614-65f3-4481-92f0-d756f840d380", int groupId = 0)
         {
             // List of rankings for the specified judge
-            var judgeRankings = _repo.Rankings.Where(x => x.JudgeId == judgeId).ToList();
+            var judgeRankings = _repo.Rankings.Where(x => x.JudgeId.Equals(judgeId)).ToList();
 
             // List of Judges and their Presentations
-            var judgesList = _repo.Judges.Where(x => x.Id == judgeId).Include(x => x.Presentations).ToList();
+            var judgesList = _repo.Judges.Where(x => x.Id.Equals(judgeId)).Include(x => x.Presentations).ToList();
 
             Ranking ranking;
 
@@ -54,7 +54,7 @@ namespace ToaPro.Controllers
                 var group = (from rankings in _repo.Rankings
                             join presentations in _repo.Presentations
                             on rankings.PresentationId equals presentations.Id
-                            where rankings.JudgeId == judgeId
+                            where rankings.JudgeId.Equals(judgeId)
                             orderby presentations.StartDate
                             select new
                             {
@@ -71,19 +71,36 @@ namespace ToaPro.Controllers
 
             //Pull in the ranking for the specified JudgeId and GroupId
             var rankingToEdit = _repo.Rankings
-                .Where(x => x.JudgeId == judgeId && x.GroupId == groupId)
+                .Where(x => x.JudgeId.Equals(judgeId) && x.GroupId == groupId)
                 .FirstOrDefault();
 
             // Set the record to be edited to the new Ranking created in the table
             var rankingId = rankingToEdit.Id;
 
             // Pass in data for buttons 
-            ViewBag.joinedData = _repo.Judges
-                .Where(x => x.Id == judgeId)
+            /*ViewBag.joinedData = _repo.Judges
+                .Where(x => x.Id.Equals(judgeId))
                 .Include(r => r.Rankings)
                 .Include(p => p.Presentations)
                     .ThenInclude(g => g.Group)
-                .ToList();
+                .ToList();*/
+
+            ViewBag.joinedData = (from judges in _repo.Judges
+                                  join rankings in _repo.Rankings
+                                  on judges.Id equals rankings.JudgeId
+                                  join groups in _repo.Groups
+                                  on rankings.GroupId equals groups.Id
+                                  join presentations in _repo.Presentations
+                                  on rankings.PresentationId equals presentations.Id
+                                  where judges.Id.Equals(judgeId)
+                                  orderby presentations.StartDate
+                                  select new
+                                  {
+                                      GroupId = groups.Id,
+                                      Section = groups.Section,
+                                      Number = groups.Number
+                                  }
+                                  ).ToList();
 
             //Select which ranking to edit
             var recordToEdit = _repo.Rankings.Single(x => x.Id == rankingId);
@@ -104,14 +121,24 @@ namespace ToaPro.Controllers
         }
 
         [HttpGet]
-        public IActionResult TeamRankings(string judgeId = "")
+        public IActionResult TeamRankings(string judgeId = "736ab614-65f3-4481-92f0-d756f840d380")
         {
-            ViewBag.joinedData = _repo.Judges
-                .Where(x => x.Id == judgeId)
-                .Include(r => r.Rankings)
-                .Include(p => p.Presentations)
-                    .ThenInclude(g => g.Group)
-                .ToList();
+            ViewBag.joinedData = (from judges in _repo.Judges
+                                  join rankings in _repo.Rankings
+                                  on judges.Id equals rankings.JudgeId
+                                  join groups in _repo.Groups
+                                  on rankings.GroupId equals groups.Id
+                                  join presentations in _repo.Presentations
+                                  on rankings.PresentationId equals presentations.Id
+                                  where judges.Id.Equals(judgeId)
+                                  orderby presentations.StartDate
+                                  select new
+                                  {
+                                      GroupId = groups.Id,
+                                      Section = groups.Section,
+                                      Number = groups.Number
+                                  }
+                                  ).ToList();
 
             return View();
         }

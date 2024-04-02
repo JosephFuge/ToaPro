@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Net.WebSockets;
+using ToaPro.Controllers;
 
 namespace ToaPro.Models
 {
@@ -404,6 +405,7 @@ namespace ToaPro.Models
             {
                 var groups = _context.Groups;
                 var judges = _context.Judges;
+                var presentations = _context.Presentations;
 
                 _context.Rankings.AddRange(
                     new Ranking
@@ -416,7 +418,8 @@ namespace ToaPro.Models
                         TechnologyPoints = 10,
                         TechnologyComments = "Great tech",
                         OverallPoints = 14,
-                        Nomination = "Number 2 in INTEX"
+                        Nomination = "Number 2 in INTEX",
+                        PresentationId = presentations.FirstOrDefault().Id
                     },
                     new Ranking
                     {
@@ -428,7 +431,8 @@ namespace ToaPro.Models
                         TechnologyPoints = 10,
                         TechnologyComments = "Great tech",
                         OverallPoints = 16,
-                        Nomination = "Number 1 in INTEX"
+                        Nomination = "Number 1 in INTEX",
+                        PresentationId = presentations.FirstOrDefault().Id
                     }
                 );
 

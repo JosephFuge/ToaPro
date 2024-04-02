@@ -61,18 +61,15 @@
         }
     </script>
     <div class="button-container">
-    @foreach (Judge judge in ViewBag.joinedData)
+    @foreach (var item in ViewBag.joinedData)
     {
-        @foreach (var presentation in judge.Presentations.OrderBy(p => p.StartDate))
+        if(Model.GroupId == item.GroupId)
         {
-            if(Model.GroupId == presentation.GroupId)
-            {
-                <a asp-controller="JudgeRankings" asp-action="JudgePresentationForm" asp-route-groupId="@presentation.GroupId"><button type="button" class="large-ghostButton">Team @presentation.Group.Section - @presentation.Group.Number</button></a>
-            }
-            else
-            {
-                <a asp-controller="JudgeRankings" asp-action="JudgePresentationForm" asp-route-groupId="@presentation.GroupId"><button type="button" class="large-button">Team @presentation.Group.Section - @presentation.Group.Number</button></a>
-            }
+            <a asp-controller="JudgeRankings" asp-action="JudgePresentationForm" asp-route-groupId="@item.GroupId"><button type="button" class="large-ghostButton">Team @item.Section - @item.Number</button></a>
+        }
+        else
+        {
+            <a asp-controller="JudgeRankings" asp-action="JudgePresentationForm" asp-route-groupId="@item.GroupId"><button type="button" class="large-button">Team @item.Section - @item.Number</button></a>
         }
     }
         <a asp-controller="JudgeRankings" asp-action="TeamRankings"><button type="button" class="large-button">Rankings</button></a>
@@ -83,6 +80,7 @@
             <input type="hidden" asp-for="GroupId"/>
             <input type="hidden" asp-for="JudgeId" />
             <input type="hidden" asp-for="TeamRanking" />
+            <input type="hidden" asp-for="PresentationId" />
             <table class="table">
                 <thead>
                     <tr class="navy-background">
