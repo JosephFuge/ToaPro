@@ -63,13 +63,23 @@
 
 -->
 
-<h2>Drag and Drop</h2>
-<p>Drag the box back and forth between the two div elements.</p>
+<div style="display: flex; flex-direction: column; align-items: center;">
+    <h2>Drag and Drop</h2>
+    <p>Drag the box back and forth between the two div elements.</p>
 
-<div id="div1" style="float: left; width: 100px; height: 35px; margin: 10px; padding: 10px; border: 1px solid black;" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <div style="display: flex; flex-direction:column; display: flex; flex-direction: row; border: white 1px solid; justify-content: space-around; align-items: center">       
+        <div class="draggable" id="drag1" draggable="true" ondragstart="drag(event)" style="width: 100px; height:35px; flex-grow: 1; margin: 5px; border: 1px solid #ccc; background-color: blue; cursor: move;">Team 1</div>
+        <div class="draggable" id="drag2" draggable="true" ondragstart="drag(event)" style="width: 100px; height:35px; flex-grow: 1; margin: 5px; border: 1px solid #ccc; background-color: #ccc; cursor: move;">Team 2</div>
+        <div class="draggable" id="drag3" draggable="true" ondragstart="drag(event)" style="width: 100px; height:35px; flex-grow: 1; margin: 5px; border: 1px solid #ccc; background-color: blue; cursor: move;">Team 3</div>
+        <div class="draggable" id="drag4" draggable="true" ondragstart="drag(event)" style="width: 100px; height:35px; flex-grow: 1; margin: 5px; border: 1px solid #ccc; background-color: #ccc; cursor: move;">Team 4</div>
+        <div class="draggable" id="drag5" draggable="true" ondragstart="drag(event)" style="width: 100px; height:35px; flex-grow: 1; margin: 5px; border: 1px solid #ccc; background-color: blue; cursor: move;">Team 5</div>
+        <div class="draggable" id="drag6" draggable="true" ondragstart="drag(event)" style="width: 100px; height:35px; flex-grow: 1; margin: 5px; border: 1px solid #ccc; background-color: #ccc; cursor: move;">Team 6</div>
+    </div>
 
-<div id="div2" style="float: left; width: 100px; height: 35px; margin: 10px; padding: 10px; border: 1px solid black;" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-
-<div id="drag1" draggable="true" ondragstart="drag(event)" style="width: 50px; height: 50px; background-color: #ccc;"></div>
-
-<div id="drag2" draggable="true" ondragstart="drag(event)" style="width: 50px; height: 50px; background-color: #ccc;"></div>
+    <div class="box" id="div1" style="width: 100px; height: 35px; margin: 10px; border: 1px solid black;" ondrop="drop(event)" ondragover="allowDrop(event)" onmouseleave="checkHeight(id)"></div>
+    <div class="box" id="div2" style="width: 100px; height: 35px; margin: 10px; border: 1px solid black;" ondrop="drop(event)" ondragover="allowDrop(event)" onmouseleave="checkHeight(id)"></div>
+    <div class="box" id="div3" style="width: 100px; height: 35px; margin: 10px; border: 1px solid black;" ondrop="drop(event)" ondragover="allowDrop(event)" onmouseleave="checkHeight(id)"></div>
+    <div class="box" id="div4" style="width: 100px; height: 35px; margin: 10px; border: 1px solid black;" ondrop="drop(event)" ondragover="allowDrop(event)" onmouseleave="checkHeight(id)"></div>
+    <div class="box" id="div5" style="width: 100px; height: 35px; margin: 10px; border: 1px solid black;" ondrop="drop(event)" ondragover="allowDrop(event)" onmouseleave="checkHeight(id)"></div>
+    <div class="box" id="div6" style="width: 100px; height: 35px; margin: 10px; border: 1px solid black;" ondrop="drop(event)" ondragover="allowDrop(event)" onmouseleave="checkHeight(id)"></div>
+</div>
