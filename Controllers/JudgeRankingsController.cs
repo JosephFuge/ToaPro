@@ -93,6 +93,9 @@ namespace ToaPro.Controllers
         public IActionResult ProfessorViewAssignAwards()
         {
 
+            ViewBag.joinedAwards = _repo.Awards
+                .Include(g => g.Group.Rankings)
+                .ToList();
             return View();
         }
 
