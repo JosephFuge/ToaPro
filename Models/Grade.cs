@@ -5,11 +5,11 @@ namespace ToaPro.Models;
 
 public partial class Grade
 {
-    public int Id { get; set; }
+    public string Id { get; set; }
 
     public int RequirementId { get; set; }
 
-    public int GraderId { get; set; }
+    public string GraderId { get; set; }
 
     public int GroupId { get; set; }
 
