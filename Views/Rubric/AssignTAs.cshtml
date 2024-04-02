@@ -8,24 +8,15 @@ This view will need to contain functionality to disallow TAs from editing their 
 and allowing professors to edit/make assignments.
 *@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <style>
-        /* Additional or override styles if needed */
-    </style>
-
-</head>
-<body>
+<div class="container">
 
     <vc:nav-bar-types user="Professor"></vc:nav-bar-types>
     <vc:submenu-types view="Grading"></vc:submenu-types>
     <vc:header-types title="Assign TAs" />
+
+    <div>
+        <vc:header-types />
+    </div>
 
     <main class="container mt-4">
         <div class="button-container mt-4 mb-4 d-flex justify-content-end">
@@ -56,5 +47,4 @@ and allowing professors to edit/make assignments.
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+</div>
