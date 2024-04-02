@@ -39,8 +39,14 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
     public virtual DbSet<Student> Students { get; set; }
 
     public virtual DbSet<Submission> Submissions { get; set; }
+    //added this part for our model:
+    public virtual DbSet<Evaluation> Evaluations { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    public virtual DbSet<Award> Awards { get; set; }
+    //inlcude a query section on Award
+
+
+    /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
         => optionsBuilder.UseNpgsql("Host=127.0.0.1;Port=5432;Database=ToaPro;Username=postgres;Password=postgres;");
 
@@ -139,6 +145,9 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
 
             entity.HasIndex(e => new { e.ClassId }, "uniq_grader").IsUnique();
 
+            entity.Property(e => e.Id)
+                .UseIdentityAlwaysColumn()
+                .HasColumnName("id");
             entity.Property(e => e.ClassId).HasColumnName("class_id");
             entity.Property(e => e.IsProfessor)
                 .HasDefaultValue(false)
@@ -387,7 +396,7 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
         OnModelCreatingPartial(modelBuilder);
     }
 
-    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);*/
 
     
 }

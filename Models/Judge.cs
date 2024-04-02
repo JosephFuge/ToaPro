@@ -10,8 +10,8 @@ public partial class Judge
     [Key]
     [ForeignKey("ToaProUser")]
     public string Id { get; set; }
-    public int semester_id { get; set; }
-
+    public string FName { get; set; } = null!;
+    public string LName { get; set; } = null!;
     public string Affiliation { get; set; } = null!;
 
     //This is how we get the Foreign key relationship info
