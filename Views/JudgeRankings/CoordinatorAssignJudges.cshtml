@@ -247,4 +247,33 @@
         </div>
     </div>
 </body>
+
 </html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    // Wait for the document to be ready
+    // $(document).ready(function () {
+        // Event listener for dropdown change
+        $('#judgeDropdown').change(function () {
+            var judgeId = $(this).val(); // Get the selected judge ID
+            // AJAX request to fetch data for the selected judge
+            $.ajax({
+                type: 'GET',
+                url: '/PresentationsController/GetJudgeData', // Change the URL to match your controller action
+                data: { id: Id }, // Pass the judge ID to the controller action
+                success: function (data) {
+                    // Update the UI with the received data
+                    $('#TimeSlot1').text(data.TimeSlot1); // Assuming you have elements with IDs TimeSlot1 to TimeSlot5 to display the data
+                    $('#TimeSlot2').text(data.TimeSlot2);
+                    $('#TimeSlot3').text(data.TimeSlot3);
+                    $('#TimeSlot4').text(data.TimeSlot4);
+                    $('#TimeSlot5').text(data.TimeSlot5);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                    // Handle error
+                }
+            });
+        });
+    });
+</script>
