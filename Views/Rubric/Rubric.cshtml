@@ -22,27 +22,35 @@ For more information on enabling MVC for empty projects, visit https://go.micros
         <div class="card-header">
             <h2>401 Project Management</h2>
         </div>
-        <div class="card-body">
-            <table class="table table-bordered table-hover table-striped">
-                <thead class="thead-dark">
+        <div class="card-body" id="class1-objectives">
+            <table class="table table-bordered table-hover table-striped rTable">
+                <thead>
                     <tr>
                         <th>Points</th>
-                        <th>Objectives</th>
+                        <th>Objective</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model.Class1Requirements)
                     {
-                        <tr>
-                            <td>@item.Points</td>
-                            <td>@item.Description</td>
+                        <tr data-objective-id="@item.Id">
+                            <td class="points-description">@item.Points</td>
+                            <td class="objective-description">@item.Description</td>
+                            <td>
+                                <button class="btn btn-primary edit-objective">Edit</button>
+                                <button class="btn btn-danger delete-objective">Delete</button>
+                            </td>
                         </tr>
                     }
                 </tbody>
             </table>
-            <form asp-controller="Rubric" asp-action="Rubric" method="post">
-                <button type="submit" name="id" value="1" class="btn btn-primary">Add Objective</button>
-            </form>
+
+            <!-- Add new objective form -->
+            <div class="add-objective-form">
+                <button class="btn btn-success add-objective-btn" data-class-id="1">Add Objective</button>
+            </div>
+
             <!-- Grading levels for 401 -->
             <table class="table table-bordered table-hover table-striped mt-4">
                 <thead class="thead-dark">
@@ -54,43 +62,48 @@ For more information on enabling MVC for empty projects, visit https://go.micros
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Description for Low</td>
-                        <td>Description for Medium</td>
-                        <td>Description for High</td>
+                        <td>Projects lack clear objectives, exhibit poor time management, and fail to meet basic requirements. Communication with team members and stakeholders is minimal or ineffective.</td>
+                        <td>Projects meet some but not all requirements. There are efforts towards organization and time management, but the project suffers from occasional lapses in communication and missed deadlines.</td>
+                        <td>Projects exceed expectations with clear, measurable objectives, exemplary time management, and effective communication. All deadlines are met, and the project demonstrates innovative problem-solving skills.</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
 
-    <!-- Repeat for other classes, 413 Enterprise Application Development, 414 Security, 455 Machine Learning -->
-    <!-- Each section follows the same structure as 401 Project Management -->
-    <!-- Example for 413 Enterprise Application Development -->
+    <!-- Section for 413 Enterprise Application Development -->
     <div class="card mb-4">
         <div class="card-header">
             <h2>413 Enterprise Application Development</h2>
         </div>
-        <div class="card-body">
-            <table class="table table-bordered table-hover table-striped">
+        <div class="card-body" id="class2-objectives">
+            <table class="table table-bordered table-hover table-striped rTable">
                 <thead class="thead-dark">
                     <tr>
                         <th>Points</th>
                         <th>Objectives</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model.Class2Requirements)
                     {
-                        <tr>
-                            <td>@item.Points</td>
-                            <td>@item.Description</td>
+                        <tr data-objective-id="@item.Id">
+                            <td class="points-description">@item.Points</td>
+                            <td class="objective-description">@item.Description</td>
+                            <td>
+                                <button class="btn btn-primary edit-objective">Edit</button>
+                                <button class="btn btn-danger delete-objective">Delete</button>
+                            </td>
                         </tr>
                     }
                 </tbody>
             </table>
-            <form asp-controller="Rubric" asp-action="Rubric" method="post">
-                <button type="submit" name="id" value="2" class="btn btn-primary">Add Objective</button>
-            </form>
+
+            <!-- Add new objective form -->
+            <div class="add-objective-form">
+                <button class="btn btn-success add-objective-btn" data-class-id="2">Add Objective</button>
+            </div>
             <!-- Grading levels for 413 -->
             <table class="table table-bordered table-hover table-striped mt-4">
                 <thead class="thead-dark">
@@ -102,41 +115,48 @@ For more information on enabling MVC for empty projects, visit https://go.micros
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Description for Low</td>
-                        <td>Description for Medium</td>
-                        <td>Description for High</td>
+                        <td>Applications are incomplete, lack basic functionality, and have numerous bugs. There's little to no consideration for user experience or security.</td>
+                        <td>Applications are functional but have room for improvement in user experience and efficiency. Minor bugs are present, and security measures are implemented but not comprehensive.</td>
+                        <td>Applications are robust, offering seamless user experiences with efficient and secure operations. The code is clean and well-documented, and the application innovates beyond the basic requirements.</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
 
-    <!-- Instructions continued for 414 Security -->
+    <!-- Section for 414 Security -->
     <div class="card mb-4">
         <div class="card-header">
             <h2>414 Security</h2>
         </div>
-        <div class="card-body">
-            <table class="table table-bordered table-hover table-striped">
+        <div class="card-body" id="class3-objectives">
+            <table class="table table-bordered table-hover table-striped rTable">
                 <thead class="thead-dark">
                     <tr>
                         <th>Points</th>
                         <th>Objectives</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.Class1Requirements)
+                    @foreach (var item in Model.Class3Requirements)
                     {
-                        <tr>
-                            <td>@item.Points</td>
-                            <td>@item.Description</td>
+                        <tr data-objective-id="@item.Id">
+                            <td class="points-description">@item.Points</td>
+                            <td class="objective-description">@item.Description</td>
+                            <td>
+                                <button class="btn btn-primary edit-objective">Edit</button>
+                                <button class="btn btn-danger delete-objective">Delete</button>
+                            </td>
                         </tr>
                     }
                 </tbody>
             </table>
-            <form asp-controller="Rubric" asp-action="Rubric" method="post">
-                <button type="submit" name="id" value="3" class="btn btn-primary">Add Objective</button>
-            </form>
+
+            <!-- Add new objective form -->
+            <div class="add-objective-form">
+                <button class="btn btn-success add-objective-btn" data-class-id="3">Add Objective</button>
+            </div>
             <!-- Grading levels for 414 -->
             <table class="table table-bordered table-hover table-striped mt-4">
                 <thead class="thead-dark">
@@ -148,9 +168,9 @@ For more information on enabling MVC for empty projects, visit https://go.micros
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Description for Low</td>
-                        <td>Description for Medium</td>
-                        <td>Description for High</td>
+                        <td>Basic understanding of security principles is lacking. Projects are vulnerable to common security threats, with no evident measures to protect data integrity and confidentiality.</td>
+                        <td>Shows a fair understanding of security essentials. Some security measures are implemented, but the project still has vulnerabilities that could be exploited.</td>
+                        <td>Demonstrates advanced knowledge of cybersecurity, implementing comprehensive security protocols to safeguard against sophisticated threats. Projects are resilient, with ongoing efforts to audit and improve security measures.</td>
                     </tr>
                 </tbody>
             </table>
@@ -161,27 +181,35 @@ For more information on enabling MVC for empty projects, visit https://go.micros
         <div class="card-header">
             <h2>455 Machine Learning</h2>
         </div>
-        <div class="card-body">
-            <table class="table table-bordered table-hover table-striped">
+        <div class="card-body" id="class4-objectives">
+            <table class="table table-bordered table-hover table-striped rTable">
                 <thead class="thead-dark">
                     <tr>
                         <th>Points</th>
                         <th>Objectives</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.Class1Requirements)
+                    @foreach (var item in Model.Class4Requirements)
                     {
-                        <tr>
-                            <td>@item.Points</td>
-                            <td>@item.Description</td>
+                        <tr data-objective-id="@item.Id">
+                            <td class="points-description">@item.Points</td>
+                            <td class="objective-description">@item.Description</td>
+                            <td>
+                                <button class="btn btn-primary edit-objective">Edit</button>
+                                <button class="btn btn-danger delete-objective">Delete</button>
+                            </td>
                         </tr>
                     }
                 </tbody>
             </table>
-            <form asp-controller="Rubric" asp-action="Rubric" method="post">
-                <button type="submit" name="id" value="4" class="btn btn-primary">Add Objective</button>
-            </form>
+
+            <!-- Add new objective form -->
+            <div class="add-objective-form">
+                <button class="btn btn-success add-objective-btn" data-class-id="4">Add Objective</button>
+            </div>
+
             <!-- Grading levels for 455 -->
             <table class="table table-bordered table-hover table-striped mt-4">
                 <thead class="thead-dark">
@@ -193,9 +221,9 @@ For more information on enabling MVC for empty projects, visit https://go.micros
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Description for Low</td>
-                        <td>Description for Medium</td>
-                        <td>Description for High</td>
+                        <td>Models are simplistic, demonstrating a poor understanding of machine learning principles. There's a significant lack of data preprocessing, and models show low accuracy and generalization.</td>
+                        <td>Models show a reasonable understanding of machine learning concepts, with moderate accuracy. Some efforts in data cleaning and model tuning are evident, but there's room for optimization.</td>
+                        <td>Models are sophisticated, employing advanced techniques for data preprocessing, feature engineering, and model optimization. High accuracy and excellent generalization to unseen data are achieved, showcasing a deep understanding of machine learning intricacies.</td>
                     </tr>
                 </tbody>
             </table>
@@ -203,3 +231,201 @@ For more information on enabling MVC for empty projects, visit https://go.micros
     </div>
 </div>
 
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Add event listeners to the objectives container
+            const objectivesContainer = document.getElementById("class1-objectives");
+            const objectivesContainer2 = document.getElementById("class2-objectives");
+            const objectivesContainer3 = document.getElementById("class3-objectives");
+            const objectivesContainer4 = document.getElementById("class4-objectives");
+
+            // Add event listeners to the objectives container for class 1
+            objectivesContainer.addEventListener("click", function (e) {
+                if (e.target.classList.contains("edit-objective")) {
+                    handleEditObjective(e.target);
+                } else if (e.target.classList.contains("delete-objective")) {
+                    handleDeleteObjective(e.target);
+                } else if (e.target.classList.contains("add-objective")) {
+                    handleAddObjective(e.target);
+                }
+            });
+
+            // Add event listeners to the objectives container for class 2
+            objectivesContainer2.addEventListener("click", function (e) {
+                if (e.target.classList.contains("edit-objective")) {
+                    handleEditObjective(e.target);
+                } else if (e.target.classList.contains("delete-objective")) {
+                    handleDeleteObjective(e.target);
+                } else if (e.target.classList.contains("add-objective")) {
+                    handleAddObjective(e.target);
+                }
+            });
+
+            // Add event listeners to the objectives container for class 3
+            objectivesContainer3.addEventListener("click", function (e) {
+                if (e.target.classList.contains("edit-objective")) {
+                    handleEditObjective(e.target);
+                } else if (e.target.classList.contains("delete-objective")) {
+                    handleDeleteObjective(e.target);
+                } else if (e.target.classList.contains("add-objective")) {
+                    handleAddObjective(e.target);
+                }
+            });
+
+            // Add event listeners to the objectives container for class 4
+            objectivesContainer4.addEventListener("click", function (e) {
+                if (e.target.classList.contains("edit-objective")) {
+                    handleEditObjective(e.target);
+                } else if (e.target.classList.contains("delete-objective")) {
+                    handleDeleteObjective(e.target);
+                } else if (e.target.classList.contains("add-objective")) {
+                    handleAddObjective(e.target);
+                }
+            });
+
+            document.querySelectorAll(".add-objective-btn").forEach(function (button) {
+                button.addEventListener("click", function (e) {
+                    const classId = e.target.getAttribute('data-class-id'); // Keep classId for later use
+                    const formContainer = e.target.closest('.add-objective-form');
+
+                    // Check if we are adding or submitting
+                    if (e.target.classList.contains('add-objective-btn')) {
+                        // Clear previous inputs if any
+                        formContainer.innerHTML = ''; // Clear the container
+
+                        // Create points input
+                        const pointsInput = document.createElement('input');
+                        pointsInput.setAttribute('type', 'number');
+                        pointsInput.classList.add('form-control', 'new-objective-points');
+                        pointsInput.placeholder = 'Points';
+                        pointsInput.min = 0;
+
+                        // Create description input
+                        const descriptionInput = document.createElement('input');
+                        descriptionInput.setAttribute('type', 'text');
+                        descriptionInput.classList.add('form-control', 'new-objective-desc');
+                        descriptionInput.placeholder = 'Objective Description';
+
+                        // Change button to Submit
+                        const submitButton = document.createElement('button');
+                        submitButton.classList.add('btn', 'btn-primary', 'submit-new-objective');
+                        submitButton.textContent = 'Submit';
+                        submitButton.dataset.classId = classId; // Preserve classId for submission
+
+                        // Append inputs and button to the form container
+                        formContainer.appendChild(pointsInput);
+                        formContainer.appendChild(descriptionInput);
+                        formContainer.appendChild(submitButton);
+
+                        // Event listener for submitting the new objective
+                        submitButton.addEventListener('click', function () {
+                            handleAddObjective(classId, descriptionInput.value, pointsInput.value);
+                        });
+                    }
+                });
+            });
+        });
+
+        function handleEditObjective(button) {
+            const objectiveRow = button.closest("tr");
+            const descriptionCell = objectiveRow.querySelector(".objective-description");
+            const pointsCell = objectiveRow.querySelector(".points-description");
+            const currentDescription = descriptionCell.textContent;
+            const currentPoints = pointsCell.textContent.trim();
+
+            // Replace text with input fields
+            descriptionCell.innerHTML = `<input type="text" class="form-control description-input" value="${currentDescription}">`;
+            pointsCell.innerHTML = `<input type="number" class="form-control points-input" value="${currentPoints}" min="0">`;
+            button.textContent = "Submit";
+
+            // Change event listener to submit edited objective
+            button.onclick = function () {
+                submitEditObjective(button);
+            };
+        }
+
+
+        function handleDeleteObjective(button) {
+            const objectiveId = button.closest("tr").dataset.objectiveId;
+            if (confirm("Are you sure you want to delete this objective?")) {
+                $.ajax({
+                    url: '/Rubric/DeleteObjective', // Adjust the URL based on your routing
+                    type: 'POST',
+                    data: { id: objectiveId },
+                    success: function (response) {
+                        if (response.success) {
+                            // Remove the row from the table if the delete was successful
+                            button.closest("tr").remove();
+                            alert(response.message);
+                        } else {
+                            // Handle failure
+                            alert(response.message);
+                        }
+                    },
+                    error: function () {
+                        alert("An error occurred while attempting to delete the objective.");
+                    }
+                });
+            }
+        }
+
+
+        function handleAddObjective(classId, description, points) {
+            if (description && points) {
+                // AJAX call to server to add new objective
+                $.ajax({
+                    url: '/Rubric/AddObjective',
+                    type: 'POST',
+                    data: {
+                        classId: classId,
+                        description: description,
+                        points: parseInt(points, 10)
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            alert("Objective added successfully.");
+                            // Consider dynamically adding the new objective to the table instead of reloading
+                            location.reload();
+                        } else {
+                            alert("Failed to add objective: " + response.message);
+                        }
+                    },
+                    error: function () {
+                        alert("An error occurred while attempting to add the objective.");
+                    }
+                });
+            } else {
+                alert("Please fill in both the description and the points for the new objective.");
+            }
+        }
+
+
+        function submitEditObjective(button) {
+            const objectiveRow = button.closest("tr");
+            const objectiveId = objectiveRow.dataset.objectiveId;
+            const newDescription = objectiveRow.querySelector(".description-input").value;
+            const newPoints = objectiveRow.querySelector(".points-input").value;
+
+            // AJAX call to server to submit edited objective
+            $.ajax({
+                url: '/Rubric/EditObjective', 
+                type: 'POST',
+                data: { id: objectiveId, description: newDescription, points: parseInt(newPoints, 10) },
+                success: function (response) {
+                    if (response.success) {
+                        // Reload page to reflect changes
+                        alert("Objective updated successfully.");
+                        location.reload(); 
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function () {
+                    alert("An error occurred while attempting to update the objective.");
+                }
+            });
+        }
+
+</script>
+}
