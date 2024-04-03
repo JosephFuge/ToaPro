@@ -338,6 +338,9 @@ table {
  * Landing Pages
  *******************************************************************/
 
+.dashboard {
+    font-family: 'Public Sans', sans-serif;
+}
 .dashboard-section img {
     transition: transform 0.3s ease;
 }
