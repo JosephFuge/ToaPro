@@ -108,5 +108,20 @@ namespace ToaPro.Controllers
             return View();
         }
 
+        public IActionResult TAIndex()
+        {
+            return View();
+        }
+
+        public IActionResult StudentIndex()
+        {
+            return View();
+        }
+
+        public IActionResult JudgeIndex()
+        {
+            return View();
+        }
+
     }
 }
