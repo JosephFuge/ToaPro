@@ -3,5 +3,189 @@
 *@
 @{
 }
-@*Judge Submits Judging Form View (Groups 9 & 11)*@
-@*group 9 is doing this*@
+@*Judge Submits Judging Form View (Groups 8 & 4)*@
+@model Ranking
+
+
+<style>
+    .button-container {
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .rounded-btn {
+        border-radius: 20px;
+        width: 10%;
+        margin: 50px;
+    }
+        .rounded-btn:hover{
+            font-weight: bold;
+            color: white;
+        }
+
+    .navy-background {
+        background-color: #002e5d;
+        color: white;
+    } 
+    .white-button {
+        background-color: white;
+        color: #002e5d;
+        border: 2px solid #002e5d;
+    }  
+        .white-button:hover {
+            background-color: #002e5d;
+            color: white;
+        }
+</style>
+<vc:nav-bar-types user="Judge"></vc:nav-bar-types>
+<vc:submenu-types view="Default"></vc:submenu-types>
+<vc:header-types title="Presentation Form" />
+<body>
+    <div>
+        <vc:header-types />
+    </div>
+    <script>
+        function updateCommunicationValue(value) {
+            document.getElementById('communicationValue').textContent = value;
+        }
+    </script>
+    <script>
+        function updateTechnologyValue(value) {
+            document.getElementById('technologyValue').textContent = value;
+        }
+    </script>
+    <script>
+        function updateOverallValue(value) {
+            document.getElementById('overallValue').textContent = value;
+        }
+    </script>
+    <div class="button-container">
+    @foreach (var item in ViewBag.joinedData)
+    {
+        if(Model.GroupId == item.GroupId)
+        {
+            <a asp-controller="JudgeRankings" asp-action="JudgePresentationForm" asp-route-groupId="@item.GroupId"><button type="button" class="large-ghostButton">Team @item.Section - @item.Number</button></a>
+        }
+        else
+        {
+            <a asp-controller="JudgeRankings" asp-action="JudgePresentationForm" asp-route-groupId="@item.GroupId"><button type="button" class="large-button">Team @item.Section - @item.Number</button></a>
+        }
+    }
+        <a asp-controller="JudgeRankings" asp-action="TeamRankings"><button type="button" class="large-button">Rankings</button></a>
+    </div>
+    <div class="container">
+        <form method="post">
+            <input type="hidden" asp-for="Id"/>
+            <input type="hidden" asp-for="GroupId"/>
+            <input type="hidden" asp-for="JudgeId" />
+            <input type="hidden" asp-for="TeamRanking" />
+            <input type="hidden" asp-for="PresentationId" />
+            <table class="table">
+                <thead>
+                    <tr class="navy-background">
+                        <th>Criteria</th>
+                        <th>Grade</th>
+                        <th>Comments</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <h3>Communication and Delivery</h3>
+                            <p>Potential Factors:</p>
+                            <ul>
+                                <li>Dress, Appearance, and Confidence</li>
+                                <li>Engaging with the audience</li>
+                                <li>Organization and timing</li>
+                                <li>Professionalism</li>
+                                <li>Transitions</li>
+                                <li>Question handling</li>
+                                <li>Slide quality</li>
+                            </ul>
+                        </td>
+                        <td>
+                            @if (Model.CommunicationPoints is null)
+                            {
+                                <input type="range" id="communicationRange" value="10" name="CommunicationPoints" min="1" max="10" asp-for="CommunicationPoints" oninput="updateCommunicationValue(this.value)">
+                                <span id="communicationValue">10</span>
+                            }
+                            else
+                            {
+                                <input type="range" id="communicationRange" name="CommunicationPoints" min="1" max="10" asp-for="CommunicationPoints" oninput="updateCommunicationValue(this.value)">
+                                <span id="communicationValue">@Model.CommunicationPoints</span>
+                            }
+                        </td>
+                        <td>
+                            <textarea class="form-control" rows="3" id="comments1" placeholder="Enter comments here..." asp-for="CommunicationComments"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h3>Technology Demonstration</h3>
+                            <p>Potential Factors:</p>
+                            <ul>
+                                <li>Website implementation and functionality</li>
+                                <li>System usability and user experience</li>
+                                <li>Coherant narrative/story when describing system</li>
+                                <li>Presence or lack of errors/bugs</li>
+                            </ul>
+                        </td>
+                        <td>
+                            @if (Model.TechnologyPoints is null)
+                            {
+                                <input type="range" id="technologyRange" value="10" name="TechnologyPoints" min="1" max="10" asp-for="TechnologyPoints" oninput="updateTechnologyValue(this.value)">
+                                <span id="technologyValue">10</span>
+                            }
+                            else
+                            {
+                                <input type="range" id="technologyRange" name="TechnologyPoints" min="1" max="10" asp-for="TechnologyPoints" oninput="updateTechnologyValue(this.value)">
+                                <span id="technologyValue">@Model.TechnologyPoints</span>
+                            }
+                        </td>
+                        <td>
+                            <textarea class="form-control" rows="3" id="comments2" placeholder="Enter comments here..." asp-for="TechnologyComments"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h3>Overall System and Client Satisfaction</h3>
+                            <p>Potential Factors:</p>
+                            <ul>
+                                <li>Team understands the challenges and requirements of the client</li>
+                                <li>System meets client needs</li>
+                                <li>Solution is realistic and viable</li>
+                                <li>You are confident in the solution and the team</li>
+                                <li>Client should engage with the team for continued implementation</li>
+                            </ul>
+                        </td>
+                        <td>
+                            @if (Model.OverallPoints is null)
+                            {
+                                <input type="range" id="overallRange" value="10" name="OverallPoints" min="1" max="10" asp-for="OverallPoints" oninput="updateOverallValue(this.value)">
+                                <span id="overallValue">10</span>
+                            }
+                            else
+                            {
+                                <input type="range" id="overallRange" name="OverallPoints" min="1" max="10" asp-for="OverallPoints" oninput="updateOverallValue(this.value)">
+                                <span id="overallValue">@Model.OverallPoints</span>
+                            }
+                        </td>
+                        <td>
+                            <textarea class="form-control" rows="3" id="comments3" placeholder="Enter comments here..." asp-for="OverallComments"></textarea>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        <br />
+        <h3>Nomination for fun awards</h3>
+        <p>We like to give the teams fun awards independent of their overall scores.  Please consider one or more creative and fun/funny awards for this team.</p>
+        <p>(i.e., "The Extra Mile Award", "Best Analytics Award", "Best Dressed Award", "Thinking Outside the Box Award", "Most Colorful Slide Award", etc.)</p>
+        <input class="form-control" type="text" asp-for="Nomination"/>
+        <br />
+        <button class="button" type="submit">Save</button>
+        <div asp-validation-summary="All"></div>
+        </form>
+    </div>
+</body>

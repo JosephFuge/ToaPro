@@ -1,19 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ToaPro.Models;
-
-public partial class Student
+namespace ToaPro.Models
 {
-    public int Id { get; set; }
+    public class Student
+    {
+        [Key]
+        [ForeignKey("ToaProUser")]
+        public string Id { get; set; }
 
-    public string FName { get; set; } = null!;
+        public ToaProUser ToaProUser { get; set; }
+        [ForeignKey("Group")]
+        public int GroupId { get; set; }
 
-    public string LName { get; set; } = null!;
+        public virtual Group Group { get; set; }
+        public string NetId { get; set; } = null!;
+        public string Reason { get; set; }
 
-    public string NetId { get; set; } = null!;
 
-    public virtual ICollection<Submission> Submissions { get; set; } = new List<Submission>();
+        public virtual ICollection<Submission> Submissions { get; set; } = new List<Submission>();
 
-    public virtual ICollection<Group> Groups { get; set; } = new List<Group>();
+        public virtual ICollection<Evaluation> Evaluations { get; set; } = new List<Evaluation>();
+
+    }
 }

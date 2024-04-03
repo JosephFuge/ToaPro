@@ -19,4 +19,5 @@ public partial class Requirement
     public virtual ClassInfo Class { get; set; } = null!;
 
     public virtual ICollection<Grade> Grades { get; set; } = new List<Grade>();
+    public virtual ICollection<GraderAssign> GraderAssign { get; set; } = new List<GraderAssign>();
 }

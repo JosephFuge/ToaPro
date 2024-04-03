@@ -1,0 +1,86 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@* team 4-8 *@
+
+
+@{
+}
+
+@model Ranking
+
+<style>
+    .button-container {
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .rounded-btn {
+        border-radius: 20px;
+        width: 10%;
+        margin: 50px;
+    }
+
+        .rounded-btn:hover {
+            font-weight: bold;
+            color: white;
+        }
+
+    .navy-background {
+        background-color: #002e5d;
+        color: white;
+    }
+
+    .white-button {
+        background-color: white;
+        color: #002e5d;
+        border: 2px solid #002e5d;
+    }
+
+        .white-button:hover {
+            background-color: #002e5d;
+            color: white;
+        }
+</style>
+<vc:nav-bar-types user="Judge"></vc:nav-bar-types>
+<vc:submenu-types view="Default"></vc:submenu-types>
+<vc:header-types title="Presentation Form" />
+<div class="button-container">
+    @foreach (var item in ViewBag.joinedData)
+    {
+        <a asp-controller="JudgeRankings" asp-action="JudgePresentationForm" asp-route-groupId="@item.GroupId"><button type="button" class="large-button">Team @item.Section - @item.Number</button></a>
+    }
+    <a asp-controller="JudgeRankings" asp-action="TeamRankings"><button type="button" class="large-ghostButton">Rankings</button></a>
+</div>
+
+<!--
+    FOR CAMERON: ADD THE RANKING COMPARISON THING HERE
+
+    NOTES:
+    - Not sure how this will work, but when they hit the submit button, it needs to update the Rankings table "team_ranking" field with an integer of their rank (1 through 6) for each team
+
+
+-->
+
+<div style="display: flex; flex-direction: column; align-items: center;">
+    <h2>Drag and Drop</h2>
+    <p>Drag the box back and forth between the two div elements.</p>
+
+    <div style="display: flex; flex-direction:column; display: flex; flex-direction: row; border: white 1px solid; justify-content: space-around; align-items: center">       
+        <div class="draggable" id="drag1" draggable="true" ondragstart="drag(event)" style="width: 100px; height:35px; flex-grow: 1; margin: 5px; border: 1px solid #ccc; background-color: blue; cursor: move;">Team 1</div>
+        <div class="draggable" id="drag2" draggable="true" ondragstart="drag(event)" style="width: 100px; height:35px; flex-grow: 1; margin: 5px; border: 1px solid #ccc; background-color: #ccc; cursor: move;">Team 2</div>
+        <div class="draggable" id="drag3" draggable="true" ondragstart="drag(event)" style="width: 100px; height:35px; flex-grow: 1; margin: 5px; border: 1px solid #ccc; background-color: blue; cursor: move;">Team 3</div>
+        <div class="draggable" id="drag4" draggable="true" ondragstart="drag(event)" style="width: 100px; height:35px; flex-grow: 1; margin: 5px; border: 1px solid #ccc; background-color: #ccc; cursor: move;">Team 4</div>
+        <div class="draggable" id="drag5" draggable="true" ondragstart="drag(event)" style="width: 100px; height:35px; flex-grow: 1; margin: 5px; border: 1px solid #ccc; background-color: blue; cursor: move;">Team 5</div>
+        <div class="draggable" id="drag6" draggable="true" ondragstart="drag(event)" style="width: 100px; height:35px; flex-grow: 1; margin: 5px; border: 1px solid #ccc; background-color: #ccc; cursor: move;">Team 6</div>
+    </div>
+
+    <div class="box" id="div1" style="width: 100px; height: 35px; margin: 10px; border: 1px solid black;" ondrop="drop(event)" ondragover="allowDrop(event)" onmouseleave="checkHeight(id)"></div>
+    <div class="box" id="div2" style="width: 100px; height: 35px; margin: 10px; border: 1px solid black;" ondrop="drop(event)" ondragover="allowDrop(event)" onmouseleave="checkHeight(id)"></div>
+    <div class="box" id="div3" style="width: 100px; height: 35px; margin: 10px; border: 1px solid black;" ondrop="drop(event)" ondragover="allowDrop(event)" onmouseleave="checkHeight(id)"></div>
+    <div class="box" id="div4" style="width: 100px; height: 35px; margin: 10px; border: 1px solid black;" ondrop="drop(event)" ondragover="allowDrop(event)" onmouseleave="checkHeight(id)"></div>
+    <div class="box" id="div5" style="width: 100px; height: 35px; margin: 10px; border: 1px solid black;" ondrop="drop(event)" ondragover="allowDrop(event)" onmouseleave="checkHeight(id)"></div>
+    <div class="box" id="div6" style="width: 100px; height: 35px; margin: 10px; border: 1px solid black;" ondrop="drop(event)" ondragover="allowDrop(event)" onmouseleave="checkHeight(id)"></div>
+</div>

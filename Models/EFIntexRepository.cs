@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace ToaPro
 {
@@ -13,29 +15,68 @@ namespace ToaPro
         {
             _toaProContext = toaProContext;
         }
+
+        public IQueryable<Student> Students => _toaProContext.Students;
+        public IEnumerable<Submission> Submissions => _toaProContext.Submissions.ToList();
+        public IQueryable<Judge> Judges => _toaProContext.Judges;
+        public IQueryable<Presentation> Presentations => _toaProContext.Presentations;
         public IEnumerable<ClassInfo> Classes => _toaProContext.Classes;
+
         public IEnumerable<Grade> Grades => _toaProContext.Grades;
         public IEnumerable<Grader> Graders => _toaProContext.Graders;
-        public IEnumerable<Models.Group> Groups => _toaProContext.Groups;
-        public IEnumerable<Judge> Judges => _toaProContext.Judges;
-        public IEnumerable<Presentation> Presentations => _toaProContext.Presentations;
-        public IEnumerable<Ranking> Rankings => _toaProContext.Rankings;
+        public IEnumerable<GraderAssign> GraderAssigns => _toaProContext.GraderAssigns;
         public IEnumerable<Requirement> Requirements => _toaProContext.Requirements;
         public IEnumerable<Semester> Semesters => _toaProContext.Semesters;
-        public IEnumerable<Student> Students => _toaProContext.Students;
-        public IEnumerable<Submission> Submissions => _toaProContext.Submissions;
-        public IEnumerable<JudgeAvailability> JudgeAvailabilities => _toaProContext.JudgeAvailabilities;
+        public IQueryable<Ranking> Rankings => _toaProContext.Rankings;
+        public IQueryable<Models.Group> Groups => _toaProContext.Groups;
+        public IQueryable<Award> Awards => _toaProContext.Awards;
 
-        public void RequestAvailability(JudgeAvailability judgeAvailability)
+        //Change RequestAvailability to match the judge model when inputting their timeslots
+        public void RequestAvailability(Judge judge)
         {
-            _toaProContext.Add(judgeAvailability);
+            _toaProContext.Add(judge);
             _toaProContext.SaveChanges();
         }
 
-        public void StudentRequestAvailability(StudentAvailability studentAvailability)
+        public void UpdateRanking(Ranking ranking)
         {
-            _toaProContext.Add(studentAvailability);
+            _toaProContext.Rankings.Update(ranking);
             _toaProContext.SaveChanges();
+        }
+
+        public void AddRanking(Ranking ranking)
+        {
+            _toaProContext.Rankings.Add(ranking);
+            _toaProContext.SaveChanges();
+        }
+
+        public void StudentRequestAvailability(Student student)
+        {
+            _toaProContext.Add(student);
+            _toaProContext.SaveChanges();
+        }
+
+        public void AddSubmission(Submission submission)
+        {
+            _toaProContext.Submissions.Add(submission);
+            _toaProContext.SaveChanges();
+        }
+
+        public void UpdateAward(Award award)
+        {
+            _toaProContext.Awards.Update(award);
+            _toaProContext.SaveChanges();
+        }
+        //PLS FIX THIS TEAM :) 
+        public void UpdateJudgeAvailability(Judge judge)
+        {
+            _toaProContext.Judges.Add(judge);
+            _toaProContext.SaveChanges();
+        }
+
+        public Judge GetJudgeById(string id)
+        {
+            return _toaProContext.Judges.FirstOrDefault(x => x.Id == id);
         }
     }
 }

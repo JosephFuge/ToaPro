@@ -3,3 +3,26 @@
 *@
 @{
 }
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+<vc:nav-bar-types user="Student"></vc:nav-bar-types>
+<vc:submenu-types view="Default"></vc:submenu-types>
+<vc:header-types title="Submission Confirmation" />
+<!--This is just a confirmation page for after the students submit-->
+<div class="container center">
+    <br />
+    <br />
+    <br />
+    <h2 class="text-center">Thank you. Your submission has been received.</h2>
+    <br />
+    <br />
+    <br />
+    <div style="text-align: center;">
+        <a asp-controller="StudentSubmissions" asp-action="Index">
+            <button type="button" class="button">Home</button>
+        </a>
+    </div>
+    
+</div>

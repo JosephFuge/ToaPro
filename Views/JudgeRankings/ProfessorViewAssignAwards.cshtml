@@ -4,3 +4,64 @@
 @{
 }
 @*Professors Assign actual rankings, this page will also display the Judges nominations from the JudgePresentationForm.cshtml View (Groups 3 & 6)*@
+@* team 4-8 *@
+@model Award
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+<vc:nav-bar-types user="Professor"></vc:nav-bar-types>
+<vc:submenu-types view="Default"></vc:submenu-types>
+<vc:header-types title="Awards Table" />
+
+<div class="container">
+    <div>
+        <vc:header-types />
+    </div>
+    <div>
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>Placement Awards</th>
+                <th>Team</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>First Place:</td>
+                <td>@ViewBag.joinedAwards[0].GroupId</td>
+            </tr>
+            <tr>
+                <td>Second Place:</td>
+                <td>@ViewBag.joinedAwards[1].GroupId</td>
+            </tr>
+            <tr>
+                <td>Third Place:</td>
+                <td>@ViewBag.joinedAwards[2].GroupId</td>
+            </tr>
+            <tr>
+                <td>Fourth Place:</td>
+                <td>@ViewBag.joinedAwards[3].GroupId</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div>
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>Fun awards</th>
+                <th>Team</th>
+            </tr>
+            </thead>
+            <tbody>
+                @foreach (var award in ViewBag.joinedAwards)
+                {
+                    <tr>
+                        <td>@award.AwardName</td> <!-- Assuming AwardName is a property of the Award class -->
+                        <td>@award.GroupId</td> <!-- Assuming Group is a property of the Award class and Name is a property of the Group class -->
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
