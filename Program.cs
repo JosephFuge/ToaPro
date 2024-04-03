@@ -8,9 +8,12 @@ using System.Runtime.ConstrainedExecution;
 // using ToaPro.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("ToaPro") ?? throw new InvalidOperationException("Connection string 'ToaProContextConnection' not found.");
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
+builder.Services.AddRazorPages();
 
 builder.Services.AddDbContext<ToaProContext>(options =>{
     options.UseNpgsql(builder.Configuration["ConnectionStrings:ToaPro"]);
@@ -29,8 +32,8 @@ builder.Services.AddDefaultIdentity<ToaProUser>(options =>
     options.Password.RequireNonAlphanumeric = true;
     options.Password.RequiredUniqueChars = 2;
     options.User.RequireUniqueEmail = true;
-    options.SignIn.RequireConfirmedAccount = true;
-    options.SignIn.RequireConfirmedEmail = true;
+    options.SignIn.RequireConfirmedAccount = false;
+    options.SignIn.RequireConfirmedEmail = false;
 }).AddRoles<IdentityRole>().AddEntityFrameworkStores<ToaProContext>();
 
 builder.Services.ConfigureApplicationCookie(options =>
@@ -73,7 +76,7 @@ using (var scope = app.Services.CreateScope())
 }
 
 
-// Configure the HTTP request pipeline.
+//// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -108,5 +111,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapRazorPages();
 
 app.Run();

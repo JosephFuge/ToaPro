@@ -1,4 +1,7 @@
-﻿<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-custom-color border-bottom box-shadow mb-3">
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ToaProUser> SignInManager
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-custom-color border-bottom box-shadow mb-3">
     <div class="container-fluid">
         <img src="https://brightspotcdn.byu.edu/e4/0a/b679ee0a41d9b1675fc78cd03239/byu-logo-white-small.svg" class="img-fluid" alt="byu logo">
         <!-- Replace "#" with the actual path -->
@@ -17,9 +20,21 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Schedule</a>
                 </li>
+                <!-- Replace "#" with the actual path-->
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Presentations" asp-action="JudgeRequestNewTime">Request Time Exception</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" asp-controller="JudgeRankings" asp-action="JudgePresentationForm">Grading Form</a>
                 </li>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <li class="nav-item">
+                        <form asp-controller="Home" asp-action="Logout" method="post">
+                            <button type="submit" class="nav-link">Logout</button>
+                        </form>
+                    </li>
+                }
             </ul>
         </div>
     </div>

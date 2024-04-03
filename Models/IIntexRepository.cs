@@ -8,6 +8,7 @@ namespace ToaPro
         IEnumerable<Class> Classes { get; }
         IEnumerable<Grade> Grades { get; }
         IEnumerable<Grader> Graders { get; }
+        IEnumerable<GraderAssign> GraderAssigns { get; }
         IEnumerable<Requirement> Requirements { get; }
         IEnumerable<Semester> Semesters { get; }
         IEnumerable<Submission> Submissions { get; }
@@ -29,5 +30,7 @@ namespace ToaPro
 
         public void AddSubmission(Submission submission);
 
+        public Judge GetJudgeById(string id);
+        public void UpdateJudgeAvailability (Judge judge);
     }
 }

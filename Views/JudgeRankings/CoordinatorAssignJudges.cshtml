@@ -4,3 +4,249 @@
 @{
 }
 @*Assign Judges View (Groups 7 & 5)*@
+@model List<Judge>
+@{
+    ViewData["Title"] = "Home Page";
+}
+<vc:nav-bar-types user="Coordinator"></vc:nav-bar-types>
+<vc:header-types title="Assign Judges" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Judge Assignment</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Style for the grid */
+        .grid-container {
+            display: grid;
+            grid-template-columns: auto repeat(6, 1fr); /* First column auto width, then 6 timeslots */
+            gap: 1px; /* Gap between grid cells */
+        }
+
+        .grid-item {
+            border: 1px solid #ccc; /* Border for each grid cell */
+            padding: 10px;
+            text-align: center;
+        }
+        /* Style to highlight header cells */
+        .grid-header {
+            font-weight: bold;
+            background-color: #f0f0f0;
+        }
+
+        /* Table styling */
+        table {
+            border-collapse: separate;
+            border-radius: 8px;
+            border-spacing: 0px;
+            overflow: hidden;
+            width: 100%; /* Fill up the container width */
+        }
+
+        table:not(.mse-no-border) {
+            border: 1px solid #C9C9C9;
+        }
+
+        table th:not(:last-child, .mse-no-border),
+        table td:not(:last-child, .mse-no-border) {
+            border-right: 1px solid #D1D1D1;
+        }
+
+        table tr th {
+            vertical-align: middle;
+            padding: 0.5rem 1rem;
+            background-color: #002E5D;
+            color: #FFF;
+        }
+
+        table tr td {
+            vertical-align: middle;
+            padding: 0.5rem 0.7rem;
+            min-width: 120px;
+        }
+
+        table tr p {
+            margin-bottom: 0;
+        }
+
+        table tbody tr:nth-of-type(2n) {
+            background-color: #EDF3FC;
+        }
+
+        .mse-table-scroll,
+        .mse-table-wrapped-no-header,
+        .mse-table-wrapped {
+            max-width: 100%;
+            overflow-x: auto;
+            display: block;
+        }
+
+        .mse-table-wrapped-no-header table,
+        .mse-table-wrapped table {
+            width: 100%;
+        }
+
+        /* media (max-width: 768px) {
+            .mse-table-wrapped-no-header th,
+            .mse-table-wrapped th {
+                display: none;
+            } */
+
+            .mse-table-wrapped-no-header td,
+            .mse-table-wrapped td {
+                padding: 2px;
+                display: grid;
+                grid-template-columns: 16ch auto;
+                border-right: none !important;
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+                overflow: auto;
+            }
+
+            .mse-table-wrapped-no-header td:first-child,
+            .mse-table-wrapped td:first-child {
+                padding-top: 1rem;
+            }
+
+            .mse-table-wrapped-no-header td:last-child,
+            .mse-table-wrapped td:last-child {
+                padding-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<br /><br />
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Left Column (1/4th of the screen) -->
+            <div class="col-lg-3">
+                <h2>Judge Assignment</h2>
+                <!-- Dropdown for Judges -->
+                <div class="form-group">
+                    <label asp-for="@Model.FirstOrDefault().Id">Select Judge:</label>
+                    <select class="form-control" id="judgeDropdown">
+                        @foreach (Judge j in Model)
+                        {
+                            <option value="@j.Id">@j.ToaProUser.FirstName @j.ToaProUser.LastName</option>
+                        }
+                    </select>
+                </div>
+                <!-- Current Assignments Box -->
+                <div class="card">
+                    <div class="card-header">Current Assignments</div>
+                    <div class="card-body">
+                        <!-- Display current assignments here -->
+                        <p>No assignments yet.</p>
+                    </div>
+                </div>
+                <!-- Not Available Times Box -->
+                <div class="card mt-3">
+                    <div class="card-header">Not Available During These Times</div>
+                    <div class="card-body">
+                        <!-- Display not available times here -->
+                        <p>No specified unavailable times.</p>
+                    </div>
+                </div>
+                <!-- Assign New Assignment Box -->
+                <div class="card mt-3">
+                    <div class="card-header">Assign New Assignment</div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="roomDropdown">Room:</label>
+                            <select class="form-control" id="roomDropdown">
+                                <option>Room 1</option>
+                                <option>Room 2</option>
+                                <option>Room 3</option>
+                                <option>Room 4</option>
+                                <option>Room 5</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="timeDropdown">Time:</label>
+                            <select class="form-control" id="timeDropdown">
+                                <option>12:30</option>
+                                <option>1:00</option>
+                                <option>1:30</option>
+                                <option>2:00</option>
+                                <option>2:30</option>
+                                <option>3:00</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-primary">Assign</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Right Column (Remaining 3/4ths of the screen) -->
+            <div class="col-lg-9">
+                <!-- Grid for rooms and timeslots -->
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ROOM #</th>
+                            <th>12:30</th>
+                            <th>1:00</th>
+                            <th>1:30</th>
+                            <th>2:00</th>
+                            <th>2:30</th>
+                            <th>3:00</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Room 1</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                        </tr>
+                        <tr>
+                            <td>Room 2</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                        </tr>
+                        <tr>
+                            <td>Room 3</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                        </tr>
+                        <tr>
+                            <td>Room 4</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                        </tr>
+                        <tr>
+                            <td>Room 5</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+

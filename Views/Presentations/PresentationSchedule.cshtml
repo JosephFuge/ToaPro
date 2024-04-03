@@ -22,6 +22,7 @@
             <span class="badge rounded-pill bg-primary text-white float-end"><small>@m.Id</small></span>
         </h3>
         <ul>
+            @* we have to access this via the join *@
             <li>First: @m.ToaProUser.FirstName</li>
             <li>Last: @m.ToaProUser.LastName</li>
             <li>Affiliation: @m.Affiliation</li>
