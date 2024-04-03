@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Microsoft.EntityFrameworkCore;
 
 namespace ToaPro
 {
@@ -15,7 +14,7 @@ namespace ToaPro
             _toaProContext = toaProContext;
         }
 
-        public IEnumerable<Student> Students => _toaProContext.Students.ToList();
+        public IQueryable<Student> Students => _toaProContext.Students;
         public IEnumerable<Submission> Submissions => _toaProContext.Submissions.ToList();
         public IQueryable<Judge> Judges => _toaProContext.Judges;
         public IQueryable<Presentation> Presentations => _toaProContext.Presentations;
@@ -26,20 +25,13 @@ namespace ToaPro
         public IEnumerable<Semester> Semesters => _toaProContext.Semesters;
         public IQueryable<Ranking> Rankings => _toaProContext.Rankings;
         public IQueryable<Models.Group> Groups => _toaProContext.Groups;
+        public IQueryable<Award> Awards => _toaProContext.Awards;
 
-        public IQueryable<ToaProUser> ToaProUsers => _toaProContext.ToaProUsers;
 
-
-        public void JRequestAvailability(int id)
+        //Change RequestAvailability to match the judge model when inputting their timeslots
+        public void RequestAvailability(Judge judge)
         {
-            var recordToEdit = _toaProContext.Judges
-            .Single(x => x.Id == id);
-
-            _toaProContext.SaveChanges();
-        }
-        public void JUpdateAvailability(Judge updatedInfo)
-        {
-            _toaProContext.Update(updatedInfo);
+            _toaProContext.Add(judge);
             _toaProContext.SaveChanges();
         }
 
@@ -54,15 +46,28 @@ namespace ToaPro
             _toaProContext.Rankings.Add(ranking);
             _toaProContext.SaveChanges();
         }
-        public void UpdateJudgeAvailability(Judge updatedInfo)
+
+        public void StudentRequestAvailability(Student student)
         {
-            _toaProContext.Update(updatedInfo);
+            _toaProContext.Add(student);
             _toaProContext.SaveChanges();
         }
 
         public void AddSubmission(Submission submission)
         {
             _toaProContext.Submissions.Add(submission);
+            _toaProContext.SaveChanges();
+        }
+
+        public void UpdateAward(Award award)
+        {
+            _toaProContext.Awards.Update(award);
+            _toaProContext.SaveChanges();
+        }
+        //PLS FIX THIS TEAM :) 
+        public void UpdateJudgeAvailability(Judge judge)
+        {
+            _toaProContext.Judges.Add(judge);
             _toaProContext.SaveChanges();
         }
     }

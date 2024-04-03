@@ -4,7 +4,7 @@
 @{
 }
 @*Assign Judges View (Groups 7 & 5)*@
-
+@model List<Judge>
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -46,11 +46,13 @@
                 <h2>Judge Assignment</h2>
                 <!-- Dropdown for Judges -->
                 <div class="form-group">
-                    <label for="judgeDropdown">Select Judge:</label>
+                    
+                    <label asp-for="@Model.FirstOrDefault().Id">Select Judge:</label>
                     <select class="form-control" id="judgeDropdown">
-                        <option>Judge 1</option>
-                        <option>Judge 2</option>
-                        <option>Judge 3</option>
+                        @foreach (Judge j in Model)
+                        {
+                         <option value="@j.Id">@j.ToaProUser.FirstName @j.ToaProUser.LastName</option>
+                        }
                     </select>
                 </div>
                 <!-- Current Assignments Box -->

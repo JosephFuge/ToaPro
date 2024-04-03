@@ -11,7 +11,7 @@
             <ul class="navbar-nav">
                 <!-- Replace "#" with the actual path -->
                 <li class="nav-item">
-                    <a class="nav-link" href="#" ">Home</a>
+                    <a class="nav-link" href="#">Home</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="gradingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">
@@ -32,7 +32,12 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="gradingDropdown">
                         <li><a class="dropdown-item" href="#">Schedule</a></li>
-                        <li><a class="dropdown-item" href="#">Awards</a></li>
+                        <li>
+                            <a class="dropdown-item" asp-controller="JudgeRankings" asp-action="ProfessorViewAssignAwards">Awards</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-controller="JudgeRankings" asp-action="FunAwards2">Fun Awards</a>
+                        </li>
                     </ul>
                 </li>
                 <!-- Replace "#" with the actual path-->

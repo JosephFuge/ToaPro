@@ -4,7 +4,7 @@ namespace ToaPro
 {
     public interface IIntexRepository
     {
-        IEnumerable<Student> Students { get; } 
+        IQueryable<Student> Students { get; } 
         IEnumerable<Class> Classes { get; }
         IEnumerable<Grade> Grades { get; }
         IEnumerable<Grader> Graders { get; }
@@ -15,14 +15,21 @@ namespace ToaPro
         IQueryable<Presentation> Presentations { get; }
         IQueryable<Ranking> Rankings { get; }
         IQueryable<Group> Groups { get; }
-		IQueryable<ToaProUser> ToaProUsers { get; }
-		public void UpdateRanking(Ranking ranking);
+        IQueryable<Award> Awards { get; }
 
-        public void JRequestAvailability(int Id);
-        public void JUpdateAvailability(Judge updatedInfo);
 
-        public void UpdateJudgeAvailability(Judge updatedInfo);
+        public void RequestAvailability(Judge judge);
+        public void StudentRequestAvailability(Student student);
+
+        public void UpdateRanking(Ranking ranking);
+
         public void AddRanking(Ranking ranking);
+
+        public void UpdateAward(Award award);
+
         public void AddSubmission(Submission submission);
+
+
+        public void UpdateJudgeAvailability (Judge judge);
     }
 }
