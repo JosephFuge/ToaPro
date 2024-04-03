@@ -58,18 +58,18 @@ namespace ToaPro.Controllers
 
         }
         [HttpPost]
-        public IActionResult StudentSubmitFilesConfirmation(Submission response)
+        public IActionResult StudentSubmitFiles(Submission response)
         {
             if (ModelState.IsValid)
             {
                 _repo.AddSubmission(response); // Corrected line
 
-                return RedirectToPage("StudentSubmitFilesConfirmation", response);
+                return View("StudentSubmitFilesConfirmation", response);
             }
             else
             {
-                ViewBag.Categories = _repo.Submissions.ToList();
-                return View("StudentSubmitFiles", response); // Corrected to return the right view
+                //ViewBag.Categories = _repo.Submissions.ToList();
+                return View(response); // Corrected to return the right view
             }
         }
 

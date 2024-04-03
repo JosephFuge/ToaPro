@@ -22,10 +22,11 @@
             <br />
             <h3 class="text-center bold-text">Please include the following in your submission:</h3>
             <div class="submission-form" style="margin-left: 20%; margin-right: auto; width: 80%;">
-                <form method="post" asp-controller="StudentSubmissions" asp-action="StudentSubmitFilesConfirmation" onsubmit="setCreatedDate()">
-                    <input type="hidden" asp-for="StudentId" />
-                    <input type="hidden" asp-for="GroupId" />
-                    <input type="hidden" id="CreatedDate" asp-for="CreatedDate" /> <!--Created down below when submitted-->
+                <form method="post" asp-controller="StudentSubmissions" asp-action="StudentSubmitFiles" onsubmit="setCreatedDate()">
+                    <input type="hidden" asp-for="Id" />
+                    <input type="text" asp-for="StudentId"/>
+                    <input type="number" asp-for="GroupId"/>
+                    <input id="CreatedDate" asp-for="CreatedDate" /> <!--Created down below when submitted-->
 
                     <br />
                     <br />
@@ -51,6 +52,14 @@
                     <span asp-validation-for="GithubLink" class="text-danger"></span><br />
                     <span asp-validation-for="YoutubeLink" class="text-danger"></span><br />
                     <span asp-validation-for="UploadFile" class="text-danger"></span>
+                    @* Trying to test form submission:
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                    <span asp-validation-for="StudentId" class="text-danger"></span>
+                    <span asp-validation-for="GroupId" class="text-danger"></span>
+                    <span asp-validation-for="CreatedDate" class="text-danger"></span>
+                    <span asp-validation-for="Grades" class="text-danger"></span>
+                    <span asp-validation-for="Group" class="text-danger"></span>
+                    <span asp-validation-for="Student" class="text-danger"></span> *@
                     <br />
                     <div style="text-align: center; margin-left: -25%">
                         <button type="submit" class="button">Submit</button>

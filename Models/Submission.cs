@@ -9,9 +9,9 @@ public partial class Submission
 {
     [Key]
     public int Id { get; set; }
-    [ForeignKey("Group")]
+    [ForeignKey("GroupId")]
     public int GroupId { get; set; } //We get this from them being logged in
-    [ForeignKey("Student")]
+    [ForeignKey("StudentId")]
     public string StudentId { get; set; } //We get this from them being logged in
     public DateTime CreatedDate { get; set; } //This is created when the submission is submitted
     [Required(ErrorMessage = "Please include a public GitHub Link.")]
@@ -23,7 +23,6 @@ public partial class Submission
 
     //These help link the submissions to other tables in the database
     public virtual ICollection<Grade> Grades { get; set; } = new List<Grade>();
-
     public virtual Group Group { get; set; } = null!;
 
     public virtual Student Student { get; set; } = null!;
