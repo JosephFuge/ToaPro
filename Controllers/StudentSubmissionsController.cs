@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ToaPro.Models;
 
 namespace ToaPro.Controllers
@@ -44,11 +45,14 @@ namespace ToaPro.Controllers
 
 
         [HttpGet]
-        public IActionResult Submission()
+        public IActionResult Submission(int id)
         {
             ViewBag.Categories = _repo.Submissions
                 .OrderBy(x => x.GithubLink)
-                .ToList();
+            .ToList();
+
+            var recordToEdit = _repo.Submissions
+                .Single(x => x.Id == id);
 
             return View("StudentSubmitFiles", new Submission()); //create new application to get rid of the error that says " is not a valid input
 

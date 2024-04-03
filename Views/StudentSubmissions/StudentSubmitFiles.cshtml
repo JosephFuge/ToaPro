@@ -45,7 +45,9 @@
                         Readme file requirements: website link with username and password
                     </p>
                     <input type="file" id="UploadFile" asp-for="UploadFile" directory webkitdirectory mozdirectory style="width: 250px;">
-                    <br />
+                    <span asp-validation-for="GithubLink" class="text-danger"></span><br />
+                    <span asp-validation-for="YoutubeLink" class="text-danger"></span><br />
+                    <span asp-validation-for="UploadFile" class="text-danger"></span>
                     <br />
                     <div style="text-align: center; margin-left: -25%">
                         <button type="submit" class="button">Submit</button>
