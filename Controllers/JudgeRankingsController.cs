@@ -148,6 +148,8 @@ namespace ToaPro.Controllers
 
             ViewBag.joinedAwards = _repo.Awards
                 .Include(g => g.Group.Rankings)
+                .OrderByDescending(g => g.Group.Rankings.Max(r => r.OverallPoints))
+                .Take(4)
                 .ToList();
             return View();
         }

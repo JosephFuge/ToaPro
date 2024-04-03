@@ -27,19 +27,19 @@
             <tbody>
             <tr>
                 <td>First Place:</td>
-                <td>Model.teamNumber</td>
+                <td>@ViewBag.joinedAwards[0].GroupId</td>
             </tr>
             <tr>
                 <td>Second Place:</td>
-                <td>Model.teamNumber</td>
+                <td>@ViewBag.joinedAwards[1].GroupId</td>
             </tr>
             <tr>
                 <td>Third Place:</td>
-                <td>Model.teamNumber</td>
+                <td>@ViewBag.joinedAwards[2].GroupId</td>
             </tr>
             <tr>
                 <td>Fourth Place:</td>
-                <td>Model.teamNumber</td>
+                <td>@ViewBag.joinedAwards[3].GroupId</td>
             </tr>
             </tbody>
         </table>
@@ -54,24 +54,14 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>I'd hire them as consultants Model.AwardName</td>
-                <td>Model.teamNumber Model.GroupId</td>
-            </tr>
-            <tr>
-                <td>Duct tape award for live debugging Model.AwardName</td>
-                <td>Model.teamNumber Model.GroupId</td>
-            </tr>
-            <tr>
-                <td>Mary Poppins Presentation award Model.AwardName</td>
-                <td>Model.teamNumber Model.GroupId</td>
-            </tr>
-            <tr>
-                <td>Swipe right award Model.AwardName</td>
-                <td>Model.teamNumber Model.GroupId</td>
-            </tr>
+                @foreach (var award in ViewBag.joinedAwards)
+                {
+                    <tr>
+                        <td>@award.AwardName</td> <!-- Assuming AwardName is a property of the Award class -->
+                        <td>@award.GroupId</td> <!-- Assuming Group is a property of the Award class and Name is a property of the Group class -->
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
-    
 </div>
