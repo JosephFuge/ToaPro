@@ -13,11 +13,13 @@ public partial class Group
     [ForeignKey("Semester")]
     public int SemesterId { get; set; }
 
-    public short Section { get; set; }
+    public int Section { get; set; }
 
-    public short Number { get; set; }
+    public int Number { get; set; }
 
     public virtual ICollection<Grade> Grades { get; set; } = new List<Grade>();
+
+    public virtual ICollection<GraderAssign> GraderAssign { get; set; } = new List<GraderAssign>();
 
     public virtual ICollection<Presentation> Presentations { get; set; } = new List<Presentation>();
 
