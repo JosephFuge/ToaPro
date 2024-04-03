@@ -19,7 +19,7 @@ namespace ToaPro.Controllers
         }
 
         [HttpGet]
-        public IActionResult JudgePresentationForm(int judgeId = 1, int groupId = 0)
+        public IActionResult JudgePresentationForm(string judgeId = "", int groupId = 0)
         {
             if (groupId == 0)
             {
@@ -78,7 +78,7 @@ namespace ToaPro.Controllers
         }
 
         [HttpGet]
-        public IActionResult TeamRankings(int judgeId = 1)
+        public IActionResult TeamRankings(string judgeId = "")
         {
             ViewBag.joinedData = _repo.Judges
                 .Where(x => x.Id == judgeId)
@@ -92,13 +92,41 @@ namespace ToaPro.Controllers
 
         public IActionResult ProfessorViewAssignAwards()
         {
+
             return View();
         }
 
+        [HttpGet]
         public IActionResult CoordinatorAssignJudges()
-        { 
+        {
+            var Judges = _repo.Judges
+                .Include(x => x.ToaProUser)
+                .OrderBy(x => x.Id).ToList();
+            return View(Judges);
+        }
+
+        [HttpPost]
+        public IActionResult CoordinatorAssignJudges(Judge updatedInfo) // this would be for if the user decide to update a detail
+        {
+            _repo.UpdateJudgeAvailability(updatedInfo);
+            return View();
+        }
+
+        public IActionResult FunAwards2()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult FunAwards2(Award updatedInfo)
+        {
+            _repo.UpdateAward(updatedInfo);
+
+            var groupId = updatedInfo.GroupId;
+            var awardId = updatedInfo.AwardId;
 
             return View();
         }
+
     }
 }
