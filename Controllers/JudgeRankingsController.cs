@@ -19,7 +19,7 @@ namespace ToaPro.Controllers
         }
 
         [HttpGet]
-        public IActionResult JudgePresentationForm(string judgeId = "736ab614-65f3-4481-92f0-d756f840d380", int groupId = 0)
+        public IActionResult JudgePresentationForm(string judgeId = "37020e47-bd55-4cc8-bf3d-e3288e15b7fb", int groupId = 0)
         {
             // List of rankings for the specified judge
             var judgeRankings = _repo.Rankings.Where(x => x.JudgeId.Equals(judgeId)).ToList();
@@ -121,7 +121,7 @@ namespace ToaPro.Controllers
         }
 
         [HttpGet]
-        public IActionResult TeamRankings(string judgeId = "736ab614-65f3-4481-92f0-d756f840d380")
+        public IActionResult TeamRankings(string judgeId = "37020e47-bd55-4cc8-bf3d-e3288e15b7fb")
         {
             ViewBag.joinedData = (from judges in _repo.Judges
                                   join rankings in _repo.Rankings

@@ -408,7 +408,20 @@ namespace ToaPro.Models
                         TechnologyComments = "Great tech",
                         OverallPoints = 14,
                         Nomination = "Number 2 in INTEX",
-                        PresentationId = presentations.FirstOrDefault().Id
+                        PresentationId = presentations.FirstOrDefault(x => x.GroupId == 4).Id
+                    },
+                    new Ranking
+                    {
+                        GroupId = groups.FirstOrDefault(x => x.Section == 4 && x.Number == 8).Id,
+                        JudgeId = judges.FirstOrDefault(x => x.Affiliation == "KPMG").Id,
+                        TeamRanking = 1,
+                        CommunicationPoints = 6,
+                        CommunicationComments = "Great communication",
+                        TechnologyPoints = 10,
+                        TechnologyComments = "Great tech",
+                        OverallPoints = 16,
+                        Nomination = "Number 1 in INTEX",
+                        PresentationId = presentations.FirstOrDefault(x => x.GroupId == 6).Id
                     },
                     new Ranking
                     {
@@ -421,7 +434,7 @@ namespace ToaPro.Models
                         TechnologyComments = "Great tech",
                         OverallPoints = 16,
                         Nomination = "Number 1 in INTEX",
-                        PresentationId = presentations.FirstOrDefault().Id
+                        PresentationId = presentations.FirstOrDefault(x => x.GroupId == 6).Id
                     }
                 );
 
