@@ -9,7 +9,7 @@ public partial class Judge
     [ForeignKey("ToaProUser")]
     public string Id { get; set; }
     public ToaProUser ToaProUser { get; set; }
-    public string Affiliation { get; set; } = null!;
+    public string? Affiliation { get; set; } = null!;
     public bool TimeSlot1 { get; set; }
     public bool TimeSlot2 { get; set; }
     public bool TimeSlot3 { get; set; }

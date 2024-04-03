@@ -30,7 +30,6 @@ namespace ToaPro
         public IQueryable<Models.Group> Groups => _toaProContext.Groups;
         public IQueryable<Award> Awards => _toaProContext.Awards;
 
-
         //Change RequestAvailability to match the judge model when inputting their timeslots
         public void RequestAvailability(Judge judge)
         {

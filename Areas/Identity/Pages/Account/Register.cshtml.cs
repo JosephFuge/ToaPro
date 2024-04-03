@@ -138,6 +138,22 @@ namespace ToaPro.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
+                    if (user.NormalizedUserName.StartsWith("COORD")) {
+                        await _userManager.AddToRoleAsync(user, "Coordinator");
+                    } else if (user.NormalizedUserName.StartsWith("PROF")) {
+                        await _userManager.AddToRoleAsync(user, "Professor");
+                    } else if (user.NormalizedUserName.StartsWith("STUD")) {
+                        await _userManager.AddToRoleAsync(user, "Student");
+                    } else if (user.NormalizedUserName.StartsWith("JUDGE"))
+                    {
+                        await _userManager.AddToRoleAsync(user, "Judge");
+                    }
+                    else if (user.NormalizedUserName.StartsWith("TA"))
+                    {
+                        await _userManager.AddToRoleAsync(user, "TA");
+                    }
+
+
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
