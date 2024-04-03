@@ -13,12 +13,12 @@ namespace ToaPro
         {
             _toaProContext = toaProContext;
         }
+        public IEnumerable<Class> Classes => _toaProContext.Classes;
 
         public IQueryable<Student> Students => _toaProContext.Students;
         public IEnumerable<Submission> Submissions => _toaProContext.Submissions.ToList();
         public IQueryable<Judge> Judges => _toaProContext.Judges;
         public IQueryable<Presentation> Presentations => _toaProContext.Presentations;
-        public IEnumerable<Class> Classes => _toaProContext.Classes;
         public IEnumerable<Grade> Grades => _toaProContext.Grades;
         public IEnumerable<Grader> Graders => _toaProContext.Graders;
         public IEnumerable<Requirement> Requirements => _toaProContext.Requirements;

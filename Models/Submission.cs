@@ -18,8 +18,7 @@ public partial class Submission
     public string GithubLink { get; set; }
     [Required(ErrorMessage = "Please include a YouTube Link.")]
     public string YoutubeLink { get; set; }
-    [Required(ErrorMessage = "Please upload the necessary files.")]
-    public string? UploadFile { get; set; }
+    public string UploadFile { get; set; }
 
     public virtual ICollection<Grade> Grades { get; set; } = new List<Grade>();
 
