@@ -8,7 +8,7 @@ This view will need to contain functionality to disallow TAs from editing their 
 and allowing professors to edit/make assignments.
 *@
 
-@model List<Grader>
+@model Dictionary<string, List<List<string>>>
 
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -44,11 +44,12 @@ and allowing professors to edit/make assignments.
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var ta in Model)
+                    @foreach (var taKey in Model.Keys)
                     {
                         <tr>
-                            <td>@(ta.ToaProUser.FirstName + " " + ta.ToaProUser.LastName)</td>
-                            <td>@ta</td>
+                            <td>@(Model[taKey][0])</td>
+                            <td></td>
+                            <td></td>
                         </tr>
                     }
                 </tbody>

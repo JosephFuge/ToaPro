@@ -3,16 +3,22 @@ using Microsoft.EntityFrameworkCore;
 using ToaPro.Models;
 using ToaPro.Models.ViewModels; // Make sure this matches the namespace of your ViewModel
 using System.Linq;
+using System.Formats.Tar;
+using Microsoft.AspNetCore.Identity;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace ToaPro.Controllers
 {
     public class RubricController : Controller
     {
         private readonly ToaProContext _context;
+        private readonly UserManager<ToaProUser> _userManager;
 
-        public RubricController(ToaProContext context)
+        public RubricController(ToaProContext context, UserManager<ToaProUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public IActionResult Rubric()
@@ -33,12 +39,40 @@ namespace ToaPro.Controllers
 
         public IActionResult AssignTAs()
         {
+            Dictionary<string, List<List<string>>> assignmentDict = new Dictionary<string, List<List<string>>>();
+
             var TAAssignmentList = _context.Graders
                 .Include(x => x.ToaProUser)
+                .Include(x => x.GraderAssigns)
                 .Where(x => x.IsProfessor == false)
                 .ToList();
 
-            return View(TAAssignmentList);
+            foreach (Grader taa in TAAssignmentList)
+            {
+                if (!assignmentDict.ContainsKey(taa.ToaProUser.Id))
+                {
+                    assignmentDict.Add(taa.ToaProUser.Id, new List<List<string>>());
+                    assignmentDict[taa.ToaProUser.Id].Add(new List<string>());
+                    assignmentDict[taa.ToaProUser.Id].Add(new List<string>());
+                }
+
+                assignmentDict[taa.ToaProUser.Id][0].Add(taa.ToaProUser.FirstName + " " + taa.ToaProUser.LastName);
+                // Add user to first array
+
+                var TAGroupAndAssignmentList = _context.GraderAssigns
+                    .Include(x => x.Group)
+                    .Include(x => x.Requirement)
+                    .Where(x => x.graderId == taa.ToaProUser.Id)
+                    .ToList();
+
+                foreach (GraderAssign ga in TAGroupAndAssignmentList)
+                {
+                    assignmentDict[taa.ToaProUser.Id][1].Add(ga.Group.Section.ToString() + ga.Group.Number.ToString());
+                    assignmentDict[taa.ToaProUser.Id][2].Add(ga.Requirement.Description + '\n');
+                }
+            }
+
+            return View(assignmentDict);
         }
         [HttpGet]
         public IActionResult AddObjective(int id)

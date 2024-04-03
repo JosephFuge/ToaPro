@@ -21,6 +21,7 @@ namespace ToaPro
         public IEnumerable<Class> Classes => _toaProContext.Classes;
         public IEnumerable<Grade> Grades => _toaProContext.Grades;
         public IEnumerable<Grader> Graders => _toaProContext.Graders;
+        public IEnumerable<GraderAssign> GraderAssigns => _toaProContext.GraderAssigns;
         public IEnumerable<Requirement> Requirements => _toaProContext.Requirements;
         public IEnumerable<Semester> Semesters => _toaProContext.Semesters;
         public IQueryable<Ranking> Rankings => _toaProContext.Rankings;
