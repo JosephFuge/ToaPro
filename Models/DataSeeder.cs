@@ -297,15 +297,16 @@ namespace ToaPro.Models
                 await _context.SaveChangesAsync();
             }
 
-            if (!_context.Groups.ToList().Any())
-            {
-                List<Semester> semesters = _context.Semesters.ToList() ?? [];
+            //IF YOU ARE WONDERING WHO COMMENTED THIS OUT, IT WAS COLEMAN.  THIS PIECE WAS THROWING AN ERROR WHEN TRYING TO LOAD THE PAGE
+            //if (!_context.Groups.ToList().Any())
+            //{
+            //    List<Semester> semesters = _context.Semesters.ToList() ?? [];
 
-                if (semesters.Any())
-                {
-                    await SeedGroupsAndStudents(semester: semesters.FirstOrDefault(x => x.Year == 2024 && x.Term == "Winter"));
-                }
-            }
+            //    if (semesters.Any())
+            //    {
+            //        await SeedGroupsAndStudents(semester: semesters.FirstOrDefault(x => x.Year == 2024 && x.Term == "Winter"));
+            //    }
+            //}
 
             await _context.SaveChangesAsync();
 
