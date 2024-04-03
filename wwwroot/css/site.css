@@ -111,6 +111,11 @@ input {
     color: #003369 !important;
 }
 
+button.nav-link {
+    background-color: transparent;
+    border-color: transparent;
+}
+
 
 
 
