@@ -357,3 +357,60 @@ table {
             padding-bottom: 1rem;
         }
 }
+
+
+/********************************************************************
+ * Landing Pages
+ *******************************************************************/
+
+.dashboard-section img {
+    transition: transform 0.3s ease;
+}
+
+.dashboard-section:hover img {
+    transform: scale(1.1);
+}
+
+/********************************************************************
+ * Dynamic Rubric
+ *******************************************************************/
+.add-objective-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.add-objective-form input {
+    margin-right: 10px;
+}
+
+.add-objective-form .new-objective-points {
+    width: 12%;
+    margin-right: 10px;
+}
+
+.add-objective-form .new-objective-desc {
+    flex-grow: 1;
+}
+
+/* Set table layout to fixed */
+.rTable {
+    table-layout: fixed;
+    width: 100%;
+}
+
+/* Set column widths */
+.rTable th:nth-child(1),
+.rTable td:nth-child(1) {
+    width: 10%;
+}
+
+.rTable th:nth-child(2),
+.rTable td:nth-child(2) {
+    width: 70%;
+}
+
+.rTable th:nth-child(3),
+.rTable td:nth-child(3) {
+    width: 20%;
+}

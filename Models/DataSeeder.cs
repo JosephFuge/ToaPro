@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Net.WebSockets;
+using ToaPro.Controllers;
 
 namespace ToaPro.Models
 {
@@ -296,15 +297,16 @@ namespace ToaPro.Models
                 await _context.SaveChangesAsync();
             }
 
-            if (!_context.Groups.ToList().Any())
-            {
-                List<Semester> semesters = _context.Semesters.ToList() ?? [];
+            //IF YOU ARE WONDERING WHO COMMENTED THIS OUT, IT WAS COLEMAN.  THIS PIECE WAS THROWING AN ERROR WHEN TRYING TO LOAD THE PAGE
+            //if (!_context.Groups.ToList().Any())
+            //{
+            //    List<Semester> semesters = _context.Semesters.ToList() ?? [];
 
-                if (semesters.Any())
-                {
-                    await SeedGroupsAndStudents(semester: semesters.FirstOrDefault(x => x.Year == 2024 && x.Term == "Winter"));
-                }
-            }
+            //    if (semesters.Any())
+            //    {
+            //        await SeedGroupsAndStudents(semester: semesters.FirstOrDefault(x => x.Year == 2024 && x.Term == "Winter"));
+            //    }
+            //}
 
             await _context.SaveChangesAsync();
 
@@ -370,7 +372,9 @@ namespace ToaPro.Models
             {
                 List<Group> groups = _context.Groups.ToList() ?? [];
 
-                _context.Presentations.AddRange(
+                if ( groups.Any() )
+                {
+                    _context.Presentations.AddRange(
                     new Presentation
                     {
                         GroupId = groups.FirstOrDefault(x => x.Section == 4 && x.Number == 8).Id,
@@ -383,7 +387,8 @@ namespace ToaPro.Models
                         Location = "5267",
                         StartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddDays(14).ToUniversalTime()
                     }
-                );
+                ); 
+                }
 
                 await _context.SaveChangesAsync();
             }
@@ -393,8 +398,11 @@ namespace ToaPro.Models
             {
                 var groups = _context.Groups;
                 var judges = _context.Judges;
+                var presentations = _context.Presentations;
 
-                _context.Rankings.AddRange(
+                if (groups.ToList().Any())
+                {
+                    _context.Rankings.AddRange(
                     new Ranking
                     {
                         GroupId = groups.FirstOrDefault(x => x.Section == 4 && x.Number == 1).Id,
@@ -405,7 +413,21 @@ namespace ToaPro.Models
                         TechnologyPoints = 10,
                         TechnologyComments = "Great tech",
                         OverallPoints = 14,
-                        Nomination = "Number 2 in INTEX"
+                        Nomination = "Number 2 in INTEX",
+                        PresentationId = presentations.FirstOrDefault(x => x.GroupId == 4).Id
+                    },
+                    new Ranking
+                    {
+                        GroupId = groups.FirstOrDefault(x => x.Section == 4 && x.Number == 8).Id,
+                        JudgeId = judges.FirstOrDefault(x => x.Affiliation == "KPMG").Id,
+                        TeamRanking = 1,
+                        CommunicationPoints = 6,
+                        CommunicationComments = "Great communication",
+                        TechnologyPoints = 10,
+                        TechnologyComments = "Great tech",
+                        OverallPoints = 16,
+                        Nomination = "Number 1 in INTEX",
+                        PresentationId = presentations.FirstOrDefault(x => x.GroupId == 6).Id
                     },
                     new Ranking
                     {
@@ -417,9 +439,11 @@ namespace ToaPro.Models
                         TechnologyPoints = 10,
                         TechnologyComments = "Great tech",
                         OverallPoints = 16,
-                        Nomination = "Number 1 in INTEX"
+                        Nomination = "Number 1 in INTEX",
+                        PresentationId = presentations.FirstOrDefault(x => x.GroupId == 6).Id
                     }
                 );
+                }
 
                 await _context.SaveChangesAsync();
             }
@@ -429,21 +453,28 @@ namespace ToaPro.Models
             {
                 var student0 = await _userManager.FindByNameAsync("studentUserName0");
                 var student1 = await _userManager.FindByNameAsync("studentUserName1");
-                _context.Students.AddRange(
-                    new Student
-                    {
-                        Id = student0.Id,
-                        NetId = "123 456 1234",
-                        Reason = "I don't like mornings"
 
-                    },
-                    new Student
-                    {
-                        Id = student1.Id,
-                        NetId = "123 478 3456",
-                        Reason = "LOL"
-                    }
-                );
+                if (student0 != null && student1 != null)
+                {
+                    _context.Students.AddRange(
+                        new Student
+                        {
+                            Id = student0.Id,
+                            NetId = "123 456 1234",
+                            Reason = "I don't like mornings"
+
+                        },
+                        new Student
+                        {
+                            Id = student1.Id,
+                            NetId = "123 478 3456",
+                            Reason = "LOL"
+                        }
+                    );
+
+                    await _context.SaveChangesAsync();
+                }
+                
             }
 
             //Submission Seeding

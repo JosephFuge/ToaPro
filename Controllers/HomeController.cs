@@ -26,7 +26,7 @@ namespace ToaPro.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             // This redirects to the login page if the user is not signed in. Otherwise, show the default page.
             // Currently commented out because newly created users aren't assigned any roles.
@@ -39,6 +39,22 @@ namespace ToaPro.Controllers
             //    return Redirect("/Identity/Account/Login");
             //}
             //Add functionality to load the Index page based on user type (Coord, Prof, Stud, TA, Judge)
+
+            var userClaim = HttpContext.User;
+
+            if (userClaim != null)
+            {
+                var user = await _signInManager.UserManager.GetUserAsync(userClaim);
+                if (user != null)
+                {
+                    var roleResult = await _signInManager.UserManager.GetRolesAsync(user);
+                    if (roleResult != null && roleResult.ToList().Any())
+                    {
+                        ViewBag.UserType = roleResult.FirstOrDefault();
+                    }
+                    
+                }
+            }
 
             return View();
         }
@@ -75,6 +91,11 @@ namespace ToaPro.Controllers
         }
 
         public IActionResult ProfessorIndex()
+        {
+            return View();
+        }
+
+        public IActionResult CoordinatorIndex()
         {
             return View();
         }

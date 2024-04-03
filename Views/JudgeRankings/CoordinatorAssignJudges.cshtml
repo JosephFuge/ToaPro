@@ -8,7 +8,7 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-<vc:nav-bar-types user="Professor"></vc:nav-bar-types>
+<vc:nav-bar-types user="Coordinator"></vc:nav-bar-types>
 <vc:header-types title="Assign Judges" />
 <!DOCTYPE html>
 <html lang="en">
@@ -36,8 +36,89 @@
             font-weight: bold;
             background-color: #f0f0f0;
         }
+
+        /* Table styling */
+        table {
+            border-collapse: separate;
+            border-radius: 8px;
+            border-spacing: 0px;
+            overflow: hidden;
+            width: 100%; /* Fill up the container width */
+        }
+
+        table:not(.mse-no-border) {
+            border: 1px solid #C9C9C9;
+        }
+
+        table th:not(:last-child, .mse-no-border),
+        table td:not(:last-child, .mse-no-border) {
+            border-right: 1px solid #D1D1D1;
+        }
+
+        table tr th {
+            vertical-align: middle;
+            padding: 0.5rem 1rem;
+            background-color: #002E5D;
+            color: #FFF;
+        }
+
+        table tr td {
+            vertical-align: middle;
+            padding: 0.5rem 0.7rem;
+            min-width: 120px;
+        }
+
+        table tr p {
+            margin-bottom: 0;
+        }
+
+        table tbody tr:nth-of-type(2n) {
+            background-color: #EDF3FC;
+        }
+
+        .mse-table-scroll,
+        .mse-table-wrapped-no-header,
+        .mse-table-wrapped {
+            max-width: 100%;
+            overflow-x: auto;
+            display: block;
+        }
+
+        .mse-table-wrapped-no-header table,
+        .mse-table-wrapped table {
+            width: 100%;
+        }
+
+        /* media (max-width: 768px) {
+            .mse-table-wrapped-no-header th,
+            .mse-table-wrapped th {
+                display: none;
+            } */
+
+            .mse-table-wrapped-no-header td,
+            .mse-table-wrapped td {
+                padding: 2px;
+                display: grid;
+                grid-template-columns: 16ch auto;
+                border-right: none !important;
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+                overflow: auto;
+            }
+
+            .mse-table-wrapped-no-header td:first-child,
+            .mse-table-wrapped td:first-child {
+                padding-top: 1rem;
+            }
+
+            .mse-table-wrapped-no-header td:last-child,
+            .mse-table-wrapped td:last-child {
+                padding-bottom: 1rem;
+            }
+        }
     </style>
 </head>
+<br /><br />
 <body>
     <div class="container-fluid">
         <div class="row">
@@ -46,12 +127,11 @@
                 <h2>Judge Assignment</h2>
                 <!-- Dropdown for Judges -->
                 <div class="form-group">
-                    
                     <label asp-for="@Model.FirstOrDefault().Id">Select Judge:</label>
                     <select class="form-control" id="judgeDropdown">
                         @foreach (Judge j in Model)
                         {
-                         <option value="@j.Id">@j.ToaProUser.FirstName @j.ToaProUser.LastName</option>
+                            <option value="@j.Id">@j.ToaProUser.FirstName @j.ToaProUser.LastName</option>
                         }
                     </select>
                 </div>
@@ -103,65 +183,70 @@
             <!-- Right Column (Remaining 3/4ths of the screen) -->
             <div class="col-lg-9">
                 <!-- Grid for rooms and timeslots -->
-                <div class="grid-container">
-                    <!-- Header row for timeslots -->
-                    <div class="grid-item grid-header">ROOM #</div>
-                    <div class="grid-item grid-header">12:30</div>
-                    <div class="grid-item grid-header">1:00</div>
-                    <div class="grid-item grid-header">1:30</div>
-                    <div class="grid-item grid-header">2:00</div>
-                    <div class="grid-item grid-header">2:30</div>
-                    <div class="grid-item grid-header">3:00</div>
-                    <!-- Rows for each room -->
-                    <div class="grid-item">Room 1</div>
-                    <div class="grid-item">Content</div>
-                    <div class="grid-item">Content</div>
-                    <div class="grid-item">Content</div>
-                    <div class="grid-item">Content</div>
-                    <div class="grid-item">Content</div>
-                    <div class="grid-item">Content</div>
-                    <!-- Content for Room 1 -->
-                    <!-- Repeat for Room 2 to Room 5 -->
-                    <div class="grid-item">Room 2</div>
-                    <div class="grid-item">Content</div>
-                    <div class="grid-item">Content</div>
-                    <div class="grid-item">Content</div>
-                    <div class="grid-item">Content</div>
-                    <div class="grid-item">Content</div>
-                    <div class="grid-item">Content</div>
-                    <!-- Content for Room 2 -->
-                    <div class="grid-item">Room 3</div>
-                    <div class="grid-item">Content</div>
-                    <div class="grid-item">Content</div>
-                    <div class="grid-item">Content</div>
-                    <div class="grid-item">Content</div>
-                    <div class="grid-item">Content</div>
-                    <div class="grid-item">Content</div>
-                    <!-- Content for Room 3 -->
-                    <div class="grid-item">Room 4</div>
-                    <div class="grid-item">Content</div>
-                    <div class="grid-item">Content</div>
-                    <div class="grid-item">Content</div>
-                    <div class="grid-item">Content</div>
-                    <div class="grid-item">Content</div>
-                    <div class="grid-item">Content</div>
-                    <!-- Content for Room 4 -->
-                    <div class="grid-item">Room 5</div>
-                    <div class="grid-item">Content</div>
-                    <div class="grid-item">Content</div>
-                    <div class="grid-item">Content</div>
-                    <div class="grid-item">Content</div>
-                    <div class="grid-item">Content</div>
-                    <div class="grid-item">Content</div>
-                    <!-- Content for Room 5 -->
-                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ROOM #</th>
+                            <th>12:30</th>
+                            <th>1:00</th>
+                            <th>1:30</th>
+                            <th>2:00</th>
+                            <th>2:30</th>
+                            <th>3:00</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Room 1</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                        </tr>
+                        <tr>
+                            <td>Room 2</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                        </tr>
+                        <tr>
+                            <td>Room 3</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                        </tr>
+                        <tr>
+                            <td>Room 4</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                        </tr>
+                        <tr>
+                            <td>Room 5</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                            <td>Content</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-
-    <!-- Bootstrap JS (Optional, if needed) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>
+
