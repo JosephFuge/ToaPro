@@ -1,25 +1,21 @@
-﻿@using ToaPro
-@using ToaPro.Models
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@addTagHelper *, ToaPro
-@{
+﻿@{
     Layout = "/Views/Shared/_Layout.cshtml";
 }
-<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
 <vc:nav-bar-types user="Default"></vc:nav-bar-types>
 
 <div class="row justify-content-center">
     <div class="col-5 mt-5">
         <div class="card login-logout-card">
-            <div class="nav nav-tabs card-header-tabs">
-                <li class="nav-item">
-                    <a class="nav-link" href="/Identity/Account/Login">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/Identity/Account/Register">Register</a>
-                </li>
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Identity/Account/Login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Identity/Account/Register">Register</a>
+                    </li>
+                </ul>
             </div>
             <div class="card-body">
                 <div class="row justify-content-center">
@@ -35,14 +31,15 @@
 @section Scripts {
     @await RenderSectionAsync("Scripts", required: false)
     <script>
-        $(function () ){
-            const currentPage = location.pathname;
+        $(function () {
+            const currentPage = location.pathname.toLowerCase();
             $('.nav-tabs li a').each(function () {
                 const $this = $(this);
-                if (currentPage.toLowerCase().indexOf($this.attr('href').toLowerCase()) != -1) {
+                if (currentPage.indexOf($this.attr('href').toLowerCase()) !== -1) {
                     $this.addClass('active');
                 }
-            })
-        })
+            });
+        });
     </script>
 }
+
