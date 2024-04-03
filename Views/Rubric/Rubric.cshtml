@@ -14,176 +14,192 @@ For more information on enabling MVC for empty projects, visit https://go.micros
 
 @model ToaPro.Models.ViewModels.RequirementViewModel
 
-<div class="container">
-    <div>
-        <vc:header-types />
+<div class="container mt-4">
+    <h2 class="mb-4">Rubric Management</h2>
+
+    <!-- Section for 401 Project Management -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2>401 Project Management</h2>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered table-hover table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Points</th>
+                        <th>Objectives</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Class1Requirements)
+                    {
+                        <tr>
+                            <td>@item.Points</td>
+                            <td>@item.Description</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <form asp-controller="Rubric" asp-action="Rubric" method="post">
+                <button type="submit" name="id" value="1" class="btn btn-primary">Add Objective</button>
+            </form>
+            <!-- Grading levels for 401 -->
+            <table class="table table-bordered table-hover table-striped mt-4">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Low (0-30)</th>
+                        <th>Medium (40-70)</th>
+                        <th>High (80-100)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Description for Low</td>
+                        <td>Description for Medium</td>
+                        <td>Description for High</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-    <!--Table to display movies-->
-
-    <h2>401 Project Management</h2>
-    <table class="table table-bordered table-hover table-striped">
-        <thead class="thead-dark">
-            <tr>
-                <th>Points</th>
-                <th>Objectives</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var x in Model.Class1Requirements)
-            {
-                <tr>
-                    <td>@x.Points</td>
-                    <td>@x.Description</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    <table class="table table-bordered table-hover table-striped">
-        <thead class="thead-dark">
-            <tr>
-                <th>Low(0-30)</th>
-                <th>Medium(40-70)</th>
-                <th>High (80-100)</th>
-            </tr>
-        </thead>
-        <tbody>
-        <td>Lorem Ipsum</td>
-        <td>Lorem Ipsum</td>
-        <td>Lorem Ipsum</td>
-        </tbody>
-    </table>
-    <form asp-controller="Rubric" asp-action="Rubric" method="post">
-        <button type="submit" name="id" value="1" style="width: 150px;">Add Objective</button>
-    </form>
-
-
-    <div class="card m-1 p-1">
-        <h2 style="text-align:center">413 Enterprise Application Development</h2>
-        <table class="table table-bordered table-hover table-striped">
-            <thead class="thead-dark bg-dark text-white">
-                <tr>
-                    <th>Points</th>
-                    <th>Objectives</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var x in Model.Class2Requirements)
-                {
+    <!-- Repeat for other classes, 413 Enterprise Application Development, 414 Security, 455 Machine Learning -->
+    <!-- Each section follows the same structure as 401 Project Management -->
+    <!-- Example for 413 Enterprise Application Development -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2>413 Enterprise Application Development</h2>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered table-hover table-striped">
+                <thead class="thead-dark">
                     <tr>
-                        <td>@x.Points</td>
-                        <td>@x.Description</td>
+                        <th>Points</th>
+                        <th>Objectives</th>
                     </tr>
-                }
-            </tbody>
-        </table>
-        <form asp-controller="Rubric" asp-action="Rubric" method="post">
-            <button type="submit" name="id" value="2" style="width: 150px;">Add Objective</button>
-        </form>
-        <br />
-        <br />
-
-
-        <table class="table table-bordered table-hover table-striped">
-            <thead class="thead-dark bg-dark text-white">
-                <tr>
-                    <th>Low(0-30)</th>
-                    <th>Medium(40-70)</th>
-                    <th>High (80-100)</th>
-                </tr>
-            </thead>
-            <tbody>
-            <td>Lorem Ipsum</td>
-            <td>Lorem Ipsum</td>
-            <td>Lorem Ipsum</td>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Class2Requirements)
+                    {
+                        <tr>
+                            <td>@item.Points</td>
+                            <td>@item.Description</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <form asp-controller="Rubric" asp-action="Rubric" method="post">
+                <button type="submit" name="id" value="2" class="btn btn-primary">Add Objective</button>
+            </form>
+            <!-- Grading levels for 413 -->
+            <table class="table table-bordered table-hover table-striped mt-4">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Low (0-30)</th>
+                        <th>Medium (40-70)</th>
+                        <th>High (80-100)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Description for Low</td>
+                        <td>Description for Medium</td>
+                        <td>Description for High</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-
-    <div class="card m-1 p-1">
-        <h2 style="text-align:center">414 Security</h2>
-        <table class="table table-bordered table-hover table-striped">
-            <thead class="thead-dark bg-dark text-white">
-                <tr>
-                    <th>Points</th>
-                    <th>Objectives</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var x in Model.Class3Requirements)
-                {
+    <!-- Instructions continued for 414 Security -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2>414 Security</h2>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered table-hover table-striped">
+                <thead class="thead-dark">
                     <tr>
-                        <td>@x.Points</td>
-                        <td>@x.Description</td>
+                        <th>Points</th>
+                        <th>Objectives</th>
                     </tr>
-                }
-            </tbody>
-        </table>
-        <form asp-controller="Rubric" asp-action="Rubric" method="post">
-            <button type="submit" name="id" value="3" style="width: 150px;">Add Objective</button>
-        </form>
-        <br />
-        <br />
-
-
-        <table class="table table-bordered table-hover table-striped">
-            <thead class="thead-dark bg-dark text-white">
-                <tr>
-                    <th>Low(0-30)</th>
-                    <th>Medium(40-70)</th>
-                    <th>High (80-100)</th>
-                </tr>
-            </thead>
-            <tbody>
-            <td>Lorem Ipsum</td>
-            <td>Lorem Ipsum</td>
-            <td>Lorem Ipsum</td>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Class1Requirements)
+                    {
+                        <tr>
+                            <td>@item.Points</td>
+                            <td>@item.Description</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <form asp-controller="Rubric" asp-action="Rubric" method="post">
+                <button type="submit" name="id" value="3" class="btn btn-primary">Add Objective</button>
+            </form>
+            <!-- Grading levels for 414 -->
+            <table class="table table-bordered table-hover table-striped mt-4">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Low (0-30)</th>
+                        <th>Medium (40-70)</th>
+                        <th>High (80-100)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Description for Low</td>
+                        <td>Description for Medium</td>
+                        <td>Description for High</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-
-
-
-    <div class="card m-1 p-1">
-        <h2 style="text-align:center">455 Machine Learning</h2>
-        <table class="table table-bordered table-hover table-striped">
-            <thead class="thead-dark bg-dark text-white">
-                <tr>
-                    <th>Points</th>
-                    <th>Objectives</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var x in Model.Class4Requirements)
-                {
+    <!-- Instructions continued for 455 Machine Learning with similar patterns -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2>455 Machine Learning</h2>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered table-hover table-striped">
+                <thead class="thead-dark">
                     <tr>
-                        <td>@x.Points</td>
-                        <td>@x.Description</td>
+                        <th>Points</th>
+                        <th>Objectives</th>
                     </tr>
-                }
-            </tbody>
-        </table>
-        <form asp-controller="Rubric" asp-action="Rubric" method="post">
-            <button type="submit" name="id" value="4" style="width: 150px;">Add Objective</button>
-        </form>
-        <br />
-        <br />
-
-        <table class="table table-bordered table-hover table-striped">
-            <thead class="thead-dark bg-dark text-white">
-                <tr>
-                    <th>Low(0-30)</th>
-                    <th>Medium(40-70)</th>
-                    <th>High (80-100)</th>
-                </tr>
-            </thead>
-            <tbody>
-            <td>Lorem Ipsum</td>
-            <td>Lorem Ipsum</td>
-            <td>Lorem Ipsum</td>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Class1Requirements)
+                    {
+                        <tr>
+                            <td>@item.Points</td>
+                            <td>@item.Description</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <form asp-controller="Rubric" asp-action="Rubric" method="post">
+                <button type="submit" name="id" value="4" class="btn btn-primary">Add Objective</button>
+            </form>
+            <!-- Grading levels for 455 -->
+            <table class="table table-bordered table-hover table-striped mt-4">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Low (0-30)</th>
+                        <th>Medium (40-70)</th>
+                        <th>High (80-100)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Description for Low</td>
+                        <td>Description for Medium</td>
+                        <td>Description for High</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
