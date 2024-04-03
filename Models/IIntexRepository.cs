@@ -30,7 +30,7 @@ namespace ToaPro
 
         public void AddSubmission(Submission submission);
 
-
+        public Judge GetJudgeById(string id);
         public void UpdateJudgeAvailability (Judge judge);
     }
 }

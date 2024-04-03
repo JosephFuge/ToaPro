@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace ToaPro
 {
@@ -70,6 +72,11 @@ namespace ToaPro
         {
             _toaProContext.Judges.Add(judge);
             _toaProContext.SaveChanges();
+        }
+
+        public Judge GetJudgeById(string id)
+        {
+            return _toaProContext.Judges.FirstOrDefault(x => x.Id == id);
         }
     }
 }

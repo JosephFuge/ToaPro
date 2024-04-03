@@ -357,3 +357,16 @@ table {
             padding-bottom: 1rem;
         }
 }
+
+
+/********************************************************************
+ * Landing Pages
+ *******************************************************************/
+
+.dashboard-section img {
+    transition: transform 0.3s ease;
+}
+
+.dashboard-section:hover img {
+    transform: scale(1.1);
+}

@@ -79,5 +79,10 @@ namespace ToaPro.Controllers
             return View();
         }
 
+        public IActionResult CoordinatorIndex()
+        {
+            return View();
+        }
+
     }
 }

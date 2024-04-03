@@ -17,4 +17,5 @@ public partial class Judge
     public bool TimeSlot5 { get; set; }
     public virtual ICollection<Ranking> Rankings { get; set; } = new List<Ranking>();
     public virtual ICollection<Presentation> Presentations { get; set; } = new List<Presentation>();
+
 }

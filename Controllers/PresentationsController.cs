@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ToaPro.Models;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace ToaPro.Controllers
 {
@@ -69,6 +69,16 @@ namespace ToaPro.Controllers
             return View(new Student());
         }
 
+        // Action to get judge data by ID
+        [HttpGet]
+        public IActionResult GetJudgeData(Judge judge)
+        {
+            // Fetch judge data from the database based on the provided ID
+            // Replace this with your actual data retrieval logic
+            var judge2 = _repo.GetJudgeById(judge.Id);
 
+            // Assuming you're returning JSON data
+            return Json(judge2);
+        }
     }
 }
