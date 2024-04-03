@@ -28,35 +28,43 @@ namespace ToaPro.Controllers
 
         public async Task<IActionResult> Index()
         {
-            // This redirects to the login page if the user is not signed in. Otherwise, show the default page.
-            // Currently commented out because newly created users aren't assigned any roles.
-            //if (_signInManager.IsSignedIn(HttpContext.User))
-            //{
-            //    return View();
-            //}
-            //else
-            //{
-            //    return Redirect("/Identity/Account/Login");
-            //}
-            //Add functionality to load the Index page based on user type (Coord, Prof, Stud, TA, Judge)
-
             var userClaim = HttpContext.User;
+            var userRole = "Default";
 
             if (userClaim != null)
             {
                 var user = await _signInManager.UserManager.GetUserAsync(userClaim);
                 if (user != null)
                 {
-                    var roleResult = await _signInManager.UserManager.GetRolesAsync(user);
-                    if (roleResult != null && roleResult.ToList().Any())
+                    var rolesResult = await _signInManager.UserManager.GetRolesAsync(user);
+                    if (rolesResult != null && rolesResult.ToList().Any())
                     {
-                        ViewBag.UserType = roleResult.FirstOrDefault();
+                        userRole = rolesResult.FirstOrDefault();
+                        ViewBag.UserType = rolesResult.FirstOrDefault();
                     }
-                    
+
                 }
             }
 
-            return View();
+            // This redirects to the login page if the user is not signed in. Otherwise, show the default page.
+            // Currently commented out because newly created users aren't assigned any roles.
+            if (_signInManager.IsSignedIn(HttpContext.User))
+            {
+                if (userRole == "Default")
+                {
+                    return View();
+                } else
+                {
+                    return View(userRole + "Index");
+                }
+            }
+            else
+            {
+                return Redirect("/Identity/Account/Login");
+            }
+            //Add functionality to load the Index page based on user type (Coord, Prof, Stud, TA, Judge)
+
+            //return View();
         }
 
         public IActionResult CoordinatorChecklist()
