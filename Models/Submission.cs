@@ -14,9 +14,12 @@ public partial class Submission
     [ForeignKey("Student")]
     public string StudentId { get; set; }
     public DateTime CreatedDate { get; set; }
+    [Required(ErrorMessage = "Please include a public GitHub Link.")]
     public string GithubLink { get; set; }
+    [Required(ErrorMessage = "Please include a YouTube Link.")]
     public string YoutubeLink { get; set; }
-    public string UploadFile { get; set; }
+    [Required(ErrorMessage = "Please upload the necessary files.")]
+    public string? UploadFile { get; set; }
 
     public virtual ICollection<Grade> Grades { get; set; } = new List<Grade>();
 
