@@ -5,7 +5,6 @@ namespace ToaPro.Models;
 
 public partial class ClassInfo
 {
-    // Comment here
     public int Id { get; set; }
 
     public string Code { get; set; } = null!;
