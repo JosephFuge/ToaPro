@@ -12,37 +12,6 @@
         </button>
         <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
             <ul class="navbar-nav">
-                <!-- Replace "#" with the actual path -->
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Home</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="gradingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">
-                        Grading
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="gradingDropdown">
-                        <li><a class="dropdown-item" href="#">Grading Home</a></li>
-                        <li><a class="nav-link dropdown-item" asp-controller="Rubric" asp-action="Rubric">Rubric</a></li>
-                        <li><a class="dropdown-item" href="#">Grade</a></li>
-                        <li><a class="nav-link dropdown-item" asp-controller="Rubric" asp-action="AssignTAs">TA Assignments</a></li>
-                        <li><a class="dropdown-item" href="#">Normalization</a></li>
-                      
-                    </ul>
-                </li>
-                <!-- Replace "#" with the actual path-->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="presentationDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">
-                        Presentation
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="gradingDropdown">
-                        <li><a class="dropdown-item" href="#">Schedule</a></li>
-                        <li><a class="dropdown-item" href="#">Awards</a></li>
-                    </ul>
-                </li>
-                <!-- Replace "#" with the actual path-->
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Permissions</a>
-                </li>
                 @if (SignInManager.IsSignedIn(User))
                 {
                     <li class="nav-item">
