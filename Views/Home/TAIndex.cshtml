@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link href="~/css/site.css" rel="stylesheet" />
+
+<vc:nav-bar-types user="Professor"></vc:nav-bar-types>
+<vc:submenu-types view="Default"></vc:submenu-types>
+<vc:header-types title="Welcome TA" />
+
+<div class="container">
+    <div class="row justify-content-center" style="padding: 40px;">
+        <div class="col-md-12 d-flex justify-content-center">
+            <a asp-controller="Grading" asp-action="GradingPage" class="dashboard-section-link">
+                <div class="dashboard-section" style="background-color: #DDDDDD; width: 150px; height: 150px; margin: 0 30px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                    <img src="~/img/grading.png" style="width: 48px; height: 48px;" />
+                    <h3 style="font-size: 14px; margin-top: 10px; text-align: center;">Grades</h3>
+                </div>
+            </a>
+            <a asp-controller="Rubric" asp-action="AssignTAs" class="dashboard-section-link">
+                <div class="dashboard-section" style="background-color: #DDDDDD; width: 150px; height: 150px; margin: 0 30px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                    <img src="~/img/ta_assignments.png" style="width: 48px; height: 48px;" />
+                    <h3 style="font-size: 14px; margin-top: 10px; text-align: center;">TA Assignments</h3>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
