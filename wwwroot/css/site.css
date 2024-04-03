@@ -341,6 +341,7 @@ table {
 .dashboard {
     font-family: 'Public Sans', sans-serif;
 }
+
 .dashboard-section img {
     transition: transform 0.3s ease;
 }
@@ -348,3 +349,9 @@ table {
 .dashboard-section:hover img {
     transform: scale(1.1);
 }
+
+.dashboard-section a {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Use the default text color */
+}
+
