@@ -10,17 +10,18 @@ public partial class Submission
     [Key]
     public int Id { get; set; }
     [ForeignKey("Group")]
-    public int GroupId { get; set; }
+    public int GroupId { get; set; } //We get this from them being logged in
     [ForeignKey("Student")]
-    public string StudentId { get; set; }
-    public DateTime CreatedDate { get; set; }
+    public string StudentId { get; set; } //We get this from them being logged in
+    public DateTime CreatedDate { get; set; } //This is created when the submission is submitted
     [Required(ErrorMessage = "Please include a public GitHub Link.")]
-    public string GithubLink { get; set; }
+    public string GithubLink { get; set; } //This is submitted by the students
     [Required(ErrorMessage = "Please include a YouTube Link.")]
-    public string YoutubeLink { get; set; }
+    public string YoutubeLink { get; set; } //This is submitted by the students
     [Required(ErrorMessage = "Please upload the necessary files.")]
-    public string? UploadFile { get; set; }
+    public string? UploadFile { get; set; } //This is submitted by the students
 
+    //These help link the submissions to other tables in the database
     public virtual ICollection<Grade> Grades { get; set; } = new List<Grade>();
 
     public virtual Group Group { get; set; } = null!;
