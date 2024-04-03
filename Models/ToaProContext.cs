@@ -18,7 +18,7 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
     {
     }
 
-    public virtual DbSet<ClassInfo> Classes { get; set; }
+    public virtual DbSet<Class> Classes { get; set; }
 
     public virtual DbSet<Grade> Grades { get; set; }
 
