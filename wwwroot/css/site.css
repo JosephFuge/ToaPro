@@ -1,20 +1,20 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
@@ -24,15 +24,35 @@ body {
     font-size: 16px;
 }
 
-/*JULES STYLING*/
-/********************************************************************/
+/*tab navigation*/
+.login-logout-card .card-header {
+    padding: Opx Opx 12px Opx;
+}
 
+.login-Logout-card ul.ngv-tabs {
+    margin: Ox Opx -12px 0px;
+}
 
+.login-logout-card li.nav-item {
+    width: 50%;
+}
+.login-logout-card a.nav-link {
+    font-size: 1rem;
+    color: #495057;
+    text-align: center;
+    padding: 1rem;
+}
 
-/* Form Styling
+.login-logout-card .card-body {
+    padding: 10px 20px;
+}
+
+    /*JULES STYLING*/
+    /********************************************************************/
+    /* Form Styling
 *******************************************************************
 */
-.main-form {
+    .main-form {
     /* No background */
 }
 
@@ -89,6 +109,11 @@ input {
 /* Change the color on hover for submenu items */
 .navbar.bg-white .navbar-nav .nav-item .nav-link:hover {
     color: #003369 !important;
+}
+
+button.nav-link {
+    background-color: transparent;
+    border-color: transparent;
 }
 
 

@@ -19,7 +19,14 @@
     </body>
 </html>
 @model IEnumerable<GradingSummaryViewModel>
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
+<vc:nav-bar-types user="Professor"></vc:nav-bar-types>
+<vc:submenu-types view="Grading"></vc:submenu-types>
+<vc:header-types title="GradingSummaryPage" />
+
+<div class="container">
 
 <div class="button-container" align="center">
     <button>Section 1</button>
@@ -80,3 +87,4 @@
         }
     </tbody>
 </table>
+</div>

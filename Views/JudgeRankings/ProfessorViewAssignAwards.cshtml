@@ -4,66 +4,74 @@
 @{
 }
 @*Professors Assign actual rankings, this page will also display the Judges nominations from the JudgePresentationForm.cshtml View (Groups 3 & 6)*@
-<table class="table table-bordered table-striped table-hover">
-    <thead class="text-light" style="background-color: #002f5d;">
-    <tr>
-        <th>Award (across all sections)</th>
-        <th>Description</th>    
-        <th>Team</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>First</td>
-        <td>First place overall in intex</td>
-        <td>Model.teamNumber</td>
-    </tr>
-    <tr>
-        <td>Second</td>
-        <td>Second place overall in intex</td>
-        <td>Model.teamNumber</td>
-    </tr>
-    <tr>
-        <td>Third</td>
-        <td>Third place overall in intex</td>
-        <td>Model.teamNumber</td>
-    </tr>
-    <tr>
-        <td>Fourth</td>
-        <td>Fourth place overall in intex</td>
-        <td>Model.teamNumber</td>
-    </tr>
-    </tbody>
-</table>
+@* team 4-8 *@
 
-<table class="table table-bordered table-striped table-hover">
-    <thead class="text-light" style="background-color: #002f5d;">
-    <tr>
-        <th>Fun awards</th>
-        <th>Description</th>    
-        <th>Team</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>I'd hire them as consultants</td>
-        <td>Do you want to come work for us now?</td>
-        <td>Model.teamNumber</td>
-    </tr>
-    <tr>
-        <td>Duct tape award for live debugging</td>
-        <td>They could figure out anything on the go</td>
-        <td>Model.teamNumber</td>
-    </tr>
-    <tr>
-        <td>Mary Poppins Presentation award</td>
-        <td>Practically perfect in every way</td>
-        <td>Model.teamNumber</td>
-    </tr>
-    <tr>
-        <td>Swipe right award</td>
-        <td>Best looking/cool use of technology</td>
-        <td>Model.teamNumber</td>
-    </tr>
-    </tbody>
-</table>
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+<vc:nav-bar-types user="Professor"></vc:nav-bar-types>
+<vc:submenu-types view="Default"></vc:submenu-types>
+<vc:header-types title="Awards Table" />
+
+<div class="container">
+    <div>
+        <vc:header-types />
+    </div>
+    <div>
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>Placement Awards</th>
+                <th>Team</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>First Place:</td>
+                <td>Model.teamNumber</td>
+            </tr>
+            <tr>
+                <td>Second Place:</td>
+                <td>Model.teamNumber</td>
+            </tr>
+            <tr>
+                <td>Third Place:</td>
+                <td>Model.teamNumber</td>
+            </tr>
+            <tr>
+                <td>Fourth Place:</td>
+                <td>Model.teamNumber</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div>
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>Fun awards</th>
+                <th>Team</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>I'd hire them as consultants</td>
+                <td>Model.teamNumber</td>
+            </tr>
+            <tr>
+                <td>Duct tape award for live debugging</td>
+                <td>Model.teamNumber</td>
+            </tr>
+            <tr>
+                <td>Mary Poppins Presentation award</td>
+                <td>Model.teamNumber</td>
+            </tr>
+            <tr>
+                <td>Swipe right award</td>
+                <td>Model.teamNumber</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    
+</div>
