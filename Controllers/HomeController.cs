@@ -28,17 +28,19 @@ namespace ToaPro.Controllers
 
         public IActionResult Index()
         {
-            //var currentUser = _signInManager.UserManager.GetUserAsync(HttpContext.User);
-            if (_signInManager.IsSignedIn(HttpContext.User))
-            {
-                return View();
-            }
-            else
-            {
-                return Redirect("/Identity/Account/Login");
-            }
+            // This redirects to the login page if the user is not signed in. Otherwise, show the default page.
+            // Currently commented out because newly created users aren't assigned any roles.
+            //if (_signInManager.IsSignedIn(HttpContext.User))
+            //{
+            //    return View();
+            //}
+            //else
+            //{
+            //    return Redirect("/Identity/Account/Login");
+            //}
             //Add functionality to load the Index page based on user type (Coord, Prof, Stud, TA, Judge)
 
+            return View();
         }
 
         public IActionResult CoordinatorChecklist()
