@@ -30,5 +30,7 @@ namespace ToaPro
 
         public void AddSubmission(Submission submission);
 
+
+        public void UpdateJudgeAvailability (Judge judge);
     }
 }

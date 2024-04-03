@@ -30,4 +30,10 @@ public partial class Group
     public virtual ICollection<Submission> Submissions { get; set; } = new List<Submission>();
 
     public virtual ICollection<Student> Students { get; set; } = new List<Student>();
+
+	public bool TimeSlot1 { get; set; }
+	public bool TimeSlot2 { get; set; }
+	public bool TimeSlot3 { get; set; }
+	public bool TimeSlot4 { get; set; }
+	public bool TimeSlot5 { get; set; }
 }

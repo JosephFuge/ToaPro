@@ -17,13 +17,12 @@ namespace ToaPro.Models
 
         public virtual Group Group { get; set; }
         public string NetId { get; set; } = null!;
-        public bool TimeSlot1 { get; set; }
-        public bool TimeSlot2 { get; set; }
-        public bool TimeSlot3 { get; set; }
-        public bool TimeSlot4 { get; set; }
-        public bool TimeSlot5 { get; set; }
         public string Reason { get; set; }
 
+
         public virtual ICollection<Submission> Submissions { get; set; } = new List<Submission>();
+
+        public virtual ICollection<Evaluation> Evaluations { get; set; } = new List<Evaluation>();
+
     }
 }

@@ -203,11 +203,6 @@ namespace ToaPro.Models
                             NetId = "netId" + i.ToString(),
                             Id = studentUserFullDetails.Id,
                             GroupId = groupId,
-                            TimeSlot1 = true,
-                            TimeSlot2 = true,
-                            TimeSlot3 = true,
-                            TimeSlot4 = true,
-                            TimeSlot5 = true,
                             Reason = "",
                         };
 
@@ -439,11 +434,6 @@ namespace ToaPro.Models
                     {
                         Id = student0.Id,
                         NetId = "123 456 1234",
-                        TimeSlot1 = true,
-                        TimeSlot2 = false,
-                        TimeSlot3 = false,
-                        TimeSlot4 = false,
-                        TimeSlot5 = false,
                         Reason = "I don't like mornings"
 
                     },
@@ -451,11 +441,6 @@ namespace ToaPro.Models
                     {
                         Id = student1.Id,
                         NetId = "123 478 3456",
-                        TimeSlot1 = false,
-                        TimeSlot2 = false,
-                        TimeSlot3 = false,
-                        TimeSlot4 = false,
-                        TimeSlot5 = true,
                         Reason = "LOL"
                     }
                 );
