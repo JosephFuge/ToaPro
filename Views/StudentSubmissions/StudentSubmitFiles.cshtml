@@ -24,9 +24,9 @@
             <div class="submission-form" style="margin-left: 20%; margin-right: auto; width: 80%;">
                 <form method="post" asp-controller="StudentSubmissions" asp-action="StudentSubmitFiles" onsubmit="setCreatedDate()">
                     <input type="hidden" asp-for="Id" />
-                    <input type="text" asp-for="StudentId"/>
-                    <input type="number" asp-for="GroupId"/>
-                    <input id="CreatedDate" asp-for="CreatedDate" /> <!--Created down below when submitted-->
+                    <input type="hidden" asp-for="StudentId"/>
+                    <input type="hidden" asp-for="GroupId"/>
+                    <input id="CreatedDate" asp-for="CreatedDate" hidden/> <!--Created down below when submitted-->
 
                     <br />
                     <br />
