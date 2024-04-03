@@ -1,10 +1,62 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Assign TAs";
 }
+
 @*
-    Assign TAs / TAs View Assignments View (Groups 7 & 5)
-    This view will need to contain functionality to disallow TAs from editing their assignments
-    and allowing professors to edit/make assignments.
+Assign TAs / TAs View Assignments View (Groups 7 & 5)
+This view will need to contain functionality to disallow TAs from editing their assignments
+and allowing professors to edit/make assignments.
 *@
+
+@model Dictionary<string, List<List<string>>>
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+<vc:nav-bar-types user="Professor"></vc:nav-bar-types>
+<vc:submenu-types view="Default"></vc:submenu-types>
+<vc:header-types title="Assign TAs" />
+
+<div class="container">
+    <div>
+        <vc:header-types />
+    </div>
+
+    <main class="container mt-4">
+        <div class="button-container mt-4 mb-4 d-flex justify-content-end">
+            <div class="d-inline-flex align-items-center mr-4">
+                <button class="ghostButton">Edit</button>
+            </div>
+
+            <div class="d-inline-flex align-items-center">
+                <button class="button">Add Row</button>
+            </div>
+        </div>
+
+
+        <div class="table-container">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>TA Name</th>
+                        <th>Groups</th>
+                        <th>Requirements</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var taKey in Model.Keys)
+                    {
+                        <tr>
+                            <td>@(Model[taKey][0])</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</div>

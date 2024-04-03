@@ -26,6 +26,7 @@ public partial class Ranking
 
     public string? Nomination { get; set; }
 
+    public int PresentationId { get; set; }
     public virtual Group Group { get; set; } = null!;
 
     public virtual Judge Judge { get; set; } = null!;
