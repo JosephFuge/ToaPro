@@ -17,11 +17,11 @@
 <div class="container">
     <body>
 
-        <div class="container center m-100">
-            <div class="submission-form">
-                <br />
-                <br />
-                <h2 class="text-center bold-text">Please include the following in your submission:</h2>
+        <div class="container center" style="margin-left: auto; margin-right: auto;">
+            <br />
+            <br />
+            <h3 class="text-center bold-text">Please include the following in your submission:</h3>
+            <div class="submission-form" style="margin-left: 20%; margin-right: auto; width: 80%;">
                 <form method="post" asp-controller="StudentSubmissions" asp-action="StudentSubmitFilesConfirmation">
                     <input type="hidden" asp-for="StudentId" />
                     <input type="hidden" asp-for="GroupId" />
@@ -47,7 +47,7 @@
                     <input type="file" id="UploadFile" asp-for="UploadFile" directory webkitdirectory mozdirectory style="width: 250px;">
                     <br />
                     <br />
-                    <div style="text-align: center;">
+                    <div style="text-align: center; margin-left: -25%">
                         <button type="submit" class="button">Submit</button>
                     </div>
                     <br />
