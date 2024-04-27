@@ -38,11 +38,14 @@ body {
 }
 .login-logout-card a.nav-link {
     font-size: 1rem;
-    color: #495057;
     text-align: center;
     padding: 1rem;
+    color: #6c757d; /* Inactive tab color */
 }
-
+.login-logout-card a.nav-link.active {
+    background-color: #ffffff; /* Active tab background color */
+    color: #000000; /* Active tab text color */
+}
 .login-logout-card .card-body {
     padding: 10px 20px;
 }
@@ -363,12 +366,23 @@ table {
  * Landing Pages
  *******************************************************************/
 
+.dashboard {
+    font-family: 'Public Sans', sans-serif;
+}
+
 .dashboard-section img {
     transition: transform 0.3s ease;
 }
 
 .dashboard-section:hover img {
     transform: scale(1.1);
+}
+
+.dashboard-section a {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Use the default text color */
+}
+
 }
 
 /********************************************************************

@@ -394,59 +394,59 @@ namespace ToaPro.Models
             }
 
             //Ranking Seeding
-            if (!_context.Rankings.ToList().Any())
-            {
-                var groups = _context.Groups;
-                var judges = _context.Judges;
-                var presentations = _context.Presentations;
+            //if (!_context.Rankings.ToList().Any())
+            //{
+            //    var groups = _context.Groups;
+            //    var judges = _context.Judges;
+            //    var presentations = _context.Presentations;
 
-                if (groups.ToList().Any())
-                {
-                    _context.Rankings.AddRange(
-                    new Ranking
-                    {
-                        GroupId = groups.FirstOrDefault(x => x.Section == 4 && x.Number == 1).Id,
-                        JudgeId = judges.FirstOrDefault(x => x.Affiliation == "KPMG").Id,
-                        TeamRanking = 2,
-                        CommunicationPoints = 4,
-                        CommunicationComments = "Needed more communication",
-                        TechnologyPoints = 10,
-                        TechnologyComments = "Great tech",
-                        OverallPoints = 14,
-                        Nomination = "Number 2 in INTEX",
-                        PresentationId = presentations.FirstOrDefault(x => x.GroupId == 4).Id
-                    },
-                    new Ranking
-                    {
-                        GroupId = groups.FirstOrDefault(x => x.Section == 4 && x.Number == 8).Id,
-                        JudgeId = judges.FirstOrDefault(x => x.Affiliation == "KPMG").Id,
-                        TeamRanking = 1,
-                        CommunicationPoints = 6,
-                        CommunicationComments = "Great communication",
-                        TechnologyPoints = 10,
-                        TechnologyComments = "Great tech",
-                        OverallPoints = 16,
-                        Nomination = "Number 1 in INTEX",
-                        PresentationId = presentations.FirstOrDefault(x => x.GroupId == 6).Id
-                    },
-                    new Ranking
-                    {
-                        GroupId = groups.FirstOrDefault(x => x.Section == 4 && x.Number == 8).Id,
-                        JudgeId = judges.FirstOrDefault(x => x.Affiliation == "Disney Corp.").Id,
-                        TeamRanking = 1,
-                        CommunicationPoints = 6,
-                        CommunicationComments = "Great communication",
-                        TechnologyPoints = 10,
-                        TechnologyComments = "Great tech",
-                        OverallPoints = 16,
-                        Nomination = "Number 1 in INTEX",
-                        PresentationId = presentations.FirstOrDefault(x => x.GroupId == 6).Id
-                    }
-                );
-                }
+            //    if (groups.ToList().Any())
+            //    {
+            //        _context.Rankings.AddRange(
+            //        new Ranking
+            //        {
+            //            GroupId = groups.FirstOrDefault(x => x.Section == 4 && x.Number == 1).Id,
+            //            JudgeId = judges.FirstOrDefault(x => x.Affiliation == "KPMG").Id,
+            //            TeamRanking = 2,
+            //            CommunicationPoints = 4,
+            //            CommunicationComments = "Needed more communication",
+            //            TechnologyPoints = 10,
+            //            TechnologyComments = "Great tech",
+            //            OverallPoints = 14,
+            //            Nomination = "Number 2 in INTEX",
+            //            PresentationId = presentations.FirstOrDefault(x => x.GroupId == 4).Id
+            //        },
+            //        new Ranking
+            //        {
+            //            GroupId = groups.FirstOrDefault(x => x.Section == 4 && x.Number == 8).Id,
+            //            JudgeId = judges.FirstOrDefault(x => x.Affiliation == "KPMG").Id,
+            //            TeamRanking = 1,
+            //            CommunicationPoints = 6,
+            //            CommunicationComments = "Great communication",
+            //            TechnologyPoints = 10,
+            //            TechnologyComments = "Great tech",
+            //            OverallPoints = 16,
+            //            Nomination = "Number 1 in INTEX",
+            //            PresentationId = presentations.FirstOrDefault(x => x.GroupId == 6).Id
+            //        },
+            //        new Ranking
+            //        {
+            //            GroupId = groups.FirstOrDefault(x => x.Section == 4 && x.Number == 8).Id,
+            //            JudgeId = judges.FirstOrDefault(x => x.Affiliation == "Disney Corp.").Id,
+            //            TeamRanking = 1,
+            //            CommunicationPoints = 6,
+            //            CommunicationComments = "Great communication",
+            //            TechnologyPoints = 10,
+            //            TechnologyComments = "Great tech",
+            //            OverallPoints = 16,
+            //            Nomination = "Number 1 in INTEX",
+            //            PresentationId = presentations.FirstOrDefault(x => x.GroupId == 6).Id
+            //        }
+            //    );
+            //    }
 
-                await _context.SaveChangesAsync();
-            }
+            //    await _context.SaveChangesAsync();
+            //}
 
             //Student Seeding
             if (!_context.Students.ToList().Any())
