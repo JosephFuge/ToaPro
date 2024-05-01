@@ -1,4 +1,29 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@addTagHelper *, ToaPro
+@inject SignInManager<ToaProUser> SignInManager;
+@inject RoleManager<IdentityRole> RoleManager;
+
+@* @{
+    string userRole = "Default";
+
+    if (SignInManager.IsSignedIn(User))
+    {
+        foreach (var tempRole in RoleManager.Roles)
+        {
+            if (User.IsInRole("Coordinator"))
+            {
+                userRole = "Coordinator";
+                break;
+            } else if (User.IsInRole(tempRole.Name))
+            {
+                userRole = tempRole.Name;
+                break;
+            }
+        }
+    }
+} *@
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -9,6 +34,9 @@
 </head>
 <body>
     <div id="wrapper">
+        
+        <vc:nav-bar-types></vc:nav-bar-types>
+        
 
         <div class="content-wrapper">
                 <main role="main" class="pb-3">
