@@ -16,7 +16,7 @@ namespace ToaPro
             _toaProContext = toaProContext;
         }
 
-        public IQueryable<Student> Students => _toaProContext.Students;
+        
         public IEnumerable<Submission> Submissions => _toaProContext.Submissions.ToList();
         public IQueryable<Judge> Judges => _toaProContext.Judges;
         public IQueryable<Presentation> Presentations => _toaProContext.Presentations;
@@ -27,7 +27,7 @@ namespace ToaPro
         public IEnumerable<Requirement> Requirements => _toaProContext.Requirements;
         public IEnumerable<Semester> Semesters => _toaProContext.Semesters;
         public IQueryable<Ranking> Rankings => _toaProContext.Rankings;
-        public IQueryable<Models.Group> Groups => _toaProContext.Groups;
+        
         public IQueryable<Award> Awards => _toaProContext.Awards;
 
         //Change RequestAvailability to match the judge model when inputting their timeslots
@@ -76,6 +76,15 @@ namespace ToaPro
         public Judge GetJudgeById(string id)
         {
             return _toaProContext.Judges.FirstOrDefault(x => x.Id == id);
+        }
+
+        /* Students */
+        public IQueryable<Student> Students => _toaProContext.Students;
+        public IQueryable<Models.Group> Groups => _toaProContext.Groups;
+        public async Task AddStudent(Student student)
+        {
+            _toaProContext.Students.Add(student);
+            _toaProContext.SaveChanges();
         }
     }
 }

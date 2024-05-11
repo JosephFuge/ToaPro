@@ -368,30 +368,30 @@ namespace ToaPro.Models
             }
 
             //Presentation Seeding
-            if (!_context.Presentations.ToList().Any())
-            {
-                List<Group> groups = _context.Groups.ToList() ?? [];
+            //if (!_context.Presentations.ToList().Any())
+            //{
+            //    List<Group> groups = _context.Groups.ToList() ?? [];
 
-                if ( groups.Any() )
-                {
-                    _context.Presentations.AddRange(
-                    new Presentation
-                    {
-                        GroupId = groups.FirstOrDefault(x => x.Section == 4 && x.Number == 8).Id,
-                        Location = "W322",
-                        StartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddDays(14).ToUniversalTime()
-                    },
-                    new Presentation
-                    {
-                        GroupId = groups.FirstOrDefault(x => x.Section == 4 && x.Number == 1).Id,
-                        Location = "5267",
-                        StartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddDays(14).ToUniversalTime()
-                    }
-                ); 
-                }
+            //    if ( groups.Any() )
+            //    {
+            //        _context.Presentations.AddRange(
+            //        new Presentation
+            //        {
+            //            GroupId = groups.FirstOrDefault(x => x.Section == 4 && x.Number == 8).Id,
+            //            Location = "W322",
+            //            StartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddDays(14).ToUniversalTime()
+            //        },
+            //        new Presentation
+            //        {
+            //            GroupId = groups.FirstOrDefault(x => x.Section == 4 && x.Number == 1).Id,
+            //            Location = "5267",
+            //            StartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddDays(14).ToUniversalTime()
+            //        }
+            //    ); 
+            //    }
 
-                await _context.SaveChangesAsync();
-            }
+            //    await _context.SaveChangesAsync();
+            //}
 
             //Ranking Seeding
             //if (!_context.Rankings.ToList().Any())

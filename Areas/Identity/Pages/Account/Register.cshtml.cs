@@ -30,13 +30,15 @@ namespace ToaPro.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<ToaProUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IIntexRepository _repo;
 
         public RegisterModel(
             UserManager<ToaProUser> userManager,
             IUserStore<ToaProUser> userStore,
             SignInManager<ToaProUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IIntexRepository repo)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -44,6 +46,7 @@ namespace ToaPro.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _repo = repo;
         }
 
         /// <summary>
@@ -144,6 +147,12 @@ namespace ToaPro.Areas.Identity.Pages.Account
                         await _userManager.AddToRoleAsync(user, "Professor");
                     } else if (user.NormalizedUserName.StartsWith("STUD")) {
                         await _userManager.AddToRoleAsync(user, "Student");
+                        await _repo.AddStudent(new Student
+                        {
+                            Id = user.Id,
+                            GroupId = 1,
+                            NetId = user.Email
+                        });
                     } else if (user.NormalizedUserName.StartsWith("JUDGE"))
                     {
                         await _userManager.AddToRoleAsync(user, "Judge");

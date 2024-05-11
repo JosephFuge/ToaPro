@@ -267,6 +267,47 @@ body, html {
         transform: scale(0.95); /* Slight decrease in size on click */
     }
 
+.ghostButton-danger {
+    border-color: #A10D2D;
+    color: #A10D2D;
+}
+
+.width-large { 
+    width: 174px;
+}
+
+/* Search bar */
+    .search-container {
+        position: relative;
+        width: 300px;
+        margin: 0 auto;
+    }
+
+    .search-input {
+        width: 100%;
+        padding: 10px 15px;
+        border: 1px solid #ccc;
+        border-radius: 32px;
+        background-color: transparent;
+        outline: none;
+    }
+
+    .search-button {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 50px;
+        height: 100%;
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+    }
+
+        .search-button i {
+            font-size: 18px;
+        }
+
+
 
 /********************************************************************
  * Fonts
