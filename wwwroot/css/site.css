@@ -267,6 +267,57 @@ body, html {
         transform: scale(0.95); /* Slight decrease in size on click */
     }
 
+.ghostButton-danger {
+    border-color: #A10D2D;
+    color: #A10D2D;
+}
+
+    .ghostButton-danger:hover {
+        background-color: #ffe6e6; /* light red background on hover */
+    }
+
+.width-large { 
+    width: 174px;
+}
+
+a.link-button-styling {
+    text-decoration: none;
+    text-align: center;
+    display: inline-block;
+}
+
+/* Search bar */
+    .search-container {
+        position: relative;
+        width: 300px;
+        margin: 0 auto;
+    }
+
+    .search-input {
+        width: 100%;
+        padding: 10px 15px;
+        border: 1px solid #ccc;
+        border-radius: 32px;
+        background-color: transparent;
+        outline: none;
+    }
+
+    .search-button {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 50px;
+        height: 100%;
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+    }
+
+        .search-button i {
+            font-size: 18px;
+        }
+
+
 
 /********************************************************************
  * Fonts

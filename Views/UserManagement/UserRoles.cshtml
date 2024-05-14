@@ -1,0 +1,70 @@
+﻿@using ToaPro.Infrastructure;
+@model UserRolesViewModel
+
+<vc:header-types title="Users" />
+@* Button for each role to allow user to change which user type they are viewing *@
+<div class="row button-row">
+    @foreach (UserRole role in Enum.GetValues<UserRole>().ToList())
+    {
+        <a asp-action="UserRoles" asp-controller="UserManagement" asp-route-selectedRole="@role.ToString()" class="@( role == Model.SelectedRole ? "button" : "ghostButton" ) width-large link-button-styling">@role.ToString()</a>
+    }
+</div>
+<div class="row">
+    <div class="search-container">
+        <input type="text" placeholder="Search" class="search-input">
+        <button type="submit" class="search-button">
+            <i class="fa fa-search"></i>
+        </button>
+    </div>
+    @if (Model.SelectedRole == UserRole.Student)
+    {
+        <vc:file-upload title="Upload Students" />
+    }
+    <button class="ghostButton">Add User</button>
+    @* <button class="ghostButton">Edit </button> *@
+</div>
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Roles</th>
+                <th>Email</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                @if (Model.SelectedRole == UserRole.Student)
+                {
+                    <th>Section-Group</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.SelectedRole == UserRole.Student && Model.StudentRoles != null)
+            {
+                @foreach (KeyValuePair<Student, IList<string>> userRoles in Model.StudentRoles)
+                {
+                    <tr>
+                        <td>Student</td>
+                        <td>@userRoles.Key.ToaProUser.Email</td>
+                        <td>@userRoles.Key.ToaProUser.FirstName</td>
+                        <td>@userRoles.Key.ToaProUser.LastName</td>
+                        <td>@(userRoles.Key.Group.Section)-@(userRoles.Key.Group.Number)</td>
+                    </tr>
+                }
+            } else
+            {
+                @foreach (KeyValuePair<ToaProUser, IList<string>> userRoles in Model.UserRoles)
+                {
+                    <tr>
+                        <td>@(userRoles.Value.Any() ? string.Join(", ", userRoles.Value) : "No Roles")</td>
+                        <td>@userRoles.Key.Email</td>
+                        <td>@userRoles.Key.FirstName</td>
+                        <td>@userRoles.Key.LastName</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<div class="row">
+    <button class="ghostButton ghostButton-danger width-large">Delete All Users</button>
+</div>
