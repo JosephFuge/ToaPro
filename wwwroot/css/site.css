@@ -272,6 +272,10 @@ body, html {
     color: #A10D2D;
 }
 
+    .ghostButton-danger:hover {
+        background-color: #ffe6e6; /* light red background on hover */
+    }
+
 .width-large { 
     width: 174px;
 }

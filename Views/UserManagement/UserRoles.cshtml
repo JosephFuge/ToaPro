@@ -2,10 +2,10 @@
 @model UserRolesViewModel
 
 <vc:header-types title="Users" />
-<div class="row">
+<div class="row button-row">
     @foreach (UserRole role in Enum.GetValues<UserRole>().ToList())
     {
-        <button class="@( role == Model.SelectedRole ? "large-button" : "large-ghostButton" ) width-large">@role.ToString()</button>
+        <button class="@( role == Model.SelectedRole ? "button" : "ghostButton" ) width-large">@role.ToString()</button>
     }
 </div>
 <div class="row">
@@ -15,7 +15,10 @@
             <i class="fa fa-search"></i>
         </button>
     </div>
-    <button class="ghostButton">Upload Users</button>
+    @if (Model.SelectedRole == UserRole.Student)
+    {
+        <vc:file-upload title="Upload Students" />
+    }
     <button class="ghostButton">Add User</button>
     @* <button class="ghostButton">Edit </button> *@
 </div>

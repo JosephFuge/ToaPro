@@ -4,17 +4,20 @@ using ToaPro.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using ToaPro.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
+using CsvHelper;
+using CsvHelper.Configuration;
 
 namespace ToaPro.Controllers
 {
     public class UserManagementController : Controller
     {
-        private IIntexRepository _repository;
+        private IIntexRepository _repo;
         private SignInManager<ToaProUser> _signInManager;
 
         public UserManagementController(IIntexRepository repository, SignInManager<ToaProUser> signInManager)
         {
-            _repository = repository;
+            _repo = repository;
             _signInManager = signInManager;
         }
 
@@ -26,7 +29,7 @@ namespace ToaPro.Controllers
         [HttpGet]
         public async Task<IActionResult> UserRoles()
         {
-            List<Student> students = _repository.Students.Include(s => s.ToaProUser).Include(s => s.Group).ToList();
+            List<Student> students = _repo.Students.Include(s => s.ToaProUser).Include(s => s.Group).ToList();
             Dictionary<Student, IList<string>> studentRoles = new Dictionary<Student, IList<string>>();
             foreach (var student in students)
             {
@@ -48,6 +51,48 @@ namespace ToaPro.Controllers
             };
 
             return View(userRolesViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Upload(FileUploadViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (model.CsvFile != null && model.CsvFile.Length > 0 && model.UserRole == UserRole.Student)
+                {
+                    var users = new List<StudentImportFormat>();
+
+                    using (var reader = new StreamReader(model.CsvFile.OpenReadStream()))
+                    using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)
+                    {
+                        Delimiter = "\t" // Set the correct delimiter here
+                    }))
+                    {
+                        users = csv.GetRecords<StudentImportFormat>().ToList();
+                        
+                        if (users != null)
+                        {
+                            var uploader = new UserBulkUploader(_signInManager.UserManager, _repo);
+                            var students = await uploader.CreateStudentsFromImport(users);
+                            if (students.Count > 0)
+                            {
+                                ViewBag.UploadSuccess = true;
+                            } else
+                            {
+                                ViewBag.UploadSuccess = false;
+                            }
+                        }
+                    }
+
+
+                    // TODO: Bulk import users to the database
+                    // Example: _userService.BulkImportUsers(users);
+
+                    return RedirectToAction("UserRoles");
+                }
+            }
+
+            return RedirectToAction("UserRoles");
         }
     }
 }

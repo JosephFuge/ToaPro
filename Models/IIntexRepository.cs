@@ -36,7 +36,8 @@ namespace ToaPro
         IQueryable<Student> Students { get; }
         IQueryable<Group> Groups { get; }
         public void StudentRequestAvailability(Student student);
-
         public Task AddStudent(Student student);
+        public Task AddStudentList(List<Student> students);
+        public Task AddGroup(Group group);
     }
 }

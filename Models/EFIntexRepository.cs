@@ -86,5 +86,15 @@ namespace ToaPro
             _toaProContext.Students.Add(student);
             _toaProContext.SaveChanges();
         }
+        public async Task AddStudentList(List<Student> students)
+        {
+            _toaProContext.Students.AddRange(students);
+            _toaProContext.SaveChanges();
+        }
+        public async Task AddGroup(Models.Group group)
+        {
+            _toaProContext.Groups.Add(group);
+            _toaProContext.SaveChanges();
+        }
     }
 }
