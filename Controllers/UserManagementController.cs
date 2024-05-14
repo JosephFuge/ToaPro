@@ -27,31 +27,57 @@ namespace ToaPro.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> UserRoles()
+        public async Task<IActionResult> UserRoles(string selectedRole = "Student")
         {
-            List<Student> students = _repo.Students.Include(s => s.ToaProUser).Include(s => s.Group).ToList();
-            Dictionary<Student, IList<string>> studentRoles = new Dictionary<Student, IList<string>>();
-            foreach (var student in students)
+            Dictionary<Student, IList<string>>? studentRoles = null;
+            Dictionary<ToaProUser, IList<string>> userRoles = new Dictionary<ToaProUser, IList<string>>();
+            if (selectedRole == "Student")
             {
-                var roles = await _signInManager.UserManager.GetRolesAsync(student.ToaProUser);
-                if (roles != null)
+                List<Student> students = _repo.Students.Include(s => s.ToaProUser).Include(s => s.Group).ToList();
+                studentRoles = new Dictionary<Student, IList<string>>();
+                foreach (var student in students)
                 {
-                    studentRoles.Add(student, roles);
-                } else
+                    var roles = await _signInManager.UserManager.GetRolesAsync(student.ToaProUser);
+                    if (roles != null)
+                    {
+                        studentRoles.Add(student, roles);
+                    }
+                    else
+                    {
+                        studentRoles.Add(student, new List<string>());
+                    }
+                }
+            } else
+            {
+                var users = await _signInManager.UserManager.GetUsersInRoleAsync(selectedRole);
+                if (users != null)
                 {
-                    studentRoles.Add(student, new List<string>());
+                    foreach (var user in users)
+                    {
+                        var roles = await _signInManager.UserManager.GetRolesAsync(user);
+                        if (roles != null)
+                        {
+                            userRoles.Add(user, roles);
+                        }
+                        else
+                        {
+                            userRoles.Add(user, new List<string>());
+                        }
+                    }
                 }
             }
+            
 
             UserRolesViewModel userRolesViewModel = new UserRolesViewModel
             {
                 SelectedRole = UserRole.Student,
-                UserRoles = { },
+                UserRoles = userRoles,
                 StudentRoles = studentRoles
             };
 
             return View(userRolesViewModel);
         }
+
 
         [HttpPost]
         public async Task<IActionResult> Upload(FileUploadViewModel model)

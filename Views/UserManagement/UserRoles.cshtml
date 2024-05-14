@@ -2,10 +2,11 @@
 @model UserRolesViewModel
 
 <vc:header-types title="Users" />
+@* Button for each role to allow user to change which user type they are viewing *@
 <div class="row button-row">
     @foreach (UserRole role in Enum.GetValues<UserRole>().ToList())
     {
-        <button class="@( role == Model.SelectedRole ? "button" : "ghostButton" ) width-large">@role.ToString()</button>
+        <a asp-action="UserRoles" asp-controller="UserManagement" asp-route-selectedRole="@role.ToString()" class="@( role == Model.SelectedRole ? "button" : "ghostButton" ) width-large link-button-styling">@role.ToString()</a>
     }
 </div>
 <div class="row">

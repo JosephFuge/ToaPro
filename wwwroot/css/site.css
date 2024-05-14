@@ -280,6 +280,12 @@ body, html {
     width: 174px;
 }
 
+a.link-button-styling {
+    text-decoration: none;
+    text-align: center;
+    display: inline-block;
+}
+
 /* Search bar */
     .search-container {
         position: relative;
