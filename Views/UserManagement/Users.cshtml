@@ -6,6 +6,32 @@
         gap: 10px;
         padding: 25px;
     }
+    .pagination-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+    .pagination-container .page-buttons {
+        margin: 0 5px;
+    }
+    .pagination-container .ellipses {
+        margin:  0 5px;
+    }
+    .page-size-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+    .page-size-container select {
+        margin-left: 10px;
+    }
+    .active-page {
+        background-color: #007bff;
+        color: white;
+        border-color: #007bff;
+    }
 </style>
 <vc:header-types title="Users" />
 <br/>
@@ -61,79 +87,332 @@
         }
         </tbody>
     </table>
+    <div class="page-size-container">
+        <label for="page-size-select">Page size:</label>
+        <select id="page-size-select">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="25" selected>25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="All">All</option>
+        </select>
+    </div>
+    <div class="pagination-container">
+        <button id="prev-page-btn" class="button width-small link-info">Previous</button>
+        <!-- Page number buttons will be dynamically inserted here -->
+        <button id="next-page-btn" class="button width-small link-info">Next</button>
+    </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
-        // Value of the currently selected role - initialized to none
-        let selectedRole = 'All';
-        // Calling updateTable for initialization
-        updateTable();
-        
-        $('.role-button').on('click', function () {
-            // Update currently selected 
-            let role = $(this).data('role');
-            selectedRole = role.endsWith('s') ? role.slice(0, -1) : role;
-            // Call the updateTable function
-            updateTable();
-        });
-        
-        $('#search-button').on('click', function () {
-            searchTable();
-        });
-        
-        $('#search-input').on('keypress', function (e) {
-            if (e.key === 'Enter') {
-                searchTable();
+        // Defining Viewer and pagination classes
+        class TableViewer {
+            // Class for handling the updating and visibility of the users table
+            selectedRole;
+            query;
+            constructor(role) {
+                this.selectedRole = role;
             }
-        });
-
-        function updateTable() {
-            // Show/hide upload students based on the selected role
-            if (selectedRole === 'Student') {
-                $('#upload-students').show();
-                $('#section-group-header').show();
-            } else {
-                $('#upload-students').hide();
+            setRole(role) {
+                this.selectedRole = role.endsWith('s') ? role.slice(0, -1) : role;
             }
-
-            $('#user-table-body tr').each(function () {
-                let role = $(this).data('role');
-                if (role === selectedRole || selectedRole === 'All') {
-                    $(this).show();
-                    if (selectedRole === 'Student' || selectedRole === 'All') {
-                        $(this).find('.section-group-data').show();
-                    } else {
-                        $(this).find('.section-group-data').hide();
+            get #pagination() {
+                return [(pagination.currentPage - 1) * pagination.pageSize, pagination.pageSize];
+            }
+            get #queryRows() {
+                let query = this.query;
+                let totalRows = 0;
+                $('#user-table-body tr').each(function () {
+                    const rowText = $(this).text().toLowerCase();
+                    if (rowText.includes(query)) {
+                        totalRows++;
                     }
+                });
+                return totalRows
+            }
+            get #roleRows() {
+                let totalRows = $('#user-table-body tr').length;
+                let filterRows = $('#user-table-body tr[data-role="' + this.selectedRole + '"]').length;
+                return [totalRows, filterRows];
+            }
+            #setQueryPagination() {
+                pagination.totalRows = this.#queryRows;
+                pagination.setTotalPages(pagination.totalRows, pagination.pageSize);
+                pagination.updateDisplay();
+            }
+            #setRolePagination() {
+                let [totalRows, filterRows] = this.#roleRows;
+                pagination.totalRows = this.selectedRole === 'All' ? totalRows : filterRows;
+                pagination.setTotalPages(pagination.totalRows, pagination.pageSize);
+                pagination.updateDisplay();
+            }
+            #filterQuery() {
+                let query = this.query;
+                let [skip, max] = this.#pagination;
+                let included = 0;
+                let i = 0;
+                $('#user-table-body tr').each(function () {
+                    const rowText = $(this).text().toLowerCase();
+                    if (rowText.includes(query)) {
+                        i++;
+                        if (i > skip && included < max) {
+                            included++;
+                            $(this).show();
+                        } else {
+                            $(this).hide();
+                        }
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            }
+            #filterRoles() {
+                let selected = this.selectedRole;
+                let [skip, max] = this.#pagination;
+                let included = 0;
+                let i = 0;
+                $('#user-table-body tr').each(function () {
+                    let role = $(this).data('role');
+                    if (role === selected || selected === 'All') {
+                        i++;
+                        if (i > skip && included < max) {
+                            included++;
+                            $(this).show();
+                            if (selected === 'Student' || selected === 'All') {
+                                $(this).find('.section-group-data').show();
+                            } else {
+                                $(this).find('.section-group-data').hide();
+                            }
+                        } else {
+                            $(this).hide();
+                        }
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            }
+            #updateSectionDisplay() {
+                if (this.selectedRole === 'All') {
+                    $('#section-group-header').show();
+                    $('.section-group-data').each(function () {
+                        if ($(this).text() === "") {
+                            $(this).show();
+                        }
+                    });
+                } else if (this.selectedRole === 'Student') {
+                    $('#section-group-header').show();
                 } else {
-                    $(this).hide();
+                    $('#section-group-header').hide();
+                    $('.section-group-data').hide();
                 }
-            });
-
-            if (selectedRole === 'All') {
+            }
+            #updateUploadDisplay() {
+                if (this.selectedRole === 'Student') {
+                    $('#upload-students').show();
+                } else {
+                    $('#upload-students').hide();
+                }
+            }
+            #updateQueryDisplay() {
+                $('#upload-students').hide();
                 $('#section-group-header').show();
                 $('.section-group-data').each(function () {
                     if ($(this).text() === "") {
                         $(this).show();
                     }
                 });
-            } else if (selectedRole !== 'Student') {
-                $('#section-group-header').hide();
-                $('.section-group-data').hide();
+            }
+            #byRole() {
+                this.#setRolePagination();
+                this.#filterRoles();
+                this.#updateSectionDisplay();
+                this.#updateUploadDisplay();
+            }
+            #byQuery(query) {
+                this.query = query;
+                this.#setQueryPagination();
+                this.#filterQuery();
+                this.#updateQueryDisplay();
+            }
+            update(query) {
+                if (query == null) {
+                    this.#byRole();
+                } else {
+                    this.#byQuery(query);
+                }
+            }
+        }
+        class Pagination {
+            // Class for handling the pagination of buttons on the users page
+            currentPage;
+            maxButtons;
+            pageSize;
+            totalPages;
+            totalRows;
+            constructor(currentPage, maxButtons, pageSize, totalRows) {
+                this.currentPage = currentPage;
+                this.maxButtons = maxButtons;
+                this.pageSize = pageSize;
+                this.totalRows = totalRows;
+                this.setTotalPages(totalRows, pageSize);
+            }
+            // Private properties
+            get #width() {
+                // Distance between the start and end buttons in the window
+                return this.maxButtons - 1;
+            }
+            get #offset() {
+                // Number of buttons before/after the current page = half the max buttons
+                return Math.floor(this.#width / 2);
+            }
+            get #start() {
+                // Gets the number of the first button in the window given the maximum buttons
+                return Math.max(this.currentPage - this.#offset, 1);
+            }
+            get #end() {
+                // Gets the number of the last button in the window given the maximum buttons
+                return Math.min(this.currentPage + this.#offset, this.totalPages);
+            }
+            get #window() {
+                let start = this.#start;
+                let end = this.#end;
+                if (end - start < this.#width) {
+                    if (start === 1) {
+                        end = Math.min(start + this.#width, this.totalPages)
+                    } else if (end === this.totalPages) {
+                        start = Math.max(end - this.#width, 1);
+                    }
+                }
+                return [start, end];
+            }
+            // Private methods
+            #clearContainer() {
+                $('.page-buttons').remove();
+                $('.ellipses').remove();
+            }
+            #insertEllipse() {
+                const ellipse = $('<span class="ellipses">...</span>');
+                ellipse.insertBefore($('#next-page-btn'));
+            }
+            #insertButton(page) {
+                const button = $('<button class="page-buttons button width-small link-info">' + page + '</button>');
+                button.data('page', page);
+                button.insertBefore($('#next-page-btn'));
+            }
+            #setRelativeButtons() {
+                if (this.totalPages > 1) {
+                    $('#prev-page-btn').show();
+                    $('#next-page-btn').show();
+                } else {
+                    $('#prev-page-btn').hide();
+                    $('#next-page-btn').hide();
+                }
+            }
+            #setFixedButtons() {
+                let [start, end] = this.#window;
+                if (start > 1) {
+                    this.#insertEllipse();
+                }
+                for (let i = start; i <= end; i++) {
+                    this.#insertButton(i);
+                }
+                if (end < this.totalPages) {
+                    this.#insertEllipse();
+                }
+                return start;
+            }
+            #setCurrentButton(page) {
+                $('.page-buttons').eq(page).addClass('active-page');
+            }
+            // Public methods
+            setPageSize(size) {
+                this.pageSize = size === 'All' ? this.totalRows : parseInt(size);
+                this.setTotalPages(this.totalRows, this.pageSize);
+                this.resetPage();
+            }
+            setTotalPages(rows, pageSize) {
+                this.totalPages = Math.ceil(rows / pageSize);
+            }
+            updateButtons() {
+                this.#clearContainer();
+                this.#setRelativeButtons();
+                this.#setCurrentButton(this.currentPage - this.#setFixedButtons());
+            }
+            updateDisplay() {
+                if (this.totalPages > 1) {
+                    $('.pagination-container').show();
+                } else {
+                    $('.pagination-container').hide();
+                }
+            }
+            resetPage() {
+                this.currentPage = 1;
+                viewer.update();
+                this.updateButtons();
+            }
+            previousPage() {
+                if (this.currentPage > 1) {
+                    this.currentPage--;
+                    viewer.update();
+                    this.updateButtons();
+                }
+            }
+            nextPage() {
+                if (this.currentPage < this.totalPages) {
+                    this.currentPage++;
+                    viewer.update();
+                    this.updateButtons();
+                }
+            }
+            toPage(page) {
+                this.currentPage = page;
+                viewer.update();
+                this.updateButtons();
             }
         }
         
-        function searchTable() {
-            const query = $('#search-input').val().toLowerCase();
-            $('#user-table-body tr').each(function () {
-                const rowText = $(this).text().toLowerCase();
-                if (rowText.includes(query)) {
-                    $(this).show();
-                } else {
-                    $(this).hide();
-                }
-            });
-        }
+        
+        // Initializing table viewer and pagination
+        const viewer = new TableViewer('All');
+        const pagination = new Pagination(
+            1, 5, parseInt($('#page-size-select').val()), $('#user-table-body tr').length
+        );
+        pagination.resetPage();
+    
+        
+        // Setting view listeners
+        // Role filtering listener
+        $('.role-button').on('click', function () {
+            viewer.setRole($(this).data('role'))
+            pagination.resetPage();
+        });
+        // Table search listeners
+        $('#search-button').on('click', function () {
+            viewer.update($('#search-input').val().toLowerCase());
+        });
+        $('#search-input').on('keypress', function (e) {
+            if (e.key === 'Enter') {
+                viewer.update($('#search-input').val().toLowerCase());
+            }
+        });
+        // Page navigation listeners
+        $('#prev-page-btn').on('click', function () {
+            // Navigating to previous page
+            pagination.previousPage();
+        });
+        $('#next-page-btn').on('click', function () {
+            // Navigating to next page
+            pagination.nextPage();
+        });
+        $(document).on('click', '.page-buttons', function () {
+            // Navigating to specific page
+            pagination.toPage($(this).data('page'));
+        });
+        // Pagination size listener
+        $('#page-size-select').on('change', function () {
+            pagination.setPageSize($(this).val());
+        });
     });
 </script>
