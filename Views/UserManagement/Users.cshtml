@@ -1,0 +1,139 @@
+﻿@model UsersViewModel
+
+<style>
+    .button-row {
+        display: flex;
+        gap: 10px;
+        padding: 25px;
+    }
+</style>
+<vc:header-types title="Users" />
+<br/>
+@* Button for row filtering using JQuery *@
+<div class="row button-row">
+    @foreach (var role in new[] { "Students", "TAs", "Professors", "Coordinators", "Judges", "All" })
+    {
+        <button class="role-button button width-large link-info" data-role="@role">@role</button>
+    }
+    <div class="search-container">
+        <input type="text" placeholder="Search" class="search-input" id="search-input">
+        <button type="button" class="search-button" id="search-button">
+            <i class="fa fa-search"></i>
+        </button>
+    </div>
+</div>
+<div id="upload-students">
+    <vc:file-upload title="Upload Students" />
+</div>
+<br/>
+<div class="row">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Role</th>
+            <th>Email</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th id="section-group-header" style="display: none;">Section-Group</th>
+        </tr>
+        </thead>
+        <tbody id="user-table-body">
+        @foreach (var (role, users) in Model.RoleUsers)
+        {
+            foreach (var user in users)
+            {
+                var student = Model.Students.FirstOrDefault(s => s.ToaProUser.Id == user.Id);
+                <tr class="user-row" data-role="@role">
+                    <td>@role</td>
+                    <td>@user.Email</td>
+                    <td>@user.FirstName</td>
+                    <td>@user.LastName</td>
+                    @if (role == "Student")
+                    {
+                        <td class="section-group-data">@(student != null ? student.Group.Section + "-" + student.Group.Number : "")</td>
+                    }
+                    else
+                    {
+                        <td class="section-group-data" style="display: none;"></td>
+                    }
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Value of the currently selected role - initialized to none
+        let selectedRole = 'All';
+        // Calling updateTable for initialization
+        updateTable();
+        
+        $('.role-button').on('click', function () {
+            // Update currently selected 
+            let role = $(this).data('role');
+            selectedRole = role.endsWith('s') ? role.slice(0, -1) : role;
+            // Call the updateTable function
+            updateTable();
+        });
+        
+        $('#search-button').on('click', function () {
+            searchTable();
+        });
+        
+        $('#search-input').on('keypress', function (e) {
+            if (e.key === 'Enter') {
+                searchTable();
+            }
+        });
+
+        function updateTable() {
+            // Show/hide upload students based on the selected role
+            if (selectedRole === 'Student') {
+                $('#upload-students').show();
+                $('#section-group-header').show();
+            } else {
+                $('#upload-students').hide();
+            }
+
+            $('#user-table-body tr').each(function () {
+                let role = $(this).data('role');
+                if (role === selectedRole || selectedRole === 'All') {
+                    $(this).show();
+                    if (selectedRole === 'Student' || selectedRole === 'All') {
+                        $(this).find('.section-group-data').show();
+                    } else {
+                        $(this).find('.section-group-data').hide();
+                    }
+                } else {
+                    $(this).hide();
+                }
+            });
+
+            if (selectedRole === 'All') {
+                $('#section-group-header').show();
+                $('.section-group-data').each(function () {
+                    if ($(this).text() === "") {
+                        $(this).show();
+                    }
+                });
+            } else if (selectedRole !== 'Student') {
+                $('#section-group-header').hide();
+                $('.section-group-data').hide();
+            }
+        }
+        
+        function searchTable() {
+            const query = $('#search-input').val().toLowerCase();
+            $('#user-table-body tr').each(function () {
+                const rowText = $(this).text().toLowerCase();
+                if (rowText.includes(query)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        }
+    });
+</script>

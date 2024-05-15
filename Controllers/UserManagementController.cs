@@ -12,70 +12,42 @@ namespace ToaPro.Controllers
 {
     public class UserManagementController : Controller
     {
-        private IIntexRepository _repo;
-        private SignInManager<ToaProUser> _signInManager;
+        private readonly IIntexRepository _repo;
+        private readonly UserManager<ToaProUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public UserManagementController(IIntexRepository repository, SignInManager<ToaProUser> signInManager)
+        public UserManagementController(
+            IIntexRepository repository, SignInManager<ToaProUser> signInManager, RoleManager<IdentityRole> roleManager
+            )
         {
             _repo = repository;
-            _signInManager = signInManager;
+            _userManager = signInManager.UserManager;
+            _roleManager = roleManager;
         }
 
         public IActionResult Index()
         {
-            return RedirectToAction("UserRoles");
+            return RedirectToAction("Users");
         }
 
         [HttpGet]
-        public async Task<IActionResult> UserRoles(string selectedRole = "Student")
+        public async Task<IActionResult> Users()
         {
-            Dictionary<Student, IList<string>>? studentRoles = null;
-            Dictionary<ToaProUser, IList<string>> userRoles = new Dictionary<ToaProUser, IList<string>>();
-            if (selectedRole == "Student")
+            var students = await _repo.Students.Include(s => s.ToaProUser).Include(s => s.Group).ToListAsync();
+            var roleNames = await _roleManager.Roles.Select(r => r.Name).Where(n => !string.IsNullOrEmpty(n)).ToListAsync();
+            var roleUsers = new Dictionary<string, IList<ToaProUser>>();
+            foreach (var roleName in roleNames)
             {
-                List<Student> students = _repo.Students.Include(s => s.ToaProUser).Include(s => s.Group).ToList();
-                studentRoles = new Dictionary<Student, IList<string>>();
-                foreach (var student in students)
-                {
-                    var roles = await _signInManager.UserManager.GetRolesAsync(student.ToaProUser);
-                    if (roles != null)
-                    {
-                        studentRoles.Add(student, roles);
-                    }
-                    else
-                    {
-                        studentRoles.Add(student, new List<string>());
-                    }
-                }
-            } else
-            {
-                var users = await _signInManager.UserManager.GetUsersInRoleAsync(selectedRole);
-                if (users != null)
-                {
-                    foreach (var user in users)
-                    {
-                        var roles = await _signInManager.UserManager.GetRolesAsync(user);
-                        if (roles != null)
-                        {
-                            userRoles.Add(user, roles);
-                        }
-                        else
-                        {
-                            userRoles.Add(user, new List<string>());
-                        }
-                    }
-                }
+                if (string.IsNullOrEmpty(roleName)) continue;
+                var users = await _userManager.GetUsersInRoleAsync(roleName);
+                roleUsers[roleName] = users.ToList();
             }
-            
-
-            UserRolesViewModel userRolesViewModel = new UserRolesViewModel
+            var userRoles = new UsersViewModel
             {
-                SelectedRole = UserRole.Student,
-                UserRoles = userRoles,
-                StudentRoles = studentRoles
+                RoleUsers = roleUsers,
+                Students = students
             };
-
-            return View(userRolesViewModel);
+            return View(userRoles);
         }
 
 
@@ -98,7 +70,7 @@ namespace ToaPro.Controllers
                         
                         if (users != null)
                         {
-                            var uploader = new UserBulkUploader(_signInManager.UserManager, _repo);
+                            var uploader = new UserBulkUploader(_userManager, _repo);
                             var students = await uploader.CreateStudentsFromImport(users);
                             if (students.Count > 0)
                             {
@@ -114,11 +86,11 @@ namespace ToaPro.Controllers
                     // TODO: Bulk import users to the database
                     // Example: _userService.BulkImportUsers(users);
 
-                    return RedirectToAction("UserRoles");
+                    return RedirectToAction("Users");
                 }
             }
 
-            return RedirectToAction("UserRoles");
+            return RedirectToAction("Users");
         }
     }
 }
