@@ -249,11 +249,17 @@
             pageSize;
             totalPages;
             totalRows;
-            constructor(currentPage, maxButtons, pageSize, totalRows) {
+            containerRef;
+            prevBtnRef;
+            nextBtnRef;
+            constructor(currentPage, maxButtons, pageSize, totalRows, containerRef, prevBtnRef, nextBtnRef) {
                 this.currentPage = currentPage;
                 this.maxButtons = maxButtons;
                 this.pageSize = pageSize;
                 this.totalRows = totalRows;
+                this.containerRef = containerRef;
+                this.prevBtnRef = prevBtnRef;
+                this.nextBtnRef = nextBtnRef;
                 this.setTotalPages(totalRows, pageSize);
             }
             // Private properties
@@ -292,20 +298,20 @@
             }
             #insertEllipse() {
                 const ellipse = $('<span class="ellipses">...</span>');
-                ellipse.insertBefore($('#next-page-btn'));
+                ellipse.insertBefore($(this.nextBtnRef));
             }
             #insertButton(page) {
                 const button = $('<button class="page-buttons button width-small link-info">' + page + '</button>');
                 button.data('page', page);
-                button.insertBefore($('#next-page-btn'));
+                button.insertBefore($(this.nextBtnRef));
             }
             #setRelativeButtons() {
                 if (this.totalPages > 1) {
-                    $('#prev-page-btn').show();
-                    $('#next-page-btn').show();
+                    $(this.prevBtnRef).show();
+                    $(this.nextBtnRef).show();
                 } else {
-                    $('#prev-page-btn').hide();
-                    $('#next-page-btn').hide();
+                    $(this.prevBtnRef).hide();
+                    $(this.nextBtnRef).hide();
                 }
             }
             #setFixedButtons() {
@@ -340,9 +346,9 @@
             }
             updateDisplay() {
                 if (this.totalPages > 1) {
-                    $('.pagination-container').show();
+                    $(this.containerRef).show();
                 } else {
-                    $('.pagination-container').hide();
+                    $(this.containerRef).hide();
                 }
             }
             resetPage() {
@@ -375,7 +381,8 @@
         // Initializing table viewer and pagination
         const viewer = new TableViewer('All');
         const pagination = new Pagination(
-            1, 5, parseInt($('#page-size-select').val()), $('#user-table-body tr').length
+            1, 5, parseInt($('#page-size-select').val()), $('#user-table-body tr').length, '.pagination-container', 
+            '#prev-page-btn', '#next-page-btn'
         );
         pagination.resetPage();
     
