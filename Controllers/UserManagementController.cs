@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections;
+using Microsoft.AspNetCore.Mvc;
 using ToaPro.Models.ViewModels;
 using ToaPro.Infrastructure;
 using Microsoft.AspNetCore.Identity;
@@ -14,15 +15,11 @@ namespace ToaPro.Controllers
     {
         private readonly IIntexRepository _repo;
         private readonly UserManager<ToaProUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public UserManagementController(
-            IIntexRepository repository, SignInManager<ToaProUser> signInManager, RoleManager<IdentityRole> roleManager
-            )
+        public UserManagementController(IIntexRepository repository, SignInManager<ToaProUser> signInManager)
         {
             _repo = repository;
             _userManager = signInManager.UserManager;
-            _roleManager = roleManager;
         }
 
         public IActionResult Index()
@@ -33,21 +30,22 @@ namespace ToaPro.Controllers
         [HttpGet]
         public async Task<IActionResult> Users()
         {
-            var students = await _repo.Students.Include(s => s.ToaProUser).Include(s => s.Group).ToListAsync();
-            var roleNames = await _roleManager.Roles.Select(r => r.Name).Where(n => !string.IsNullOrEmpty(n)).ToListAsync();
-            var roleUsers = new Dictionary<string, IList<ToaProUser>>();
-            foreach (var roleName in roleNames)
+            var students = await _repo.Students
+                .Include(s => s.ToaProUser)
+                .Include(s => s.Group)
+                .ToListAsync();
+            var userRoles = new Dictionary<ToaProUser, IList<string>>();
+            foreach (var user in await _userManager.Users.ToListAsync())
             {
-                if (string.IsNullOrEmpty(roleName)) continue;
-                var users = await _userManager.GetUsersInRoleAsync(roleName);
-                roleUsers[roleName] = users.ToList();
+                var roles = await _userManager.GetRolesAsync(user);
+                userRoles[user] = roles;
             }
-            var userRoles = new UsersViewModel
+            var model = new UsersViewModel
             {
-                RoleUsers = roleUsers,
+                UserRoles = userRoles,
                 Students = students
             };
-            return View(userRoles);
+            return View(model);
         }
 
 

@@ -56,7 +56,7 @@
     <table class="table">
         <thead>
         <tr>
-            <th>Role</th>
+            <th>Roles</th>
             <th>Email</th>
             <th>First Name</th>
             <th>Last Name</th>
@@ -64,26 +64,24 @@
         </tr>
         </thead>
         <tbody id="user-table-body">
-        @foreach (var (role, users) in Model.RoleUsers)
+        @foreach (var (user, roles) in Model.UserRoles)
         {
-            foreach (var user in users)
-            {
-                var student = Model.Students.FirstOrDefault(s => s.ToaProUser.Id == user.Id);
-                <tr class="user-row" data-role="@role">
-                    <td>@role</td>
-                    <td>@user.Email</td>
-                    <td>@user.FirstName</td>
-                    <td>@user.LastName</td>
-                    @if (role == "Student")
-                    {
-                        <td class="section-group-data">@(student != null ? student.Group.Section + "-" + student.Group.Number : "")</td>
-                    }
-                    else
-                    {
-                        <td class="section-group-data" style="display: none;"></td>
-                    }
-                </tr>
-            }
+            var rolesString = string.Join(", ", roles);
+            var student = Model.Students.FirstOrDefault(s => s.ToaProUser.Id == user.Id);
+            <tr class="user-row" data-role="@rolesString">
+                <td>@rolesString</td>
+                <td>@user.Email</td>
+                <td>@user.FirstName</td>
+                <td>@user.LastName</td>
+                @if (roles.Any(s => s.Contains("Student")))
+                {
+                    <td class="section-group-data">@(student != null ? student.Group.Section + "-" + student.Group.Number : "")</td>
+                }
+                else
+                {
+                    <td class="section-group-data" style="display: none;"></td>
+                }
+            </tr>
         }
         </tbody>
     </table>
@@ -175,7 +173,7 @@
                 let i = 0;
                 $('#user-table-body tr').each(function () {
                     let role = $(this).data('role');
-                    if (role === selected || selected === 'All') {
+                    if (role.includes(selected) || selected === 'All') {
                         i++;
                         if (i > skip && included < max) {
                             included++;
