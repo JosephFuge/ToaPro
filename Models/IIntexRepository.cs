@@ -29,7 +29,9 @@ namespace ToaPro
 
         public void AddSubmission(Submission submission);
 
+        /* Judges */
         public Judge GetJudgeById(string id);
+        public Task AddJudgeList(List<Judge> judges);
         public void UpdateJudgeAvailability (Judge judge);
 
         /* Students */

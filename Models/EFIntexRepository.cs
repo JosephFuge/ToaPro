@@ -72,6 +72,11 @@ namespace ToaPro
             _toaProContext.Judges.Add(judge);
             _toaProContext.SaveChanges();
         }
+        public async Task AddJudgeList(List<Judge> judges)
+        {
+            _toaProContext.Judges.AddRange(judges);
+            _toaProContext.SaveChanges();
+        }
 
         public Judge GetJudgeById(string id)
         {

@@ -9,7 +9,9 @@ public partial class Judge
     [ForeignKey("ToaProUser")]
     public string Id { get; set; }
     public ToaProUser ToaProUser { get; set; }
+    public string? JudgeType { get; set; } = null!; // For example: Alumni, Professor, Industry
     public string? Affiliation { get; set; } = null!;
+    public bool HasConfirmedTimes { get; set; } = false; // If the judges have set their schedule for the available time slots
     public bool TimeSlot1 { get; set; }
     public bool TimeSlot2 { get; set; }
     public bool TimeSlot3 { get; set; }

@@ -57,60 +57,85 @@ namespace ToaPro.Controllers
                 if (model.CsvFile != null && model.CsvFile.Length > 0) {
                     if (model.UserRole == UserRole.Student)
                     {
-                            var users = new List<StudentImportFormat>();
+                        var users = new List<StudentImportFormat>();
 
-                            using (var reader = new StreamReader(model.CsvFile.OpenReadStream()))
-                            using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)
-                            {
-                                Delimiter = "\t" // Set the correct delimiter here
-                            }))
-                            {
-                                users = csv.GetRecords<StudentImportFormat>().ToList();
-
-                                if (users != null)
-                                {
-                                    var uploader = new UserBulkUploader(_userManager, _repo);
-                                    var students = await uploader.CreateStudentsFromImport(users);
-                                    if (students.Count > 0)
-                                    {
-                                        ViewBag.UploadSuccess = true;
-                                    }
-                                    else
-                                    {
-                                        ViewBag.UploadSuccess = false;
-                                    }
-                                }
-                            }
-                        } else if (model.UserRole == UserRole.TA)
+                        using (var reader = new StreamReader(model.CsvFile.OpenReadStream()))
+                        using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)
                         {
-                            var users = new List<TAImportFormat>();
+                            Delimiter = "\t" // Set the correct delimiter here
+                        }))
+                        {
+                            users = csv.GetRecords<StudentImportFormat>().ToList();
 
-                            using (var reader = new StreamReader(model.CsvFile.OpenReadStream()))
-                            using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)
+                            if (users != null)
                             {
-                                Delimiter = "\t" // Set the correct delimiter here
-                            }))
-                            {
-                                users = csv.GetRecords<TAImportFormat>().ToList();
-
-                                if (users != null)
+                                var uploader = new UserBulkUploader(_userManager, _repo);
+                                var students = await uploader.CreateStudentsFromImport(users);
+                                if (students.Count > 0)
                                 {
-                                    var uploader = new UserBulkUploader(_userManager, _repo);
-                                    var TAs = await uploader.CreateTAsFromImport(users);
-                                    if (TAs.Count > 0)
-                                    {
-                                        ViewBag.UploadSuccess = true;
-                                    }
-                                    else
-                                    {
-                                        ViewBag.UploadSuccess = false;
-                                    }
+                                    ViewBag.UploadSuccess = true;
+                                }
+                                else
+                                {
+                                    ViewBag.UploadSuccess = false;
                                 }
                             }
                         }
+                    } else if (model.UserRole == UserRole.TA)
+                    {
+                        var users = new List<TAImportFormat>();
 
-                    // TODO: Bulk import users to the database
-                    // Example: _userService.BulkImportUsers(users);
+                        using (var reader = new StreamReader(model.CsvFile.OpenReadStream()))
+                        using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)
+                        {
+                            Delimiter = "\t" // Set the correct delimiter here
+                        }))
+                        {
+                            users = csv.GetRecords<TAImportFormat>().ToList();
+
+                            if (users != null)
+                            {
+                                var uploader = new UserBulkUploader(_userManager, _repo);
+                                var TAs = await uploader.CreateTAsFromImport(users);
+                                if (TAs.Count > 0)
+                                {
+                                    ViewBag.UploadSuccess = true;
+                                }
+                                else
+                                {
+                                    ViewBag.UploadSuccess = false;
+                                }
+                            }
+                        }
+                    } else if (model.UserRole == UserRole.Judge)
+                    {
+                        var users = new List<JudgeImportFormat>();
+
+                        using (var reader = new StreamReader(model.CsvFile.OpenReadStream()))
+                        using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)
+                        {
+                            Delimiter = "\t" // Set the correct delimiter here
+                        }))
+                        {
+                            users = csv.GetRecords<JudgeImportFormat>().ToList();
+
+                            if (users != null)
+                            {
+                                var uploader = new UserBulkUploader(_userManager, _repo);
+                                var judges = await uploader.CreateJudgesFromImport(users);
+                                if (judges.Count > 0)
+                                {
+                                    ViewBag.UploadSuccess = true;
+                                }
+                                else
+                                {
+                                    ViewBag.UploadSuccess = false;
+                                }
+                            }
+                        }
+                    }
+
+                    // TODO: Show success/failure dialog depending on results of bulk upload
 
                     return RedirectToAction("Users");
                 }

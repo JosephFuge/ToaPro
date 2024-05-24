@@ -25,7 +25,8 @@ namespace ToaPro.Infrastructure
 
             for (int i = 0; i < users.Count; i++)
             {
-                var result = await _userManager.CreateAsync(users[i], "A123!!!" + users[i].NetId);
+                var emailName = users[i].Email.Substring(0, users[i].Email.IndexOf("@")).ToLowerInvariant();
+                var result = await _userManager.CreateAsync(users[i], "A123!!!" + emailName);
                 results.Add(result);
             }
 
@@ -153,6 +154,58 @@ namespace ToaPro.Infrastructure
             }
             
             return new List<ToaProUser>();
+        }
+
+        public async Task<List<Judge>> CreateJudgesFromImport(List<JudgeImportFormat> userImportModels)
+        {
+            try
+            {
+                var judges = new List<Judge>();
+                var users = userImportModels.Select(uim =>
+                    new ToaProUser
+                    {
+                        FirstName = uim.FirstName,
+                        LastName = uim.LastName,
+                        Email = uim.Email,
+                        UserName = uim.Email // Assuming email is used as username
+                    }
+                ).ToList();
+
+                var results = await CreateUserAccounts(users);
+
+                for (int i = 0; i < results.Count; i++)
+                {
+                    if (results[i] != null && results[i].Succeeded)
+                    {
+                        await _userManager.AddToRoleAsync(users[i], "Judge");
+
+                        Judge newJudge = new Judge
+                        {
+                            Id = users[i].Id,
+                            JudgeType = userImportModels[i].JudgeType,
+                            Affiliation = userImportModels[i].Organization,
+                            TimeSlot1 = true,
+                            TimeSlot2 = true,
+                            TimeSlot3 = true,
+                            TimeSlot4 = true,
+                            TimeSlot5 = true
+                        };
+                        judges.Add(newJudge);
+                    }
+                }
+
+                if (judges.Count > 0)
+                {
+                    await _repo.AddJudgeList(judges);
+                }
+
+                return judges;
+            } catch (Exception ex)
+            {
+
+            }
+            
+            return new List<Judge>();
         }
     }
 }
