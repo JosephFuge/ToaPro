@@ -48,8 +48,8 @@
         </button>
     </div>
 </div>
-<div id="upload-students">
-    <vc:file-upload title="Upload Students" />
+<div id="upload-users">
+    <vc:file-upload title="Upload Users" />
 </div>
 <br/>
 <div class="row">
@@ -207,10 +207,12 @@
                 }
             }
             #updateUploadDisplay() {
-                if (this.selectedRole === 'Student') {
-                    $('#upload-students').show();
+                if (this.selectedRole === 'Student' || this.selectedRole === 'TA' || this.selectedRole === 'Judge') {
+                    $('#upload-users').show();
+                    $('#upload-selected-role').prop('value', this.selectedRole);
+                    $('#upload-users-button').text('Upload ' + this.selectedRole + 's');
                 } else {
-                    $('#upload-students').hide();
+                    $('#upload-users').hide();
                 }
             }
             #updateQueryDisplay() {
