@@ -82,7 +82,7 @@ namespace ToaPro.Infrastructure
                         FirstName = uim.FirstName,
                         LastName = uim.LastName,
                         Email = uim.Email,
-                        UserName = uim.Email // Assuming email is used as username
+                        UserName = uim.Email
                     }
                 ).ToList();
 
@@ -133,7 +133,7 @@ namespace ToaPro.Infrastructure
                         FirstName = uim.FirstName,
                         LastName = uim.LastName,
                         Email = uim.Email,
-                        UserName = uim.Email // Assuming email is used as username
+                        UserName = uim.Email
                     }
                 ).ToList();
 
