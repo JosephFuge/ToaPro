@@ -2,7 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using ToaPro.Models;
-using ToaPro;
 using System.Runtime.ConstrainedExecution;
 using ToaPro.Infrastructure;
 

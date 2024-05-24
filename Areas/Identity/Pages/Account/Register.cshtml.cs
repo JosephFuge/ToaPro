@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using ToaPro.Infrastructure;
 using ToaPro.Models;
 
 namespace ToaPro.Areas.Identity.Pages.Account

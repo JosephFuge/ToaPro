@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
-namespace ToaPro
+namespace ToaPro.Infrastructure
 {
     public class EFIntexRepository : IIntexRepository
     {
@@ -16,7 +16,7 @@ namespace ToaPro
             _toaProContext = toaProContext;
         }
 
-        
+
         public IEnumerable<Submission> Submissions => _toaProContext.Submissions.ToList();
         public IQueryable<Judge> Judges => _toaProContext.Judges;
         public IQueryable<Presentation> Presentations => _toaProContext.Presentations;
@@ -27,7 +27,7 @@ namespace ToaPro
         public IEnumerable<Requirement> Requirements => _toaProContext.Requirements;
         public IEnumerable<Semester> Semesters => _toaProContext.Semesters;
         public IQueryable<Ranking> Rankings => _toaProContext.Rankings;
-        
+
         public IQueryable<Award> Awards => _toaProContext.Awards;
 
         //Change RequestAvailability to match the judge model when inputting their timeslots
