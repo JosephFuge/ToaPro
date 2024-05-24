@@ -10,7 +10,7 @@ namespace ToaPro.Components
             var viewModel = new FileUploadViewModel
             {
                 ButtonText = title,
-                UserRole = Infrastructure.UserRole.Student
+                UserRole = Infrastructure.UserRole.TA
             };
             return View("Default", viewModel);
         }

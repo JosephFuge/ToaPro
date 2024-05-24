@@ -16,7 +16,6 @@ namespace ToaPro.Models
         public int GroupId { get; set; }
 
         public virtual Group Group { get; set; }
-        public string NetId { get; set; } = string.Empty;
         public string Reason { get; set; } = string.Empty;
 
 

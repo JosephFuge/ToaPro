@@ -54,32 +54,60 @@ namespace ToaPro.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (model.CsvFile != null && model.CsvFile.Length > 0 && model.UserRole == UserRole.Student)
-                {
-                    var users = new List<StudentImportFormat>();
+                if (model.CsvFile != null && model.CsvFile.Length > 0) {
+                    if (model.UserRole == UserRole.Student)
+                    {
+                            var users = new List<StudentImportFormat>();
 
-                    using (var reader = new StreamReader(model.CsvFile.OpenReadStream()))
-                    using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)
-                    {
-                        Delimiter = "\t" // Set the correct delimiter here
-                    }))
-                    {
-                        users = csv.GetRecords<StudentImportFormat>().ToList();
-                        
-                        if (users != null)
+                            using (var reader = new StreamReader(model.CsvFile.OpenReadStream()))
+                            using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)
+                            {
+                                Delimiter = "\t" // Set the correct delimiter here
+                            }))
+                            {
+                                users = csv.GetRecords<StudentImportFormat>().ToList();
+
+                                if (users != null)
+                                {
+                                    var uploader = new UserBulkUploader(_userManager, _repo);
+                                    var students = await uploader.CreateStudentsFromImport(users);
+                                    if (students.Count > 0)
+                                    {
+                                        ViewBag.UploadSuccess = true;
+                                    }
+                                    else
+                                    {
+                                        ViewBag.UploadSuccess = false;
+                                    }
+                                }
+                            }
+                        } else if (model.UserRole == UserRole.TA)
                         {
-                            var uploader = new UserBulkUploader(_userManager, _repo);
-                            var students = await uploader.CreateStudentsFromImport(users);
-                            if (students.Count > 0)
+                            var users = new List<TAImportFormat>();
+
+                            using (var reader = new StreamReader(model.CsvFile.OpenReadStream()))
+                            using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)
                             {
-                                ViewBag.UploadSuccess = true;
-                            } else
+                                Delimiter = "\t" // Set the correct delimiter here
+                            }))
                             {
-                                ViewBag.UploadSuccess = false;
+                                users = csv.GetRecords<TAImportFormat>().ToList();
+
+                                if (users != null)
+                                {
+                                    var uploader = new UserBulkUploader(_userManager, _repo);
+                                    var TAs = await uploader.CreateTAsFromImport(users);
+                                    if (TAs.Count > 0)
+                                    {
+                                        ViewBag.UploadSuccess = true;
+                                    }
+                                    else
+                                    {
+                                        ViewBag.UploadSuccess = false;
+                                    }
+                                }
                             }
                         }
-                    }
-
 
                     // TODO: Bulk import users to the database
                     // Example: _userService.BulkImportUsers(users);
@@ -89,6 +117,6 @@ namespace ToaPro.Controllers
             }
 
             return RedirectToAction("Users");
-        }
+}
     }
 }

@@ -142,78 +142,78 @@ namespace ToaPro.Models
             }
         }
 
-        public async Task<bool> SeedGroupsAndStudents(Semester semester)
-        {
-            bool overallSuccess = true;
+        //public async Task<bool> SeedGroupsAndStudents(Semester semester)
+        //{
+        //    bool overallSuccess = true;
 
-            int group4_1 = SeedGroup(semesterId: semester.Id, 4, 1);
-            int group3_5 = SeedGroup(semesterId: semester.Id, 3, 5);
-            int group4_8 = SeedGroup(semesterId: semester.Id, 4, 8);
+        //    int group4_1 = SeedGroup(semesterId: semester.Id, 4, 1);
+        //    int group3_5 = SeedGroup(semesterId: semester.Id, 3, 5);
+        //    int group4_8 = SeedGroup(semesterId: semester.Id, 4, 8);
 
-            if (group4_1 != 0)
-            {
-                await AddStudentsWithGroup(0, group4_1);
-            } else
-            {
-                overallSuccess = false;
-            }
+        //    if (group4_1 != 0)
+        //    {
+        //        await AddStudentsWithGroup(0, group4_1);
+        //    } else
+        //    {
+        //        overallSuccess = false;
+        //    }
 
-            if (group3_5 != 0) 
-            {
-                await AddStudentsWithGroup(4, group3_5);
-            } else
-            {
-                overallSuccess = false;
-            }
+        //    if (group3_5 != 0) 
+        //    {
+        //        await AddStudentsWithGroup(4, group3_5);
+        //    } else
+        //    {
+        //        overallSuccess = false;
+        //    }
 
-            if (group4_8 != 0)
-            {
-                await AddStudentsWithGroup(8, group4_8);
-            } else
-            {
-                overallSuccess = false;
-            }
+        //    if (group4_8 != 0)
+        //    {
+        //        await AddStudentsWithGroup(8, group4_8);
+        //    } else
+        //    {
+        //        overallSuccess = false;
+        //    }
 
-            return overallSuccess;
-        }
+        //    return overallSuccess;
+        //}
 
-        public async Task AddStudentsWithGroup(int startNumber, int groupId)
-        {
-            for (int i = startNumber; i < startNumber + 4; i++)
-            {
-                ToaProUser newStudentUser = new ToaProUser
-                {
-                    UserName = "studentUserName" + i.ToString(),
-                    Email = "student" + i.ToString() + "@gmail.com",
-                    FirstName = "studentFirst" + i.ToString(),
-                    LastName = "studentLast" + i.ToString(),
-                };
+        //public async Task AddStudentsWithGroup(int startNumber, int groupId)
+        //{
+        //    for (int i = startNumber; i < startNumber + 4; i++)
+        //    {
+        //        ToaProUser newStudentUser = new ToaProUser
+        //        {
+        //            UserName = "studentUserName" + i.ToString(),
+        //            Email = "student" + i.ToString() + "@gmail.com",
+        //            FirstName = "studentFirst" + i.ToString(),
+        //            LastName = "studentLast" + i.ToString(),
+        //        };
 
-                bool success = await SeedIndividualUser(newStudentUser, "Password123!", "Student");
+        //        bool success = await SeedIndividualUser(newStudentUser, "Password123!", "Student");
 
-                await _context.SaveChangesAsync();
+        //        await _context.SaveChangesAsync();
 
-                if (success)
-                {
-                    ToaProUser studentUserFullDetails = await _userManager.FindByNameAsync(userName: newStudentUser.UserName);
+        //        if (success)
+        //        {
+        //            ToaProUser studentUserFullDetails = await _userManager.FindByNameAsync(userName: newStudentUser.UserName);
 
-                    if (studentUserFullDetails != null)
-                    {
-                        Student newStudent = new Student
-                        {
-                            NetId = "netId" + i.ToString(),
-                            Id = studentUserFullDetails.Id,
-                            GroupId = groupId,
-                            Reason = "",
-                        };
+        //            if (studentUserFullDetails != null)
+        //            {
+        //                Student newStudent = new Student
+        //                {
+        //                    NetId = "netId" + i.ToString(),
+        //                    Id = studentUserFullDetails.Id,
+        //                    GroupId = groupId,
+        //                    Reason = "",
+        //                };
 
-                        _context.Add(newStudent);
-                    }
+        //                _context.Add(newStudent);
+        //            }
 
-                    await _context.SaveChangesAsync();
-                }
-            }
-        }
+        //            await _context.SaveChangesAsync();
+        //        }
+        //    }
+        //}
     
         public async Task SeedData()
         {
@@ -449,33 +449,33 @@ namespace ToaPro.Models
             //}
 
             //Student Seeding
-            if (!_context.Students.ToList().Any())
-            {
-                var student0 = await _userManager.FindByNameAsync("studentUserName0");
-                var student1 = await _userManager.FindByNameAsync("studentUserName1");
+            //if (!_context.Students.ToList().Any())
+            //{
+            //    var student0 = await _userManager.FindByNameAsync("studentUserName0");
+            //    var student1 = await _userManager.FindByNameAsync("studentUserName1");
 
-                if (student0 != null && student1 != null)
-                {
-                    _context.Students.AddRange(
-                        new Student
-                        {
-                            Id = student0.Id,
-                            NetId = "123 456 1234",
-                            Reason = "I don't like mornings"
+            //    if (student0 != null && student1 != null)
+            //    {
+            //        _context.Students.AddRange(
+            //            new Student
+            //            {
+            //                Id = student0.Id,
+            //                NetId = "123 456 1234",
+            //                Reason = "I don't like mornings"
 
-                        },
-                        new Student
-                        {
-                            Id = student1.Id,
-                            NetId = "123 478 3456",
-                            Reason = "LOL"
-                        }
-                    );
+            //            },
+            //            new Student
+            //            {
+            //                Id = student1.Id,
+            //                NetId = "123 478 3456",
+            //                Reason = "LOL"
+            //            }
+            //        );
 
-                    await _context.SaveChangesAsync();
-                }
+            //        await _context.SaveChangesAsync();
+            //    }
                 
-            }
+            //}
 
             //Submission Seeding
             //    if (!_context.Submissions.ToList().Any())
