@@ -57,82 +57,13 @@ namespace ToaPro.Controllers
                 if (model.CsvFile != null && model.CsvFile.Length > 0) {
                     if (model.UserRole == UserRole.Student)
                     {
-                        var users = new List<StudentImportFormat>();
-
-                        using (var reader = new StreamReader(model.CsvFile.OpenReadStream()))
-                        using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)
-                        {
-                            Delimiter = "\t" // Set the correct delimiter here
-                        }))
-                        {
-                            users = csv.GetRecords<StudentImportFormat>().ToList();
-
-                            if (users != null)
-                            {
-                                var uploader = new UserBulkUploader(_userManager, _repo);
-                                var students = await uploader.CreateStudentsFromImport(users);
-                                if (students.Count > 0)
-                                {
-                                    ViewBag.UploadSuccess = true;
-                                }
-                                else
-                                {
-                                    ViewBag.UploadSuccess = false;
-                                }
-                            }
-                        }
+                        ViewBag.UploadSuccess = await UploadStudents(model.CsvFile);
                     } else if (model.UserRole == UserRole.TA)
                     {
-                        var users = new List<TAImportFormat>();
-
-                        using (var reader = new StreamReader(model.CsvFile.OpenReadStream()))
-                        using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)
-                        {
-                            Delimiter = "\t" // Set the correct delimiter here
-                        }))
-                        {
-                            users = csv.GetRecords<TAImportFormat>().ToList();
-
-                            if (users != null)
-                            {
-                                var uploader = new UserBulkUploader(_userManager, _repo);
-                                var TAs = await uploader.CreateTAsFromImport(users);
-                                if (TAs.Count > 0)
-                                {
-                                    ViewBag.UploadSuccess = true;
-                                }
-                                else
-                                {
-                                    ViewBag.UploadSuccess = false;
-                                }
-                            }
-                        }
+                        ViewBag.UploadSuccess = await UploadTAs(model.CsvFile);
                     } else if (model.UserRole == UserRole.Judge)
                     {
-                        var users = new List<JudgeImportFormat>();
-
-                        using (var reader = new StreamReader(model.CsvFile.OpenReadStream()))
-                        using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)
-                        {
-                            Delimiter = "\t" // Set the correct delimiter here
-                        }))
-                        {
-                            users = csv.GetRecords<JudgeImportFormat>().ToList();
-
-                            if (users != null)
-                            {
-                                var uploader = new UserBulkUploader(_userManager, _repo);
-                                var judges = await uploader.CreateJudgesFromImport(users);
-                                if (judges.Count > 0)
-                                {
-                                    ViewBag.UploadSuccess = true;
-                                }
-                                else
-                                {
-                                    ViewBag.UploadSuccess = false;
-                                }
-                            }
-                        }
+                        ViewBag.UploadSuccess = await UploadJudges(model.CsvFile);
                     }
 
                     // TODO: Show success/failure dialog depending on results of bulk upload
@@ -142,6 +73,93 @@ namespace ToaPro.Controllers
             }
 
             return RedirectToAction("Users");
-}
+        }
+
+        private async Task<bool> UploadStudents(IFormFile CsvFile)
+        {
+            try
+            {
+                var users = new List<StudentImportFormat>();
+
+                using (var reader = new StreamReader(CsvFile.OpenReadStream()))
+                using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)
+                {
+                    Delimiter = "\t" // Set the correct delimiter here
+                }))
+                {
+                    users = csv.GetRecords<StudentImportFormat>().ToList();
+
+                    if (users != null)
+                    {
+                        var uploader = new UserBulkUploader(_userManager, _repo);
+                        var students = await uploader.CreateStudentsFromImport(users);
+                        return students.Count > 0;
+                    }
+                }
+            } catch (Exception ex)
+            {
+                return false;
+            }
+
+            return false;
+        }
+
+        private async Task<bool> UploadTAs(IFormFile CsvFile)
+        {
+            try
+            {
+                var users = new List<TAImportFormat>();
+
+                using (var reader = new StreamReader(CsvFile.OpenReadStream()))
+                using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)
+                {
+                    Delimiter = "\t" // Set the correct delimiter here
+                }))
+                {
+                    users = csv.GetRecords<TAImportFormat>().ToList();
+
+                    if (users != null)
+                    {
+                        var uploader = new UserBulkUploader(_userManager, _repo);
+                        var TAs = await uploader.CreateTAsFromImport(users);
+                        return TAs.Count > 0;
+                    }
+                }
+            } catch (Exception ex)
+            {
+                return false;
+            }
+
+            return false;
+        }
+
+        private async Task<bool> UploadJudges(IFormFile CsvFile)
+        {
+            try
+            {
+                var users = new List<JudgeImportFormat>();
+
+                using (var reader = new StreamReader(CsvFile.OpenReadStream()))
+                using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)
+                {
+                    Delimiter = "\t" // Set the correct delimiter here
+                }))
+                {
+                    users = csv.GetRecords<JudgeImportFormat>().ToList();
+
+                    if (users != null)
+                    {
+                        var uploader = new UserBulkUploader(_userManager, _repo);
+                        var judges = await uploader.CreateJudgesFromImport(users);
+                        return judges.Count > 0;
+                    }
+                }
+            } catch (Exception ex)
+            {
+                return false;
+            }
+
+            return false;
+        }
     }
 }
