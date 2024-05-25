@@ -47,10 +47,8 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
     public virtual DbSet<Award> Awards { get; set; }
     //inlcude a query section on Award
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    private void SeedData(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(modelBuilder);
-
         modelBuilder.Entity<Semester>().HasData(
             new Semester { Id = 1, Year = 2024, Term = "Fall" }
         );
@@ -422,6 +420,8 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
         });
 
         OnModelCreatingPartial(modelBuilder);
+
+        SeedData(modelBuilder);
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);*/
