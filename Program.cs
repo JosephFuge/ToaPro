@@ -91,7 +91,15 @@ using (var scope = app.Services.CreateScope())
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ToaProUser>>();
     var dataSeeder = new DataSeeder(context, userManager);
 
-    await dataSeeder.SeedSemester(term: "Fall", year: 2024);
+    ToaProUser coordinator = new ToaProUser
+    {
+        UserName = "BrewmasterTaylor",
+        Email = "taylor@wells.com",
+        FirstName = "Taylor",
+        LastName = "Wells"
+    };
+
+    await dataSeeder.SeedIndividualUser(coordinator, "Password123!", "Coordinator");
 }
 
 
