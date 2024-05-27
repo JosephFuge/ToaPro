@@ -1,11 +1,11 @@
 ﻿using System.Runtime.CompilerServices;
 using ToaPro.Models;
 
-namespace ToaPro
+namespace ToaPro.Infrastructure
 {
     public interface IIntexRepository
     {
-        
+
         IEnumerable<Class> Classes { get; }
         IEnumerable<Grade> Grades { get; }
         IEnumerable<Grader> Graders { get; }
@@ -20,7 +20,7 @@ namespace ToaPro
 
 
         public void RequestAvailability(Judge judge);
-       
+
         public void UpdateRanking(Ranking ranking);
 
         public void AddRanking(Ranking ranking);
@@ -29,8 +29,10 @@ namespace ToaPro
 
         public void AddSubmission(Submission submission);
 
+        /* Judges */
         public Judge GetJudgeById(string id);
-        public void UpdateJudgeAvailability (Judge judge);
+        public Task AddJudgeList(List<Judge> judges);
+        public void UpdateJudgeAvailability(Judge judge);
 
         /* Students */
         IQueryable<Student> Students { get; }

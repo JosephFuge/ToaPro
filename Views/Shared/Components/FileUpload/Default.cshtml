@@ -1,8 +1,8 @@
 ﻿@model FileUploadViewModel
 
 <form asp-action="Upload" method="post" enctype="multipart/form-data">
-    <input type="hidden" asp-for="UserRole" />
+    <input type="hidden" id="upload-selected-role" asp-for="UserRole" />
     <input asp-for="CsvFile" class="form-control" />
-    <button type="submit" class="ghostButton">@Model.ButtonText</button>
+    <button type="submit" id="upload-users-button" class="ghostButton">@Model.ButtonText</button>
     <span asp-validation-for="CsvFile" class="text-danger"></span>
 </form>

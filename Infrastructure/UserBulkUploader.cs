@@ -10,12 +10,27 @@ namespace ToaPro.Infrastructure
     {
         private UserManager<ToaProUser> _userManager;
         private IIntexRepository _repo;
+        public int semesterId { get; set; } = 1; // Hardcoded for now, replace with actual value if needed
         public List<Group> Groups { get; set; } = new List<Group>();
 
         public UserBulkUploader(UserManager<ToaProUser> userManager, IIntexRepository intexRepository)
         {
             _userManager = userManager;
             _repo = intexRepository;
+        }
+
+        private async Task<List<IdentityResult?>> CreateUserAccounts(List<ToaProUser> users)
+        {
+            List<IdentityResult?> results = new List<IdentityResult?>();
+
+            for (int i = 0; i < users.Count; i++)
+            {
+                var emailName = users[i].Email.Substring(0, users[i].Email.IndexOf("@")).ToLowerInvariant();
+                var result = await _userManager.CreateAsync(users[i], "A123!!!" + emailName);
+                results.Add(result);
+            }
+
+            return results;
         }
 
         public async Task<int?> GetOrCreateGroup(int Section, int Number, int semesterId)
@@ -60,35 +75,31 @@ namespace ToaPro.Infrastructure
             try
             {
                 var students = new List<Student>();
-                var users = new List<ToaProUser>();
-                const int semesterId = 1; // Hardcoded for now, replace with actual value if needed
-                var results = new List<IdentityResult>();
-
-                for (int i = 0; i < userImportModels.Count; i++)
-                {
-                    ToaProUser studentUser = new ToaProUser
+                var users = userImportModels.Select(uim =>
+                    new ToaProUser
                     {
-                        FirstName = userImportModels[i].FirstName,
-                        LastName = userImportModels[i].LastName,
-                        Email = userImportModels[i].Email,
-                        UserName = userImportModels[i].Email // Assuming email is used as username
-                    };
-                    users.Add(studentUser);
-                    var result = await _userManager.CreateAsync(studentUser, "A123!!!" + userImportModels[i].NetID);
-                    results.Add(result);
-                }
+                        NetId = uim.NetID,
+                        FirstName = uim.FirstName,
+                        LastName = uim.LastName,
+                        Email = uim.Email,
+                        UserName = uim.Email
+                    }
+                ).ToList();
+
+                var results = await CreateUserAccounts(users);
 
                 for (int i = 0; i < results.Count; i++)
                 {
                     if (results[i] != null && results[i].Succeeded)
                     {
+                        await _userManager.AddToRoleAsync(users[i], "Student");
+
                         int? GroupId = await GetOrCreateGroup(userImportModels[i].SectionNumber, userImportModels[i].GroupNumber, semesterId);
                         if (GroupId != null)
                         {
                             Student newStudent = new Student
                             {
                                 Id = users[i].Id,
-                                NetId = userImportModels[i].NetID,
                                 Reason = string.Empty,
                                 GroupId = GroupId!.Value,
                             };
@@ -109,6 +120,92 @@ namespace ToaPro.Infrastructure
             }
             
             return new List<Student>();
+        }
+
+        public async Task<List<ToaProUser>> CreateTAsFromImport(List<TAImportFormat> userImportModels)
+        {
+            try
+            {
+                var users = userImportModels.Select(uim =>
+                    new ToaProUser
+                    {
+                        NetId = uim.NetID,
+                        FirstName = uim.FirstName,
+                        LastName = uim.LastName,
+                        Email = uim.Email,
+                        UserName = uim.Email
+                    }
+                ).ToList();
+
+                var results = await CreateUserAccounts(users);
+
+                for (int i = 0; i < results.Count; i++)
+                {
+                    if (results[i] != null && results[i].Succeeded)
+                    {
+                        await _userManager.AddToRoleAsync(users[i], "TA");
+                    }
+                }
+
+                return users;
+            } catch (Exception ex)
+            {
+
+            }
+            
+            return new List<ToaProUser>();
+        }
+
+        public async Task<List<Judge>> CreateJudgesFromImport(List<JudgeImportFormat> userImportModels)
+        {
+            try
+            {
+                var judges = new List<Judge>();
+                var users = userImportModels.Select(uim =>
+                    new ToaProUser
+                    {
+                        FirstName = uim.FirstName,
+                        LastName = uim.LastName,
+                        Email = uim.Email,
+                        UserName = uim.Email // Assuming email is used as username
+                    }
+                ).ToList();
+
+                var results = await CreateUserAccounts(users);
+
+                for (int i = 0; i < results.Count; i++)
+                {
+                    if (results[i] != null && results[i].Succeeded)
+                    {
+                        await _userManager.AddToRoleAsync(users[i], "Judge");
+
+                        Judge newJudge = new Judge
+                        {
+                            Id = users[i].Id,
+                            JudgeType = userImportModels[i].JudgeType,
+                            Affiliation = userImportModels[i].Organization,
+                            TimeSlot1 = true,
+                            TimeSlot2 = true,
+                            TimeSlot3 = true,
+                            TimeSlot4 = true,
+                            TimeSlot5 = true
+                        };
+                        judges.Add(newJudge);
+                    }
+                }
+
+                if (judges.Count > 0)
+                {
+                    await _repo.AddJudgeList(judges);
+                }
+
+                return judges;
+            } catch (Exception ex)
+            {
+
+            }
+            
+            return new List<Judge>();
         }
     }
 }

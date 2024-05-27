@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using ToaPro.Infrastructure;
 using ToaPro.Models;
 
 namespace ToaPro.Areas.Identity.Pages.Account
@@ -131,10 +132,16 @@ namespace ToaPro.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
 
-                user.FirstName = Input.FirstName; user.LastName = Input.LastName;
+                user.FirstName = Input.FirstName; user.LastName = Input.LastName; 
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+
+                if (Input.Email.ToUpper().StartsWith("STUD"))
+                {
+                    user.NetId = Input.Email.Substring(0, Input.Email.IndexOf("@"));
+                }
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
@@ -151,7 +158,6 @@ namespace ToaPro.Areas.Identity.Pages.Account
                         {
                             Id = user.Id,
                             GroupId = 1,
-                            NetId = user.Email
                         });
                     } else if (user.NormalizedUserName.StartsWith("JUDGE"))
                     {
