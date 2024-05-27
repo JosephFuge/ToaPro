@@ -1,0 +1,51 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model SubmissionFieldsViewModel
+
+<vc:header-types title="Submission Entries@(Model.TermYear)" />
+<br/>
+<div class="row">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Prompt</th>
+            <th>Type</th>
+            <th>Due Date</th>
+            <th>Default</th>
+            <th># Of Submissions</th>
+        </tr>
+        </thead>
+        <tbody id="submission-field-table-body">
+        @foreach (var (field, numSubmitted) in Model.SubmissionFieldsFrequencies)
+        {
+            <tr>
+                <td>@field.Prompt</td>
+                <td>@field.DataType.ToString()</td>
+                <td>@field.DueDate</td>
+                <td>@field.IsDefault</td>
+                <td>@numSubmitted</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+<div class="row">
+    <div class="col"></div>
+    <div class="col-3">
+        <button id="add-entry-button" class="btn btn-success rounded-pill">Add An Entry</button>
+    </div>
+    <div class="col"></div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#add-entry-button').on('click', function () {
+            $('#submission-field-table-body:last-child').append('<tr><td>Lorem Ipsum Prompt</td><td>Dolorem DataType</td><td>Lorem Ipsum DueDate</td><td>Dolorem IsDefault</td><td>Lorem Ipsum 0</td></tr>');
+        });
+    });
+</script>

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ToaPro.Infrastructure;
 using ToaPro.Models;
+using ToaPro.Models.ViewModels;
 
 namespace ToaPro.Controllers
 {
@@ -72,6 +73,33 @@ namespace ToaPro.Controllers
                 //ViewBag.Categories = _repo.Submissions.ToList();
                 return View(response); // Corrected to return the right view
             }
+        }
+
+        [HttpGet]
+        public IActionResult StudentSubmissionFields()
+        {
+            const int currentSemesterId = 1;
+            List<SubmissionField> subFields = _repo.SubmissionFields.Where(sf => sf.SemesterId == currentSemesterId).ToList();
+
+            var subFieldFrequencies = new Dictionary<SubmissionField, int>();
+
+            foreach (var subField in subFields)
+            {
+                subFieldFrequencies[subField] = 0;
+            }
+
+            var currentSemester = _repo.Semesters.FirstOrDefault(s => s.Id == currentSemesterId);
+
+            String currentTermYear = currentSemester != null ? " - " + currentSemester.Term + " " + currentSemester.Year : "";
+
+            var subFieldsViewModel = new SubmissionFieldsViewModel
+            {
+                SubmissionFieldsFrequencies = subFieldFrequencies,
+                TermYear = currentTermYear
+            };
+
+            return View(subFieldsViewModel); 
+
         }
 
     }

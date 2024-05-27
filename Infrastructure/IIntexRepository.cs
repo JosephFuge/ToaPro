@@ -13,6 +13,7 @@ namespace ToaPro.Infrastructure
         IEnumerable<Requirement> Requirements { get; }
         IEnumerable<Semester> Semesters { get; }
         IEnumerable<Submission> Submissions { get; }
+        IEnumerable<SubmissionField> SubmissionFields { get; }
         IQueryable<Judge> Judges { get; }
         IQueryable<Presentation> Presentations { get; }
         IQueryable<Ranking> Rankings { get; }

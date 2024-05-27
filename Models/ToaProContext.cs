@@ -42,6 +42,9 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
 
     public virtual DbSet<Submission> Submissions { get; set; }
     //added this part for our model:
+
+    public virtual DbSet<SubmissionField> SubmissionFields { get; set; }
+
     public virtual DbSet<Evaluation> Evaluations { get; set; }
 
     public virtual DbSet<Award> Awards { get; set; }

@@ -18,6 +18,7 @@ namespace ToaPro.Infrastructure
 
 
         public IEnumerable<Submission> Submissions => _toaProContext.Submissions.ToList();
+        public IEnumerable<SubmissionField> SubmissionFields => _toaProContext.SubmissionFields.ToList();
         public IQueryable<Judge> Judges => _toaProContext.Judges;
         public IQueryable<Presentation> Presentations => _toaProContext.Presentations;
         public IEnumerable<Class> Classes => _toaProContext.Classes;
