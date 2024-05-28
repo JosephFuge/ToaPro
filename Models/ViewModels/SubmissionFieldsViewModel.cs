@@ -2,7 +2,8 @@
 {
     public class SubmissionFieldsViewModel
     {
-        public Dictionary<SubmissionField, int> SubmissionFieldsFrequencies { get; set; } // A submission field as the key with the number of times students have submitted it as a value
+        public List<SubmissionField> SubmissionFields { get; set; } 
+        public List<int> SubmissionFieldFrequencies { get; set; }
         public string TermYear { get; set; }
     }
 }

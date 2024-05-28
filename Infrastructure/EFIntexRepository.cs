@@ -17,8 +17,6 @@ namespace ToaPro.Infrastructure
         }
 
 
-        public IEnumerable<Submission> Submissions => _toaProContext.Submissions.ToList();
-        public IEnumerable<SubmissionField> SubmissionFields => _toaProContext.SubmissionFields.ToList();
         public IQueryable<Judge> Judges => _toaProContext.Judges;
         public IQueryable<Presentation> Presentations => _toaProContext.Presentations;
         public IEnumerable<Class> Classes => _toaProContext.Classes;
@@ -101,6 +99,15 @@ namespace ToaPro.Infrastructure
         {
             _toaProContext.Groups.Add(group);
             _toaProContext.SaveChanges();
+        }
+
+        /* Submissions */
+        public IEnumerable<Submission> Submissions => _toaProContext.Submissions.ToList();
+        public IEnumerable<SubmissionField> SubmissionFields => _toaProContext.SubmissionFields.ToList();
+        public async Task AddSubmissionFieldList(List<SubmissionField> submissionFields)
+        {
+            _toaProContext.SubmissionFields.AddRange(submissionFields);
+            await _toaProContext.SaveChangesAsync();
         }
     }
 }

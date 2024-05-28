@@ -12,8 +12,6 @@ namespace ToaPro.Infrastructure
         IEnumerable<GraderAssign> GraderAssigns { get; }
         IEnumerable<Requirement> Requirements { get; }
         IEnumerable<Semester> Semesters { get; }
-        IEnumerable<Submission> Submissions { get; }
-        IEnumerable<SubmissionField> SubmissionFields { get; }
         IQueryable<Judge> Judges { get; }
         IQueryable<Presentation> Presentations { get; }
         IQueryable<Ranking> Rankings { get; }
@@ -42,5 +40,10 @@ namespace ToaPro.Infrastructure
         public Task AddStudent(Student student);
         public Task AddStudentList(List<Student> students);
         public Task AddGroup(Group group);
+
+        /* Submissions */
+        IEnumerable<Submission> Submissions { get; }
+        IEnumerable<SubmissionField> SubmissionFields { get; }
+        public Task AddSubmissionFieldList(List<SubmissionField> submissionFields);
     }
 }

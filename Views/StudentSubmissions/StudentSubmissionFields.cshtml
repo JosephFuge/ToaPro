@@ -31,14 +31,14 @@
             </tr>
             </thead>
             <tbody id="submission-field-table-body">
-            @foreach (var (field, numSubmitted) in Model.SubmissionFieldsFrequencies)
+            @for (int i = 0; i < Model.SubmissionFields.Count; i++)
             {
                 <tr>
-                    <td>@field.Prompt</td>
-                    <td>@field.DataType.ToString()</td>
-                    <td>@field.DueDate</td>
-                    <td>@field.IsDefault</td>
-                    <td>@numSubmitted</td>
+                    <td>@Model.SubmissionFields[i].Prompt</td>
+                    <td>@Model.SubmissionFields[i].DataType</td>
+                    <td>@Model.SubmissionFields[i].DueDate</td>
+                    <td>@Model.SubmissionFields[i].IsDefault</td>
+                    <td>@(i < Model.SubmissionFieldFrequencies.Count ? Model.SubmissionFieldFrequencies[i] : 0)</td>
                 </tr>
             }
             </tbody>
@@ -79,12 +79,31 @@
     }
 
     $(document).ready(function () {
-        $('#add-entry-button').on('click', function () {
-            $('#submission-field-table-body').append('<tr class="new-field"><td>Lorem Ipsum Prompt</td><td>Dolorem DataType</td><td>Lorem Ipsum DueDate</td><td>Dolorem IsDefault</td><td>Lorem Ipsum 0</td></tr>');
+        let rowIndex = @Model.SubmissionFields.Count();
 
-            let shouldShowFooter = updateNumNewFields(1);
-            console.log(`numNewFields: ${numNewFields}`);
-            console.log(`shouldHideFooter: ${shouldShowFooter}`);
+        $('#add-entry-button').on('click', function () {
+            // $('#submission-field-table-body').append('<tr class="new-field"><td>Lorem Ipsum Prompt</td><td>Dolorem DataType</td><td>Lorem Ipsum DueDate</td><td>Dolorem IsDefault</td><td>Lorem Ipsum 0</td></tr>');
+
+            const newRow = `
+                <tr class="new-field">
+                    <td><input type="text" name="SubmissionFields[${rowIndex}].Prompt" class="form-control" /></td>
+                    <td>
+                        <select name="SubmissionFields[${rowIndex}].DataType" class="form-control">
+                            <option value="Text">Text</option>
+                            <option value="URL">URL</option>
+                            <option value="Description">Description</option>
+                            <option value="Image">Image</option>
+                        </select>
+                    </td>
+                    <td><input type="datetime-local" name="SubmissionFields[${rowIndex}].DueDate" class="form-control" /></td>
+                    <td><input type="checkbox" name="SubmissionFields[${rowIndex}].IsDefault" value="true" /></td>
+                    <td>N/A</td>
+                </tr>
+            `;
+            $('#submission-field-table-body').append(newRow);
+            rowIndex++;
+
+            const shouldShowFooter = updateNumNewFields(1);
             if (shouldShowFooter) {
                 $('#submission-field-table-foot').show();
             } else {
@@ -95,7 +114,13 @@
         $('#cancel-changes-button').on('click', function () {
             $('.new-field').remove();
             numNewFields = 0;
+            rowIndex = @Model.SubmissionFields.Count();
             $('#submission-field-table-foot').hide();
         });
+
+
+        $('#add-row-button').click(function () {
+        });
+
     });
 </script>

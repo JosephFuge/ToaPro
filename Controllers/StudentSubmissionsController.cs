@@ -81,11 +81,11 @@ namespace ToaPro.Controllers
             const int currentSemesterId = 1;
             List<SubmissionField> subFields = _repo.SubmissionFields.Where(sf => sf.SemesterId == currentSemesterId).ToList();
 
-            var subFieldFrequencies = new Dictionary<SubmissionField, int>();
+            var subFieldFrequencies = new List<int>();
 
-            foreach (var subField in subFields)
+            for (int i = 0; i < subFields.Count; i++)
             {
-                subFieldFrequencies[subField] = 0;
+                subFieldFrequencies.Add(0);
             }
 
             var currentSemester = _repo.Semesters.FirstOrDefault(s => s.Id == currentSemesterId);
@@ -94,12 +94,40 @@ namespace ToaPro.Controllers
 
             var subFieldsViewModel = new SubmissionFieldsViewModel
             {
-                SubmissionFieldsFrequencies = subFieldFrequencies,
+                SubmissionFields = subFields,
+                SubmissionFieldFrequencies = subFieldFrequencies,
                 TermYear = currentTermYear
             };
 
             return View(subFieldsViewModel); 
 
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> StudentSubmissionFields(SubmissionFieldsViewModel subFields)
+        {
+            const int currentSemesterId = 1;
+
+            List<SubmissionField> newFields = subFields.SubmissionFields
+                                                .Where(sf => sf.Id == 0)
+                                                .ToList();
+
+            foreach (var newField in newFields)
+            {
+                if (newField.DueDate.Kind == DateTimeKind.Unspecified)
+                {
+                    newField.DueDate = newField.DueDate.ToUniversalTime();
+                    // newField.DueDate = DateTime.SpecifyKind(newField.DueDate, DateTimeKind.Utc);
+                }
+
+                newField.SemesterId = currentSemesterId;
+            }
+
+
+            await _repo.AddSubmissionFieldList(newFields);
+
+            return RedirectToAction("StudentSubmissionFields"); 
         }
 
     }
