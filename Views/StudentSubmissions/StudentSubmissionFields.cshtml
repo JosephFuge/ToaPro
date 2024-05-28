@@ -100,7 +100,7 @@
     }
 
     $(document).ready(function () {
-        let rowIndex = @Model.SubmissionFields.Count();
+        let rowIndex = 0;
 
         $('#add-entry-button').on('click', function () {
             const newRow = `
@@ -138,7 +138,7 @@
         $('#cancel-changes-button').on('click', function () {
             $('.new-field').remove();
             numNewFields = 0;
-            rowIndex = @Model.SubmissionFields.Count();
+            rowIndex = 0;
             $('#submission-field-table-foot').hide();
         });
 
