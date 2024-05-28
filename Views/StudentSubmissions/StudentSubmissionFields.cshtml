@@ -6,46 +6,96 @@
 
 @model SubmissionFieldsViewModel
 
+<style>
+    .new-field {
+        background-color: #bcf5bc !important;
+    }
+
+    #submission-field-table-foot {
+        display: none;
+    }
+</style>
+
 <vc:header-types title="Submission Entries@(Model.TermYear)" />
 <br/>
 <div class="row">
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Prompt</th>
-            <th>Type</th>
-            <th>Due Date</th>
-            <th>Default</th>
-            <th># Of Submissions</th>
-        </tr>
-        </thead>
-        <tbody id="submission-field-table-body">
-        @foreach (var (field, numSubmitted) in Model.SubmissionFieldsFrequencies)
-        {
+    <form method="post">
+        <table class="table">
+            <thead>
             <tr>
-                <td>@field.Prompt</td>
-                <td>@field.DataType.ToString()</td>
-                <td>@field.DueDate</td>
-                <td>@field.IsDefault</td>
-                <td>@numSubmitted</td>
+                <th>Prompt</th>
+                <th>Type</th>
+                <th>Due Date</th>
+                <th>Default</th>
+                <th># Of Submissions</th>
             </tr>
-        }
-        </tbody>
-    </table>
+            </thead>
+            <tbody id="submission-field-table-body">
+            @foreach (var (field, numSubmitted) in Model.SubmissionFieldsFrequencies)
+            {
+                <tr>
+                    <td>@field.Prompt</td>
+                    <td>@field.DataType.ToString()</td>
+                    <td>@field.DueDate</td>
+                    <td>@field.IsDefault</td>
+                    <td>@numSubmitted</td>
+                </tr>
+            }
+            </tbody>
+            <tfoot id="submission-field-table-foot">
+                <tr>
+                    <td colspan="5">
+                        <button type="submit" class="button">Save Changes</button>
+                        <button type="button" id="cancel-changes-button" class="ghostButton">Cancel</button>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </form>
 </div>
 <div class="row">
     <div class="col"></div>
     <div class="col-3">
-        <button id="add-entry-button" class="btn btn-success rounded-pill">Add An Entry</button>
+        <button id="add-entry-button" class="btn btn-success rounded-pill">Add New Entry</button>
     </div>
     <div class="col"></div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    var numNewFields = 0;
+    
+    function updateNumNewFields(increment) {
+        numNewFields += increment;
+        if (numNewFields <= 0) {
+            numNewFields = 0;
+
+            return false;
+        } else if (numNewFields - increment <= 0) {
+            return true;
+        }
+
+        return true;
+    }
+
     $(document).ready(function () {
         $('#add-entry-button').on('click', function () {
-            $('#submission-field-table-body:last-child').append('<tr><td>Lorem Ipsum Prompt</td><td>Dolorem DataType</td><td>Lorem Ipsum DueDate</td><td>Dolorem IsDefault</td><td>Lorem Ipsum 0</td></tr>');
+            $('#submission-field-table-body').append('<tr class="new-field"><td>Lorem Ipsum Prompt</td><td>Dolorem DataType</td><td>Lorem Ipsum DueDate</td><td>Dolorem IsDefault</td><td>Lorem Ipsum 0</td></tr>');
+
+            let shouldShowFooter = updateNumNewFields(1);
+            console.log(`numNewFields: ${numNewFields}`);
+            console.log(`shouldHideFooter: ${shouldShowFooter}`);
+            if (shouldShowFooter) {
+                $('#submission-field-table-foot').show();
+            } else {
+                $('#submission-field-table-foot').hide();
+            }
+        });
+
+        $('#cancel-changes-button').on('click', function () {
+            $('.new-field').remove();
+            numNewFields = 0;
+            $('#submission-field-table-foot').hide();
         });
     });
 </script>
