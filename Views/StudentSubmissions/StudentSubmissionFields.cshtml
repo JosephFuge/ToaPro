@@ -48,7 +48,7 @@
                     <input id="submission-field-id-@i" asp-for="@Model.SubmissionFields[i].Id" hidden />
                     <td class="current-submission-field"><input asp-for="@Model.SubmissionFields[i].Prompt" disabled/></td>
                     <td class="current-submission-field">
-                        <select asp-for="@Model.SubmissionFields[i].DataType" id="dataType" disabled>
+                        <select asp-for="@Model.SubmissionFields[i].DataType" id="dataType" class="form-control" disabled>
                             @foreach (var dataType in Enum.GetValues(typeof(SubmissionInputType)))
                             {
                                 <option value="@dataType">@dataType</option>
@@ -189,7 +189,7 @@
         changedField.removeClass('delete-field');
         changedField.removeClass('edit-field');
         changedField.find('.current-submission-field').find('input').prop('disabled', true);
-        changedField.find('.current-submission-field').find('select').prop('disabled', false);
+        changedField.find('.current-submission-field').find('select').prop('disabled', true);
 
         $(`#field-cancel-change-${rowNumber}`).remove();
 
