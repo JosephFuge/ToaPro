@@ -4,6 +4,7 @@
     {
         public List<SubmissionField> SubmissionFields { get; set; } 
         public List<int> SubmissionFieldFrequencies { get; set; }
+        public List<int> DeleteFieldIds { get; set; } = new List<int>();
         public string TermYear { get; set; }
     }
 }
