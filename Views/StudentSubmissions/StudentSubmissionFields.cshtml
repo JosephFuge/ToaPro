@@ -172,7 +172,6 @@
             } else {
                 indexOfNum = fieldsToEdit.indexOf(rowNumber);
                 if (indexOfNum >= 0) {
-                    changedField.find('.current-submission-field').find('input').prop('disabled', true);
                     fieldsToEdit.splice(indexOfNum, 1);
                 }
             }
@@ -180,6 +179,7 @@
 
         changedField.removeClass('delete-field');
         changedField.removeClass('edit-field');
+        changedField.find('.current-submission-field').find('input').prop('disabled', true);
 
         $(`#field-cancel-change-${rowNumber}`).remove();
 
@@ -250,10 +250,5 @@
 
             updateFooterVisibility();
         });
-
-
-        $('#add-row-button').click(function () {
-        });
-
     });
 </script>

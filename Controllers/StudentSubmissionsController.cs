@@ -138,7 +138,7 @@ namespace ToaPro.Controllers
             {
                 if (newField.DueDate.Kind == DateTimeKind.Unspecified)
                 {
-                    newField.DueDate = newField.DueDate.ToUniversalTime();
+                    newField.DueDate = DateTime.SpecifyKind(newField.DueDate, DateTimeKind.Utc);
                 }
 
                 if (newField.SemesterId <= 0)
