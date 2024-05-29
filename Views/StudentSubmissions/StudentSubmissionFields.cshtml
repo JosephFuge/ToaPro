@@ -1,4 +1,5 @@
-﻿@*
+﻿@using ToaPro.Infrastructure
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
@@ -46,7 +47,14 @@
                 <tr id="submission-field-@i">
                     <input id="submission-field-id-@i" asp-for="@Model.SubmissionFields[i].Id" hidden />
                     <td class="current-submission-field"><input asp-for="@Model.SubmissionFields[i].Prompt" disabled/></td>
-                    <td class="current-submission-field"><input asp-for="@Model.SubmissionFields[i].DataType" disabled/></td>
+                    <td class="current-submission-field">
+                        <select asp-for="@Model.SubmissionFields[i].DataType" id="dataType" disabled>
+                            @foreach (var dataType in Enum.GetValues(typeof(SubmissionInputType)))
+                            {
+                                <option value="@dataType">@dataType</option>
+                            }
+                        </select>
+                    </td>
                     <td class="current-submission-field"><input asp-for="@Model.SubmissionFields[i].DueDate" disabled/></td>
                     <td class="current-submission-field"><input asp-for="@Model.SubmissionFields[i].IsDefault" disabled /></td>
                     <td>@(i < Model.SubmissionFieldFrequencies.Count ? Model.SubmissionFieldFrequencies[i] : 0)</td>
@@ -157,6 +165,7 @@
             const editRow = $(`#submission-field-${rowNumber}`);
 
             editRow.find('.current-submission-field').find('input').prop('disabled', false);
+            editRow.find('.current-submission-field').find('select').prop('disabled', false);
             fieldsToEdit.push(rowNumber);
             updateFooterVisibility();
         }
@@ -180,6 +189,7 @@
         changedField.removeClass('delete-field');
         changedField.removeClass('edit-field');
         changedField.find('.current-submission-field').find('input').prop('disabled', true);
+        changedField.find('.current-submission-field').find('select').prop('disabled', false);
 
         $(`#field-cancel-change-${rowNumber}`).remove();
 
