@@ -43,8 +43,9 @@ namespace ToaPro.Infrastructure
 
         /* Submissions */
         IEnumerable<Submission> Submissions { get; }
-        IEnumerable<SubmissionField> SubmissionFields { get; }
+        IEnumerable<SubmissionField> SubmissionFields(bool tracking = true);
         public void AddSubmissionFieldList(List<SubmissionField> submissionFields);
+        public void UpdateSubmissionFieldList(List<SubmissionField> submissionFields);
         public void DeleteSubmissionFieldList(List<SubmissionField> submissionFields);
         public Task<int> CommitChangesAsync();
     }

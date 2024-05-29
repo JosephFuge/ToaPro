@@ -108,10 +108,23 @@ namespace ToaPro.Infrastructure
 
         /* Submissions */
         public IEnumerable<Submission> Submissions => _toaProContext.Submissions.ToList();
-        public IEnumerable<SubmissionField> SubmissionFields => _toaProContext.SubmissionFields.ToList();
+        public IEnumerable<SubmissionField> SubmissionFields(bool tracking = true)
+        {
+            if (tracking)
+            {
+                return _toaProContext.SubmissionFields.ToList();
+            } else
+            {
+                return _toaProContext.SubmissionFields.AsNoTracking().ToList();
+            }
+        }
         public void AddSubmissionFieldList(List<SubmissionField> submissionFields)
         {
             _toaProContext.SubmissionFields.AddRange(submissionFields);
+        }
+        public void UpdateSubmissionFieldList(List<SubmissionField> submissionFields)
+        {
+            _toaProContext.SubmissionFields.UpdateRange(submissionFields);
         }
 
         public void DeleteSubmissionFieldList(List<SubmissionField> submissionFields)
