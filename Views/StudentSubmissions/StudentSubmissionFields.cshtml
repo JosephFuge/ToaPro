@@ -1,4 +1,5 @@
-﻿@*
+﻿@using ToaPro.Infrastructure
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
@@ -13,6 +14,14 @@
 
     #submission-field-table-foot {
         display: none;
+    }
+
+    .delete-field {
+        background-color : #fcabab !important;
+    }
+
+    .edit-field {
+        background-color : #fff8d6 !important;
     }
 </style>
 
@@ -35,21 +44,29 @@
             <tbody id="submission-field-table-body">
             @for (int i = 0; i < Model.SubmissionFields.Count; i++)
             {
-                <tr>
-                    <td>@Model.SubmissionFields[i].Prompt</td>
-                    <td>@Model.SubmissionFields[i].DataType</td>
-                    <td>@Model.SubmissionFields[i].DueDate</td>
-                    <td>@Model.SubmissionFields[i].IsDefault</td>
+                <tr id="submission-field-@i">
+                    <input id="submission-field-id-@i" asp-for="@Model.SubmissionFields[i].Id" hidden />
+                    <td class="current-submission-field"><input asp-for="@Model.SubmissionFields[i].Prompt" disabled/></td>
+                    <td class="current-submission-field">
+                        <select asp-for="@Model.SubmissionFields[i].DataType" id="dataType" class="form-control" disabled>
+                            @foreach (var dataType in Enum.GetValues(typeof(SubmissionInputType)))
+                            {
+                                <option value="@dataType">@dataType</option>
+                            }
+                        </select>
+                    </td>
+                    <td class="current-submission-field"><input asp-for="@Model.SubmissionFields[i].DueDate" disabled/></td>
+                    <td class="current-submission-field"><input asp-for="@Model.SubmissionFields[i].IsDefault" disabled /></td>
                     <td>@(i < Model.SubmissionFieldFrequencies.Count ? Model.SubmissionFieldFrequencies[i] : 0)</td>
-                    <td>
-                        <button type="button" class="button-circle"> @* Edit SubmissionEntry button *@
+                    <td id="field-edit-cell-@i">
+                        <button type="button" onclick="editField(@i)" class="button-circle"> @* Edit SubmissionEntry button *@
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-pencil" viewBox="0 0 16 16">
                               <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
                             </svg>
                         </button>
                     </td>
-                    <td>
-                        <button type="button" class="button-circle background-danger-red"> @* Delete SubmissionEntry button *@
+                    <td id="field-delete-cell-@i">
+                        <button type="button" onclick="markFieldForDeletion(@i)" class="button-circle background-danger-red"> @* Delete SubmissionEntry button *@
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-trash" viewBox="0 0 16 16">
                               <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
                               <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
@@ -80,71 +97,168 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    var tableFooterIsVisible = false;
     var numNewFields = 0;
+    var fieldsToDelete = [];
+    var fieldsToEdit = [];
     
     function updateNumNewFields(increment) {
         numNewFields += increment;
         if (numNewFields <= 0) {
             numNewFields = 0;
-
-            return false;
-        } else if (numNewFields - increment <= 0) {
-            return true;
         }
+    }
 
-        return true;
+    function updateFooterVisibility() {
+        if (tableFooterIsVisible && (numNewFields <= 0 && fieldsToDelete.length <= 0 && fieldsToEdit.length <= 0)) {
+            $('#submission-field-table-foot').hide();
+            tableFooterIsVisible = false;
+        } else if (!tableFooterIsVisible && (numNewFields > 0 || fieldsToDelete.length > 0 || fieldsToEdit.length > 0)) {
+            $('#submission-field-table-foot').show();
+            tableFooterIsVisible = true;
+        }
     }
 
     function removeNewField(rowNumber) {
         $(`#new-field-${rowNumber}`).remove();
+        updateNumNewFields(-1);
+        updateFooterVisibility();
+    }
+
+    function markFieldChanged(rowNumber, newClass, additionalElements) {
+        var changedField = $(`#submission-field-${rowNumber}`);
+        changedField.addClass(newClass);
+        
+        $(`#field-edit-cell-${rowNumber}`).remove();
+        $(`#field-delete-cell-${rowNumber}`).remove();
+
+        additionalElements ??= '';
+
+        changedField.append(`
+        <td id="field-cancel-change-${rowNumber}" colspan="2">
+            ${additionalElements}
+            <button onclick="cancelFieldChange(${rowNumber}, true);" type="button" class="button"> 
+                Cancel
+            </button>
+        </td>`);
+    }
+
+    function markFieldForDeletion(rowNumber) {
+        if (!fieldsToDelete.includes(rowNumber) && !fieldsToEdit.includes(rowNumber)) {
+            const deleteFieldId = $(`#submission-field-id-${rowNumber}`).val();
+            const deleteIdTag = `<input hidden type="number" name="DeleteFieldIds[${fieldsToDelete.length}]" value="${deleteFieldId}" class="form-control" />`;
+
+            markFieldChanged(rowNumber, 'delete-field', deleteIdTag);
+
+            fieldsToDelete.push(rowNumber);
+            updateFooterVisibility();
+        }
+    }
+
+    function editField(rowNumber) {
+        if (!fieldsToEdit.includes(rowNumber) && !fieldsToDelete.includes(rowNumber)) {
+            const editFieldId = $(`#submission-field-id-${rowNumber}`).val();
+            const editIdTag = `<input hidden type="number" name="UpdatedSubmissionFieldIds[${fieldsToEdit.length}]" value="${editFieldId}" class="form-control" />`;
+
+            markFieldChanged(rowNumber, 'edit-field', editIdTag);
+
+            const editRow = $(`#submission-field-${rowNumber}`);
+
+            editRow.find('.current-submission-field').find('input').prop('disabled', false);
+            editRow.find('.current-submission-field').find('select').prop('disabled', false);
+            fieldsToEdit.push(rowNumber);
+            updateFooterVisibility();
+        }
+    }
+
+    function cancelFieldChange(rowNumber, updateList) {
+        var changedField = $(`#submission-field-${rowNumber}`);
+
+        if (updateList === true) {
+            let indexOfNum = fieldsToDelete.indexOf(rowNumber);
+            if (indexOfNum >= 0) {
+                fieldsToDelete.splice(indexOfNum, 1);
+            } else {
+                indexOfNum = fieldsToEdit.indexOf(rowNumber);
+                if (indexOfNum >= 0) {
+                    fieldsToEdit.splice(indexOfNum, 1);
+                }
+            }
+        }
+
+        changedField.removeClass('delete-field');
+        changedField.removeClass('edit-field');
+        changedField.find('.current-submission-field').find('input').prop('disabled', true);
+        changedField.find('.current-submission-field').find('select').prop('disabled', true);
+
+        $(`#field-cancel-change-${rowNumber}`).remove();
+
+        changedField.append(`
+            <td id="field-edit-cell-${rowNumber}">
+                <button onclick="editField(${rowNumber})" type="button" class="button-circle"> 
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-pencil" viewBox="0 0 16 16">
+                      <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                    </svg>
+                </button>
+            </td>
+            <td id="field-delete-cell-${rowNumber}">
+                <button type="button" onclick="markFieldForDeletion(${rowNumber})" class="button-circle background-danger-red"> 
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-trash" viewBox="0 0 16 16">
+                      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                      <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                    </svg>
+                </button>
+            </td>
+        `);
+
+        updateFooterVisibility();
     }
 
     $(document).ready(function () {
-        let rowIndex = 0;
-
         $('#add-entry-button').on('click', function () {
             const newRow = `
-                <tr id="new-field-${rowIndex}" class="new-field">
-                    <td><input type="text" name="SubmissionFields[${rowIndex}].Prompt" class="form-control" /></td>
+                <tr id="new-field-${numNewFields}" class="new-field">
+                    <td><input type="text" name="SubmissionFields[${numNewFields}].Prompt" class="form-control" /></td>
                     <td>
-                        <select name="SubmissionFields[${rowIndex}].DataType" class="form-control">
+                        <select name="SubmissionFields[${numNewFields}].DataType" class="form-control">
                             <option value="Text">Text</option>
                             <option value="URL">URL</option>
                             <option value="Description">Description</option>
                             <option value="Image">Image</option>
                         </select>
                     </td>
-                    <td><input type="datetime-local" name="SubmissionFields[${rowIndex}].DueDate" class="form-control" /></td>
-                    <td><input type="checkbox" name="SubmissionFields[${rowIndex}].IsDefault" value="true" /></td>
+                    <td><input type="datetime-local" name="SubmissionFields[${numNewFields}].DueDate" class="form-control" /></td>
+                    <td><input type="checkbox" name="SubmissionFields[${numNewFields}].IsDefault" value="true" /></td>
                     <td>N/A</td>
                     <td colspan="2">
-                        <button onclick="removeNewField(${rowIndex})" type="button" class="button background-danger-red"> 
+                        <button onclick="removeNewField(${numNewFields})" type="button" class="button background-danger-red"> 
                             Cancel
                         </button>
                     </td>
                 </tr>
             `;
             $('#submission-field-table-body').append(newRow);
-            rowIndex++;
 
-            const shouldShowFooter = updateNumNewFields(1);
-            if (shouldShowFooter) {
-                $('#submission-field-table-foot').show();
-            } else {
-                $('#submission-field-table-foot').hide();
-            }
+            updateNumNewFields(1);
+            updateFooterVisibility();
         });
 
         $('#cancel-changes-button').on('click', function () {
             $('.new-field').remove();
             numNewFields = 0;
-            rowIndex = 0;
-            $('#submission-field-table-foot').hide();
+            
+            for (const tempRowNum of fieldsToDelete) {
+                cancelFieldChange(tempRowNum, false);
+            }
+
+            for (const tempRowNum of fieldsToEdit) {
+                cancelFieldChange(tempRowNum, false);
+            }
+
+            fieldsToDelete = [];
+            fieldsToEdit = [];
+
+            updateFooterVisibility();
         });
-
-
-        $('#add-row-button').click(function () {
-        });
-
     });
 </script>

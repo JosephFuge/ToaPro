@@ -9,6 +9,7 @@ namespace ToaPro.Controllers
     public class StudentSubmissionsController : Controller
     {
 
+        const int currentSemesterId = 1;
         private IIntexRepository _repo;
 
         public StudentSubmissionsController(IIntexRepository temp) //Constructor
@@ -78,8 +79,7 @@ namespace ToaPro.Controllers
         [HttpGet]
         public IActionResult StudentSubmissionFields()
         {
-            const int currentSemesterId = 1;
-            List<SubmissionField> subFields = _repo.SubmissionFields.Where(sf => sf.SemesterId == currentSemesterId).ToList();
+            List<SubmissionField> subFields = _repo.SubmissionFields(tracking: false).Where(sf => sf.SemesterId == currentSemesterId).OrderBy(sf => sf.Id).ToList();
 
             var subFieldFrequencies = new List<int>();
 
@@ -113,20 +113,41 @@ namespace ToaPro.Controllers
                                                 .Where(sf => sf.Id == 0)
                                                 .ToList();
 
-            foreach (var newField in newFields)
+            List<SubmissionField> changedFields = subFields.SubmissionFields
+                                                    .Where(sf => subFields.UpdatedSubmissionFieldIds.Contains(sf.Id))
+                                                    .ToList();
+
+            var changedIds = subFields.UpdatedSubmissionFieldIds;
+
+            newFields = convertSubmissionDateTimesToUTC(newFields);
+            changedFields = convertSubmissionDateTimesToUTC(changedFields);
+
+            List<SubmissionField> deleteFields = _repo.SubmissionFields(tracking: false).Where(sf => subFields.DeleteFieldIds.Contains(sf.Id)).ToList();
+
+            _repo.AddSubmissionFieldList(newFields);
+            _repo.UpdateSubmissionFieldList(changedFields);
+            _repo.DeleteSubmissionFieldList(deleteFields);
+            await _repo.CommitChangesAsync();
+
+            return RedirectToAction("StudentSubmissionFields"); 
+        }
+
+        private List<SubmissionField> convertSubmissionDateTimesToUTC(List<SubmissionField> submissionFields)
+        {
+            foreach (var newField in submissionFields)
             {
                 if (newField.DueDate.Kind == DateTimeKind.Unspecified)
                 {
-                    newField.DueDate = newField.DueDate.ToUniversalTime();
+                    newField.DueDate = DateTime.SpecifyKind(newField.DueDate, DateTimeKind.Utc);
                 }
 
-                newField.SemesterId = currentSemesterId;
+                if (newField.SemesterId <= 0)
+                {
+                    newField.SemesterId = currentSemesterId;
+                }
             }
 
-
-            await _repo.AddSubmissionFieldList(newFields);
-
-            return RedirectToAction("StudentSubmissionFields"); 
+            return submissionFields;
         }
 
     }
