@@ -276,6 +276,41 @@ body, html {
         background-color: #ffe6e6; /* light red background on hover */
     }
 
+.button-circle {
+    background-color: #0D64B5;
+    text-align: center;
+    color: white; 
+    border: none;
+    width: 2em;
+    height: 2em;
+    padding: 4px 4px; 
+    font-size: 16px; 
+    border-radius: 50px; 
+    cursor: pointer; 
+    user-select: none; 
+    transition: background-color 0.3s, transform 0.3s; 
+}
+
+    .button-circle:hover {
+        background-color: #003369; /* Darker blue background on hover */
+    }
+
+    .button-circle:active {
+        transform: scale(0.95); /* Slight decrease in size on click */
+    }
+
+.background-dark-blue {
+    background-color: #0D64B5;
+}
+
+.background-danger-red {
+    background-color: #A10D2D;
+}
+
+    .background-danger-red:hover {
+        background-color: #63091D;
+    }
+
 .width-large { 
     width: 174px;
 }

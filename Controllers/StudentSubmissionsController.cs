@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ToaPro.Infrastructure;
 using ToaPro.Models;
+using ToaPro.Models.ViewModels;
 
 namespace ToaPro.Controllers
 {
@@ -72,6 +73,60 @@ namespace ToaPro.Controllers
                 //ViewBag.Categories = _repo.Submissions.ToList();
                 return View(response); // Corrected to return the right view
             }
+        }
+
+        [HttpGet]
+        public IActionResult StudentSubmissionFields()
+        {
+            const int currentSemesterId = 1;
+            List<SubmissionField> subFields = _repo.SubmissionFields.Where(sf => sf.SemesterId == currentSemesterId).ToList();
+
+            var subFieldFrequencies = new List<int>();
+
+            for (int i = 0; i < subFields.Count; i++)
+            {
+                subFieldFrequencies.Add(0);
+            }
+
+            var currentSemester = _repo.Semesters.FirstOrDefault(s => s.Id == currentSemesterId);
+
+            String currentTermYear = currentSemester != null ? " - " + currentSemester.Term + " " + currentSemester.Year : "";
+
+            var subFieldsViewModel = new SubmissionFieldsViewModel
+            {
+                SubmissionFields = subFields,
+                SubmissionFieldFrequencies = subFieldFrequencies,
+                TermYear = currentTermYear
+            };
+
+            return View(subFieldsViewModel); 
+
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> StudentSubmissionFields(SubmissionFieldsViewModel subFields)
+        {
+            const int currentSemesterId = 1;
+
+            List<SubmissionField> newFields = subFields.SubmissionFields
+                                                .Where(sf => sf.Id == 0)
+                                                .ToList();
+
+            foreach (var newField in newFields)
+            {
+                if (newField.DueDate.Kind == DateTimeKind.Unspecified)
+                {
+                    newField.DueDate = newField.DueDate.ToUniversalTime();
+                }
+
+                newField.SemesterId = currentSemesterId;
+            }
+
+
+            await _repo.AddSubmissionFieldList(newFields);
+
+            return RedirectToAction("StudentSubmissionFields"); 
         }
 
     }
