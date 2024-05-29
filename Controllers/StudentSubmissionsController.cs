@@ -123,8 +123,11 @@ namespace ToaPro.Controllers
                 newField.SemesterId = currentSemesterId;
             }
 
+            List<SubmissionField> deleteFields = _repo.SubmissionFields.Where(sf => subFields.DeleteFieldIds.Contains(sf.Id)).ToList();
 
-            await _repo.AddSubmissionFieldList(newFields);
+            _repo.AddSubmissionFieldList(newFields);
+            _repo.DeleteSubmissionFieldList(deleteFields);
+            await _repo.CommitChangesAsync();
 
             return RedirectToAction("StudentSubmissionFields"); 
         }

@@ -16,6 +16,11 @@ namespace ToaPro.Infrastructure
             _toaProContext = toaProContext;
         }
 
+        public async Task<int> CommitChangesAsync()
+        {
+            return await _toaProContext.SaveChangesAsync();
+        }
+
 
         public IQueryable<Judge> Judges => _toaProContext.Judges;
         public IQueryable<Presentation> Presentations => _toaProContext.Presentations;
@@ -104,10 +109,14 @@ namespace ToaPro.Infrastructure
         /* Submissions */
         public IEnumerable<Submission> Submissions => _toaProContext.Submissions.ToList();
         public IEnumerable<SubmissionField> SubmissionFields => _toaProContext.SubmissionFields.ToList();
-        public async Task AddSubmissionFieldList(List<SubmissionField> submissionFields)
+        public void AddSubmissionFieldList(List<SubmissionField> submissionFields)
         {
             _toaProContext.SubmissionFields.AddRange(submissionFields);
-            await _toaProContext.SaveChangesAsync();
+        }
+
+        public void DeleteSubmissionFieldList(List<SubmissionField> submissionFields)
+        {
+            _toaProContext.SubmissionFields.RemoveRange(submissionFields);
         }
     }
 }
