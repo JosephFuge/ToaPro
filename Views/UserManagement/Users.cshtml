@@ -106,7 +106,7 @@
 
 @if (TempData["NotificationTitle"] != null && TempData["NotificationBody"] != null)
 {
-    <vc:notification-dialog title=@TempData["NotificationTitle"] body=@TempData["NotificationBody"] />
+    <vc:notification-dialog title=@TempData["NotificationTitle"] body=@TempData["NotificationBody"] notification-type="@(Enum.Parse<ToaPro.Infrastructure.NotificationDialogType>(TempData["NotificationType"]?.ToString() ?? "Default"))" />
 }
 
 <script>

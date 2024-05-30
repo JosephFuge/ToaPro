@@ -147,10 +147,12 @@ namespace ToaPro.Controllers
                 }
 
                 TempData["NotificationTitle"] = "Success";
+                TempData["NotificationType"] = NotificationDialogType.Success;
                 TempData["NotificationBody"] = bodyText;
             } else if (newFields.Count > 0 || changedFields.Count > 0 || deleteFields.Count > 0)
             {
                 TempData["NotificationTitle"] = "Failure";
+                TempData["NotificationType"] = NotificationDialogType.Failure;
                 TempData["NotificationBody"] = "None of your changes were successfully saved.";
             }
 

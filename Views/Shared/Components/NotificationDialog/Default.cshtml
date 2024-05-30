@@ -2,7 +2,20 @@
 
 <div id="dialog-popup" class="toast position-fixed bottom-0 end-0 p-3" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="toast-header">
-        <strong class="me-auto">@Model.Title</strong>
+        <strong class="me-auto">@{
+                switch (Model.DialogType)
+                {
+                    case ToaPro.Infrastructure.NotificationDialogType.Success:
+                        <img width="24" class="filter-green" src="/img/iconmonstr-check-mark-7.svg" alt="green checkmark icon" />
+                        break;
+                    case ToaPro.Infrastructure.NotificationDialogType.Failure:
+                        <img width="24" class="filter-red" src="/img/iconmonstr-x-mark-10.svg" alt="red x icon" />
+                        break;
+                    default:
+                        <img width="24" class="filter-grey" src="/img/iconmonstr-info-1.svg" alt="grey info icon" />
+                        break;
+                }
+            } @Model.Title</strong>
         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
     <div class="toast-body">

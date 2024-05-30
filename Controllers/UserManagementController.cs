@@ -61,10 +61,12 @@ namespace ToaPro.Controllers
                         if (newStudentCount > 0)
                         {
                             TempData["NotificationTitle"] = "Success";
+                            TempData["NotificationType"] = NotificationDialogType.Success;
                             TempData["NotificationBody"] = "Successfully uploaded " + newStudentCount + " Students.";
                         } else
                         {
                             TempData["NotificationTitle"] = "Failed";
+                            TempData["NotificationType"] = NotificationDialogType.Failure;
                             TempData["NotificationBody"] = "No students uploaded.";
                         }
                     } else if (model.UserRole == UserRole.TA)
@@ -73,12 +75,16 @@ namespace ToaPro.Controllers
                         if (newTACount > 0)
                         {
                             TempData["NotificationTitle"] = "Success";
+                            TempData["NotificationType"] = NotificationDialogType.Success;
                             TempData["NotificationBody"] = "Successfully uploaded " + newTACount + " TAs.";
                         } else
                         {
                             TempData["NotificationTitle"] = "Failed";
+                            TempData["NotificationType"] = NotificationDialogType.Failure;
                             TempData["NotificationBody"] = "No TAs uploaded.";
                         }
+
+                        Enum.Parse<NotificationDialogType>("Failure");
 
                     } else if (model.UserRole == UserRole.Judge)
                     {
@@ -86,10 +92,12 @@ namespace ToaPro.Controllers
                         if (newJudgeCount > 0)
                         {
                             TempData["NotificationTitle"] = "Success";
+                            TempData["NotificationType"] = NotificationDialogType.Success;
                             TempData["NotificationBody"] = "Successfully uploaded " + newJudgeCount + " Judges.";
                         } else
                         {
                             TempData["NotificationTitle"] = "Failed";
+                            TempData["NotificationType"] = NotificationDialogType.Failure;
                             TempData["NotificationBody"] = "No judges uploaded.";
                         }
                     }
