@@ -146,8 +146,12 @@ namespace ToaPro.Controllers
                     bodyText += "• Deleted " + deleteFields.Count + " fields";
                 }
 
-                TempData["NotificationTitle"] = "Success!";
+                TempData["NotificationTitle"] = "Success";
                 TempData["NotificationBody"] = bodyText;
+            } else if (newFields.Count > 0 || changedFields.Count > 0 || deleteFields.Count > 0)
+            {
+                TempData["NotificationTitle"] = "Failure";
+                TempData["NotificationBody"] = "None of your changes were successfully saved.";
             }
 
             return RedirectToAction("StudentSubmissionFields"); 
