@@ -57,16 +57,42 @@ namespace ToaPro.Controllers
                 if (model.CsvFile != null && model.CsvFile.Length > 0) {
                     if (model.UserRole == UserRole.Student)
                     {
-                        ViewBag.UploadSuccess = await UploadStudents(model.CsvFile);
+                        int newStudentCount = await UploadStudents(model.CsvFile);
+                        if (newStudentCount > 0)
+                        {
+                            TempData["NotificationTitle"] = "Success";
+                            TempData["NotificationBody"] = "Successfully uploaded " + newStudentCount + " Students.";
+                        } else
+                        {
+                            TempData["NotificationTitle"] = "Failed";
+                            TempData["NotificationBody"] = "No students uploaded.";
+                        }
                     } else if (model.UserRole == UserRole.TA)
                     {
-                        ViewBag.UploadSuccess = await UploadTAs(model.CsvFile);
+                        int newTACount = await UploadTAs(model.CsvFile);
+                        if (newTACount > 0)
+                        {
+                            TempData["NotificationTitle"] = "Success";
+                            TempData["NotificationBody"] = "Successfully uploaded " + newTACount + " TAs.";
+                        } else
+                        {
+                            TempData["NotificationTitle"] = "Failed";
+                            TempData["NotificationBody"] = "No TAs uploaded.";
+                        }
+
                     } else if (model.UserRole == UserRole.Judge)
                     {
-                        ViewBag.UploadSuccess = await UploadJudges(model.CsvFile);
+                        int newJudgeCount = await UploadJudges(model.CsvFile);
+                        if (newJudgeCount > 0)
+                        {
+                            TempData["NotificationTitle"] = "Success";
+                            TempData["NotificationBody"] = "Successfully uploaded " + newJudgeCount + " Judges.";
+                        } else
+                        {
+                            TempData["NotificationTitle"] = "Failed";
+                            TempData["NotificationBody"] = "No judges uploaded.";
+                        }
                     }
-
-                    // TODO: Show success/failure dialog depending on results of bulk upload
 
                     return RedirectToAction("Users");
                 }
@@ -75,7 +101,7 @@ namespace ToaPro.Controllers
             return RedirectToAction("Users");
         }
 
-        private async Task<bool> UploadStudents(IFormFile CsvFile)
+        private async Task<int> UploadStudents(IFormFile CsvFile)
         {
             try
             {
@@ -93,18 +119,18 @@ namespace ToaPro.Controllers
                     {
                         var uploader = new UserBulkUploader(_userManager, _repo);
                         var students = await uploader.CreateStudentsFromImport(users);
-                        return students.Count > 0;
+                        return students.Count;
                     }
                 }
             } catch (Exception ex)
             {
-                return false;
+                return 0;
             }
 
-            return false;
+            return 0;
         }
 
-        private async Task<bool> UploadTAs(IFormFile CsvFile)
+        private async Task<int> UploadTAs(IFormFile CsvFile)
         {
             try
             {
@@ -122,18 +148,18 @@ namespace ToaPro.Controllers
                     {
                         var uploader = new UserBulkUploader(_userManager, _repo);
                         var TAs = await uploader.CreateTAsFromImport(users);
-                        return TAs.Count > 0;
+                        return TAs.Count;
                     }
                 }
             } catch (Exception ex)
             {
-                return false;
+                return 0;
             }
 
-            return false;
+            return 0;
         }
 
-        private async Task<bool> UploadJudges(IFormFile CsvFile)
+        private async Task<int> UploadJudges(IFormFile CsvFile)
         {
             try
             {
@@ -151,15 +177,15 @@ namespace ToaPro.Controllers
                     {
                         var uploader = new UserBulkUploader(_userManager, _repo);
                         var judges = await uploader.CreateJudgesFromImport(users);
-                        return judges.Count > 0;
+                        return judges.Count;
                     }
                 }
             } catch (Exception ex)
             {
-                return false;
+                return 0;
             }
 
-            return false;
+            return 0;
         }
     }
 }
