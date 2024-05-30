@@ -514,3 +514,18 @@ table {
 .rTable td:nth-child(3) {
     width: 20%;
 }
+
+
+/********************************************************************
+ * Other
+ *******************************************************************/
+
+/* Notification Dialogs */
+
+.toast {
+    display: none; 
+}
+
+.toast.show {
+    display: block; /* Show the toast when the 'show' class is added */
+}

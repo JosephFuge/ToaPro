@@ -1,0 +1,36 @@
+﻿@model NotificationDialogViewModel
+
+<div id="dialog-popup" class="toast position-fixed bottom-0 end-0 p-3" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+        <strong class="me-auto">@Model.Title</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+        @Model.Body
+    </div>
+</div>
+
+
+<script>
+$(document).ready(function() {
+    const $dialogPopup = $('#dialog-popup');
+    const autoDismissTimeout = 10000; 
+
+    setTimeout(() => {
+        $dialogPopup.addClass('show');
+    }, 100);
+
+    // Hide the toast popup after 10 seconds
+    setTimeout(() => {
+        $dialogPopup.removeClass('show');
+    }, autoDismissTimeout);
+
+    $dialogPopup.on('hidden.bs.toast', function () {
+        $dialogPopup.removeClass('show');
+    });
+
+    // Bootstrap toast initialization
+    var toast = new bootstrap.Toast($dialogPopup[0]);
+    toast.show();
+});
+</script>
