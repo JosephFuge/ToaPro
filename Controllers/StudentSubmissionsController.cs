@@ -100,7 +100,6 @@ namespace ToaPro.Controllers
             };
 
             return View(subFieldsViewModel); 
-
         }
 
 
@@ -127,7 +126,35 @@ namespace ToaPro.Controllers
             _repo.AddSubmissionFieldList(newFields);
             _repo.UpdateSubmissionFieldList(changedFields);
             _repo.DeleteSubmissionFieldList(deleteFields);
-            await _repo.CommitChangesAsync();
+            int numChanged = await _repo.CommitChangesAsync();
+
+            if (numChanged > 0)
+            {
+                var bodyText = "Successfully completed the following changes:\n";
+                if (newFields.Count > 0)
+                {
+                    bodyText += "• Added " + newFields.Count + " new fields";
+                }
+
+                if (changedFields.Count > 0)
+                {
+                    bodyText += "• Updated " + changedFields.Count + " fields";
+                }
+
+                if (deleteFields.Count > 0)
+                {
+                    bodyText += "• Deleted " + deleteFields.Count + " fields";
+                }
+
+                TempData["NotificationTitle"] = "Success";
+                TempData["NotificationType"] = NotificationDialogType.Success;
+                TempData["NotificationBody"] = bodyText;
+            } else if (newFields.Count > 0 || changedFields.Count > 0 || deleteFields.Count > 0)
+            {
+                TempData["NotificationTitle"] = "Failure";
+                TempData["NotificationType"] = NotificationDialogType.Failure;
+                TempData["NotificationBody"] = "None of your changes were successfully saved.";
+            }
 
             return RedirectToAction("StudentSubmissionFields"); 
         }

@@ -514,3 +514,34 @@ table {
 .rTable td:nth-child(3) {
     width: 20%;
 }
+
+
+/********************************************************************
+ * Other
+ *******************************************************************/
+
+/* Notification Dialogs */
+
+.toast {
+    display: none; 
+    border-radius: 24px;
+    background-color: #FDFDFD;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.35);
+}
+
+.toast.show {
+    display: block; /* Show the toast when the 'show' class is added */
+}
+
+/* SVG color filters */
+.filter-red {
+    filter: invert(36%) sepia(8%) saturate(7430%) hue-rotate(323deg) brightness(127%) contrast(92%);
+}
+
+.filter-green {
+    filter: invert(69%) sepia(48%) saturate(3931%) hue-rotate(70deg) brightness(90%) contrast(135%);
+}
+
+.filter-grey {
+    filter: invert(79%) sepia(3%) saturate(13%) hue-rotate(321deg) brightness(87%) contrast(85%);
+}

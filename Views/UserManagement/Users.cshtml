@@ -103,6 +103,12 @@
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+@if (TempData["NotificationTitle"] != null && TempData["NotificationBody"] != null)
+{
+    <vc:notification-dialog title=@TempData["NotificationTitle"] body=@TempData["NotificationBody"] notification-type="@(Enum.Parse<ToaPro.Infrastructure.NotificationDialogType>(TempData["NotificationType"]?.ToString() ?? "Default"))" />
+}
+
 <script>
     $(document).ready(function () {
         // Defining Viewer and pagination classes

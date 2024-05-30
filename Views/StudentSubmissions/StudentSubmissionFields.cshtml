@@ -44,7 +44,7 @@
             <tbody id="submission-field-table-body">
             @for (int i = 0; i < Model.SubmissionFields.Count; i++)
             {
-                <tr id="submission-field-@i">
+                <tr id="submission-field-@i" class="submission-field-row">
                     <input id="submission-field-id-@i" asp-for="@Model.SubmissionFields[i].Id" hidden />
                     <td class="current-submission-field"><input asp-for="@Model.SubmissionFields[i].Prompt" disabled/></td>
                     <td class="current-submission-field">
@@ -96,6 +96,11 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+@if (TempData["NotificationTitle"] != null && TempData["NotificationBody"] != null)
+{
+    <vc:notification-dialog title=@TempData["NotificationTitle"] body=@TempData["NotificationBody"] notification-type="@(Enum.Parse<ToaPro.Infrastructure.NotificationDialogType>(TempData["NotificationType"]?.ToString() ?? "Default"))" />
+}
 <script>
     var tableFooterIsVisible = false;
     var numNewFields = 0;
@@ -216,19 +221,21 @@
 
     $(document).ready(function () {
         $('#add-entry-button').on('click', function () {
+            const numCurrentFields = $('.submission-field-row').length;
+
             const newRow = `
                 <tr id="new-field-${numNewFields}" class="new-field">
-                    <td><input type="text" name="SubmissionFields[${numNewFields}].Prompt" class="form-control" /></td>
+                    <td><input type="text" name="SubmissionFields[${numCurrentFields + numNewFields}].Prompt" class="form-control" /></td>
                     <td>
-                        <select name="SubmissionFields[${numNewFields}].DataType" class="form-control">
+                        <select name="SubmissionFields[${numCurrentFields + numNewFields}].DataType" class="form-control">
                             <option value="Text">Text</option>
                             <option value="URL">URL</option>
                             <option value="Description">Description</option>
                             <option value="Image">Image</option>
                         </select>
                     </td>
-                    <td><input type="datetime-local" name="SubmissionFields[${numNewFields}].DueDate" class="form-control" /></td>
-                    <td><input type="checkbox" name="SubmissionFields[${numNewFields}].IsDefault" value="true" /></td>
+                    <td><input type="datetime-local" name="SubmissionFields[${numCurrentFields + numNewFields}].DueDate" class="form-control" /></td>
+                    <td><input type="checkbox" name="SubmissionFields[${numCurrentFields + numNewFields}].IsDefault" value="true" /></td>
                     <td>N/A</td>
                     <td colspan="2">
                         <button onclick="removeNewField(${numNewFields})" type="button" class="button background-danger-red"> 
