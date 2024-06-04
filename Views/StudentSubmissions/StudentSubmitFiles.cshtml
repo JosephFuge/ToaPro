@@ -1,11 +1,12 @@
-﻿@*
+﻿@using ToaPro.Infrastructure
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
 @*Student Submits Files View (Groups 9 & 11)*@
 @*Group 11*@
-@* @model SubmissionEntry *@
+@model List<SubmissionAnswer>
 
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -21,7 +22,29 @@
             <br />
             <h3 class="text-center bold-text">Please include the following in your submission:</h3>
             <div class="submission-form" style="margin-left: 20%; margin-right: auto; width: 80%;">
-                <form method="post" asp-controller="StudentSubmissions" asp-action="StudentSubmitFiles" onsubmit="setCreatedDate()">
+                <form method="post" asp-controller="StudentSubmissions" asp-action="GroupSubmitAnswers"> @*onsubmit="setCreatedDate()"*@
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        <input asp-for="@Model[i].SubmissionFieldId" hidden />
+                        <input asp-for="@Model[i].Id" hidden />
+                        <input asp-for="@Model[i].GroupId" hidden />
+                        @if (Model[i].SubmissionField.DataType == SubmissionInputType.ShortText
+                           || Model[i].SubmissionField.DataType == SubmissionInputType.Link)
+                        {   
+                            <label asp-for="@Model[i].TextData">@Model[i].SubmissionField.Prompt</label>
+                            <input asp-for="@Model[i].TextData" />
+                        } else if (Model[i].SubmissionField.DataType == SubmissionInputType.Description)
+                        {
+                            <label asp-for="@Model[i].TextData">@Model[i].SubmissionField.Prompt</label>
+                            <textarea asp-for="@Model[i].TextData" rows="5" cols="60">@Model[i].TextData</textarea>
+                        } else
+                        {
+                            @* Assume it's a file upload *@
+                            <label asp-for="@Model[i].FileData">@Model[i].SubmissionField.Prompt</label>
+                            <input asp-for="@Model[i].FileData" type="file" />
+                        }
+                    }
+
 @*                     <input type="hidden" asp-for="Id" />
                     <input type="hidden" asp-for="StudentId"/>
                     <input type="hidden" asp-for="GroupId"/>

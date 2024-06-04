@@ -102,10 +102,10 @@ namespace ToaPro.Infrastructure
 
         /* Submissions */
         public IEnumerable<SubmissionAnswer> SubmissionAnswers => _toaProContext.SubmissionAnswers.ToList();
-        public void AddSubmissionAnswers(List<SubmissionAnswer> answers)
+        public async Task<int> AddSubmissionAnswers(IEnumerable<SubmissionAnswer> answers)
         {
             _toaProContext.SubmissionAnswers.AddRange(answers);
-            _toaProContext.SaveChanges();
+            return await _toaProContext.SaveChangesAsync();
         }
 
         public IEnumerable<SubmissionField> SubmissionFields(bool tracking = true)

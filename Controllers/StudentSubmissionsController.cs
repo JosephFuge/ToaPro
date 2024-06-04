@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using ToaPro.Infrastructure;
 using ToaPro.Models;
 using ToaPro.Models.ViewModels;
@@ -34,8 +36,15 @@ namespace ToaPro.Controllers
         [HttpGet]
         public IActionResult StudentSubmitFiles()
         {
-
-            return View("StudentSubmitFiles");
+            var group = _repo.Groups.FirstOrDefault();
+            List<SubmissionField> fields = _repo.SubmissionFields().ToList();
+            List<SubmissionAnswer> answers = fields.Select(f => new SubmissionAnswer
+            {
+                SubmissionFieldId = f.Id,
+                SubmissionField = f,
+                GroupId = group?.Id ?? 1
+            }).ToList();
+            return View("StudentSubmitFiles", answers);
         }
 
 
@@ -57,19 +66,44 @@ namespace ToaPro.Controllers
 
         }
         [HttpPost]
-        public IActionResult StudentSubmitFiles(int blah)
+        public async Task<IActionResult> GroupSubmitAnswers(List<SubmissionAnswer> answers)
         {
-            if (ModelState.IsValid)
-            {
-                //_repo.AddSubmission(response); // Corrected line
+            List<SubmissionAnswer> newValidAnswers = new List<SubmissionAnswer>();
+            List<SubmissionAnswer> updatedValidAnswers = new List<SubmissionAnswer>();
 
-                return View("StudentSubmitFilesConfirmation"/*, response*/);
-            }
-            else
+            for (int i = 0; i < answers.Count; i++)
             {
-                //ViewBag.Categories = _repo.Submissions.ToList();
-                return View(/*response*/); // Corrected to return the right view
+                var tempEntry = ModelState.Where(pair => pair.Key.Contains("TextData") || pair.Key.Contains("FileData")).ElementAtOrDefault(i);
+                if ((tempEntry.Key.Contains("TextData") || tempEntry.Key.Contains("FileData")) && tempEntry.Value != null && tempEntry.Value.ValidationState == ModelValidationState.Valid)
+                {
+                    if (answers[i].Id > 0)
+                    {
+                        updatedValidAnswers.Add(answers[i]);
+                    } else
+                    {
+                        newValidAnswers.Add(answers[i]);
+                    }
+                }
             }
+
+            if (newValidAnswers.Count > 0)
+            {
+                var numberAdded = await _repo.AddSubmissionAnswers(newValidAnswers);
+                return View("StudentSubmitFilesConfirmation", newValidAnswers.Count);
+            }
+
+
+            var subFields = _repo.SubmissionFields().Where(sf => answers.Select(a => a.SubmissionFieldId).Contains(sf.Id)).ToList();
+            foreach (var answer in answers)
+            {
+                var answerSubField = subFields.FirstOrDefault(sf => sf.Id == answer.SubmissionFieldId);
+                if (answerSubField != null)
+                {
+                    answer.SubmissionField = answerSubField;
+                }
+            }
+            //ViewBag.Categories = _repo.Submissions.ToList();
+            return View("StudentSubmitFiles", answers); // Corrected to return the right view
         }
 
         [HttpGet]
@@ -129,17 +163,17 @@ namespace ToaPro.Controllers
                 var bodyText = "Successfully completed the following changes:\n";
                 if (newFields.Count > 0)
                 {
-                    bodyText += "• Added " + newFields.Count + " new fields";
+                    bodyText += "• Added " + newFields.Count + " new fields\n";
                 }
 
                 if (changedFields.Count > 0)
                 {
-                    bodyText += "• Updated " + changedFields.Count + " fields";
+                    bodyText += "• Updated " + changedFields.Count + " fields\n";
                 }
 
                 if (deleteFields.Count > 0)
                 {
-                    bodyText += "• Deleted " + deleteFields.Count + " fields";
+                    bodyText += "• Deleted " + deleteFields.Count + " fields\n";
                 }
 
                 TempData["NotificationTitle"] = "Success";
