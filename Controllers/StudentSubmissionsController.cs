@@ -50,29 +50,25 @@ namespace ToaPro.Controllers
         [HttpGet]
         public IActionResult Submission()
         {
-            ViewBag.Categories = _repo.Submissions
-                .OrderBy(x => x.GithubLink)
-            .ToList();
-
             //var studentId = _repo.Students.StudentId(x => x.StudentId);
             //var groupId = _repo.Groups.GroupId(x => x.GroupId);
 
-            return View("StudentSubmitFiles", new Submission()); //create new application to get rid of the error that says " is not a valid input
+            return View("StudentSubmitFiles"); //create new application to get rid of the error that says " is not a valid input
 
         }
         [HttpPost]
-        public IActionResult StudentSubmitFiles(Submission response)
+        public IActionResult StudentSubmitFiles(int blah)
         {
             if (ModelState.IsValid)
             {
-                _repo.AddSubmission(response); // Corrected line
+                //_repo.AddSubmission(response); // Corrected line
 
-                return View("StudentSubmitFilesConfirmation", response);
+                return View("StudentSubmitFilesConfirmation"/*, response*/);
             }
             else
             {
                 //ViewBag.Categories = _repo.Submissions.ToList();
-                return View(response); // Corrected to return the right view
+                return View(/*response*/); // Corrected to return the right view
             }
         }
 

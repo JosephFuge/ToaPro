@@ -13,11 +13,11 @@ else
     <p>Peer Evaluation Grade: @Model.PeerEvalGrade</p>
     <p>Evaluated ID: @Model.EvaluatedId</p>
     <p>Evaluation Comments: @Model.EvalComments</p>
-    <p>Submission ID: @Model.SubmissionId</p>
+    @* <p>Submission ID: @Model.SubmissionId</p> *@
     <p>Group ID: @(Model.GroupId.HasValue ? Model.GroupId.ToString() : "Not Set")</p>
 
     <h3>Submission:</h3>
-    @if (Model.Submission == null)
+@*     @if (Model.Submission == null)
     {
         <p>No submission data available.</p>
     }
@@ -26,7 +26,7 @@ else
         <p>Submission exists with ID: @Model.Submission.Id</p>
         <!-- Output other Submission properties as needed -->
     }
-
+ *@
     <h3>Group:</h3>
     @if (Model.Group == null)
     {

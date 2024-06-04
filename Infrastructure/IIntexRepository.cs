@@ -26,8 +26,6 @@ namespace ToaPro.Infrastructure
 
         public void UpdateAward(Award award);
 
-        public void AddSubmission(Submission submission);
-
         /* Judges */
         public Judge GetJudgeById(string id);
         public Task AddJudgeList(List<Judge> judges);
@@ -42,7 +40,7 @@ namespace ToaPro.Infrastructure
         public Task AddGroup(Group group);
 
         /* Submissions */
-        IEnumerable<Submission> Submissions { get; }
+        IEnumerable<SubmissionAnswer> SubmissionAnswers { get; }
         IEnumerable<SubmissionField> SubmissionFields(bool tracking = true);
         public void AddSubmissionFieldList(List<SubmissionField> submissionFields);
         public void UpdateSubmissionFieldList(List<SubmissionField> submissionFields);

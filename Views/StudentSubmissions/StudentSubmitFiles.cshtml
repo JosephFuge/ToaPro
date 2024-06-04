@@ -5,7 +5,7 @@
 }
 @*Student Submits Files View (Groups 9 & 11)*@
 @*Group 11*@
-@model Submission
+@* @model SubmissionEntry *@
 
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -22,7 +22,7 @@
             <h3 class="text-center bold-text">Please include the following in your submission:</h3>
             <div class="submission-form" style="margin-left: 20%; margin-right: auto; width: 80%;">
                 <form method="post" asp-controller="StudentSubmissions" asp-action="StudentSubmitFiles" onsubmit="setCreatedDate()">
-                    <input type="hidden" asp-for="Id" />
+@*                     <input type="hidden" asp-for="Id" />
                     <input type="hidden" asp-for="StudentId"/>
                     <input type="hidden" asp-for="GroupId"/>
                     <input id="CreatedDate" asp-for="CreatedDate" hidden/> <!--Created down below when submitted-->
@@ -51,7 +51,8 @@
                     <span asp-validation-for="GithubLink" class="text-danger"></span><br />
                     <span asp-validation-for="YoutubeLink" class="text-danger"></span><br />
                     <span asp-validation-for="UploadFile" class="text-danger"></span>
-                    @* Trying to test form submission:
+                    *@
+                     @* Trying to test form submission:
                     <span asp-validation-for="Id" class="text-danger"></span>
                     <span asp-validation-for="StudentId" class="text-danger"></span>
                     <span asp-validation-for="GroupId" class="text-danger"></span>

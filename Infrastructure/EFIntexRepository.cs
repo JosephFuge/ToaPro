@@ -59,12 +59,6 @@ namespace ToaPro.Infrastructure
             _toaProContext.SaveChanges();
         }
 
-        public void AddSubmission(Submission submission)
-        {
-            _toaProContext.Submissions.Add(submission);
-            _toaProContext.SaveChanges();
-        }
-
         public void UpdateAward(Award award)
         {
             _toaProContext.Awards.Update(award);
@@ -107,7 +101,13 @@ namespace ToaPro.Infrastructure
         }
 
         /* Submissions */
-        public IEnumerable<Submission> Submissions => _toaProContext.Submissions.ToList();
+        public IEnumerable<SubmissionAnswer> SubmissionAnswers => _toaProContext.SubmissionAnswers.ToList();
+        public void AddSubmissionAnswers(List<SubmissionAnswer> answers)
+        {
+            _toaProContext.SubmissionAnswers.AddRange(answers);
+            _toaProContext.SaveChanges();
+        }
+
         public IEnumerable<SubmissionField> SubmissionFields(bool tracking = true)
         {
             if (tracking)

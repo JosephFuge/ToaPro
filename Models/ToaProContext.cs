@@ -40,8 +40,8 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
 
     public virtual DbSet<Student> Students { get; set; }
 
-    public virtual DbSet<Submission> Submissions { get; set; }
     //added this part for our model:
+    public virtual DbSet<SubmissionAnswer> SubmissionAnswers { get; set; }
 
     public virtual DbSet<SubmissionField> SubmissionFields { get; set; }
 

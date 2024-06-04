@@ -27,8 +27,6 @@ public partial class Group
 
     public virtual Semester Semester { get; set; } = null!;
 
-    public virtual ICollection<Submission> Submissions { get; set; } = new List<Submission>();
-
     public virtual ICollection<Student> Students { get; set; } = new List<Student>();
 
 	public bool TimeSlot1 { get; set; }

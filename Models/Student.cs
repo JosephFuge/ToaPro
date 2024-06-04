@@ -17,10 +17,6 @@ namespace ToaPro.Models
 
         public virtual Group Group { get; set; }
         public string Reason { get; set; } = string.Empty;
-
-
-        public virtual ICollection<Submission> Submissions { get; set; } = new List<Submission>();
-
         public virtual ICollection<Evaluation> Evaluations { get; set; } = new List<Evaluation>();
 
     }
