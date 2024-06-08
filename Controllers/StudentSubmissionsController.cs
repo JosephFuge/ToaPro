@@ -68,9 +68,31 @@ namespace ToaPro.Controllers
         [HttpPost]
         public async Task<IActionResult> GroupSubmitAnswers(List<SubmissionAnswer> answers)
         {
-            List<SubmissionAnswer> newValidAnswers = new List<SubmissionAnswer>();
-            List<SubmissionAnswer> updatedValidAnswers = new List<SubmissionAnswer>();
+            (List<SubmissionAnswer> updatedValidAnswers, List<SubmissionAnswer> newValidAnswers) = SortSubmittedAnswers(ModelState, answers);
+            
+            if (newValidAnswers.Count > 0)
+            {
+                var numberAdded = await _repo.AddSubmissionAnswers(newValidAnswers);
+                return View("StudentSubmitFilesConfirmation", newValidAnswers.Count);
+            }
 
+            var subFields = _repo.SubmissionFields().Where(sf => answers.Select(a => a.SubmissionFieldId).Contains(sf.Id)).ToList();
+            foreach (var answer in answers)
+            {
+                var answerSubField = subFields.FirstOrDefault(sf => sf.Id == answer.SubmissionFieldId);
+                if (answerSubField != null)
+                {
+                    answer.SubmissionField = answerSubField;
+                }
+            }
+            //ViewBag.Categories = _repo.Submissions.ToList();
+            return View("StudentSubmitFiles", answers); // Corrected to return the right view
+        }
+
+        private (List<SubmissionAnswer> updatedValidAnswers, List<SubmissionAnswer> newValidAnswers) SortSubmittedAnswers(ModelStateDictionary modelState, List<SubmissionAnswer> answers)
+        {
+            List<SubmissionAnswer> updatedValidAnswers = new List<SubmissionAnswer>();
+            List<SubmissionAnswer> newValidAnswers = new List<SubmissionAnswer>();
             for (int i = 0; i < answers.Count; i++)
             {
                 var tempEntry = ModelState.Where(pair => pair.Key.Contains("TextData") || pair.Key.Contains("FileData")).ElementAtOrDefault(i);
@@ -86,24 +108,7 @@ namespace ToaPro.Controllers
                 }
             }
 
-            if (newValidAnswers.Count > 0)
-            {
-                var numberAdded = await _repo.AddSubmissionAnswers(newValidAnswers);
-                return View("StudentSubmitFilesConfirmation", newValidAnswers.Count);
-            }
-
-
-            var subFields = _repo.SubmissionFields().Where(sf => answers.Select(a => a.SubmissionFieldId).Contains(sf.Id)).ToList();
-            foreach (var answer in answers)
-            {
-                var answerSubField = subFields.FirstOrDefault(sf => sf.Id == answer.SubmissionFieldId);
-                if (answerSubField != null)
-                {
-                    answer.SubmissionField = answerSubField;
-                }
-            }
-            //ViewBag.Categories = _repo.Submissions.ToList();
-            return View("StudentSubmitFiles", answers); // Corrected to return the right view
+            return (updatedValidAnswers: updatedValidAnswers, newValidAnswers: newValidAnswers);
         }
 
         [HttpGet]
