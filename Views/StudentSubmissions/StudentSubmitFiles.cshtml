@@ -6,7 +6,7 @@
 }
 @*Student Submits Files View (Groups 9 & 11)*@
 @*Group 11*@
-@model List<SubmissionAnswer>
+@model List<GroupSubmissionViewModel>
 
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -16,32 +16,31 @@
 
 <div class="container">
     <body>
-
         <div class="container center" style="margin-left: auto; margin-right: auto;">
             <br />
             <br />
             <h3 class="text-center bold-text">Please include the following in your submission:</h3>
             <div class="submission-form" style="margin-left: 20%; margin-right: auto; width: 80%;">
-                <form method="post" asp-controller="StudentSubmissions" asp-action="GroupSubmitAnswers"> @*onsubmit="setCreatedDate()"*@
+                <form method="post" enctype="multipart/form-data" asp-controller="StudentSubmissions" asp-action="GroupSubmitAnswers"> @*onsubmit="setCreatedDate()"*@
                     @for (int i = 0; i < Model.Count; i++)
                     {
-                        <input asp-for="@Model[i].SubmissionFieldId" hidden />
-                        <input asp-for="@Model[i].Id" hidden />
-                        <input asp-for="@Model[i].GroupId" hidden />
-                        @if (Model[i].SubmissionField.DataType == SubmissionInputType.ShortText
-                           || Model[i].SubmissionField.DataType == SubmissionInputType.Link)
+                        <input asp-for="@Model[i].SubmissionAnswer.SubmissionFieldId" hidden />
+                        <input asp-for="@Model[i].SubmissionAnswer.Id" hidden />
+                        <input asp-for="@Model[i].SubmissionAnswer.GroupId" hidden />
+                        @if (Model[i].SubmissionAnswer.SubmissionField.DataType == SubmissionInputType.ShortText
+                           || Model[i].SubmissionAnswer.SubmissionField.DataType == SubmissionInputType.Link)
                         {   
-                            <label asp-for="@Model[i].TextData">@Model[i].SubmissionField.Prompt</label>
-                            <input asp-for="@Model[i].TextData" />
-                        } else if (Model[i].SubmissionField.DataType == SubmissionInputType.Description)
+                            <label asp-for="@Model[i].SubmissionAnswer.TextData">@Model[i].SubmissionAnswer.SubmissionField.Prompt</label>
+                            <input asp-for="@Model[i].SubmissionAnswer.TextData" />
+                        } else if (Model[i].SubmissionAnswer.SubmissionField.DataType == SubmissionInputType.Description)
                         {
-                            <label asp-for="@Model[i].TextData">@Model[i].SubmissionField.Prompt</label>
-                            <textarea asp-for="@Model[i].TextData" rows="5" cols="60">@Model[i].TextData</textarea>
+                            <label asp-for="@Model[i].SubmissionAnswer.TextData">@Model[i].SubmissionAnswer.SubmissionField.Prompt</label>
+                            <textarea asp-for="@Model[i].SubmissionAnswer.TextData" rows="5" cols="60">@Model[i].SubmissionAnswer.TextData</textarea>
                         } else
                         {
                             @* Assume it's a file upload *@
-                            <label asp-for="@Model[i].FileData">@Model[i].SubmissionField.Prompt</label>
-                            <input asp-for="@Model[i].FileData" type="file" />
+                            <label asp-for="@Model[i].UploadFile">@Model[i].SubmissionAnswer.SubmissionField.Prompt</label>
+                            <input asp-for="@Model[i].UploadFile"/>
                         }
                     }
 

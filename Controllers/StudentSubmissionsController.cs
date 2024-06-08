@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.IO.Pipes;
 using ToaPro.Infrastructure;
 using ToaPro.Models;
 using ToaPro.Models.ViewModels;
@@ -38,11 +39,14 @@ namespace ToaPro.Controllers
         {
             var group = _repo.Groups.FirstOrDefault();
             List<SubmissionField> fields = _repo.SubmissionFields().ToList();
-            List<SubmissionAnswer> answers = fields.Select(f => new SubmissionAnswer
+            List<GroupSubmissionViewModel> answers = fields.Select(f => new GroupSubmissionViewModel
             {
-                SubmissionFieldId = f.Id,
-                SubmissionField = f,
-                GroupId = group?.Id ?? 1
+                SubmissionAnswer = new SubmissionAnswer
+                {
+                    SubmissionFieldId = f.Id,
+                    SubmissionField = f,
+                    GroupId = group?.Id ?? 1
+                }
             }).ToList();
             return View("StudentSubmitFiles", answers);
         }
@@ -65,10 +69,11 @@ namespace ToaPro.Controllers
             return View("StudentSubmitFiles"); //create new application to get rid of the error that says " is not a valid input
 
         }
+
         [HttpPost]
-        public async Task<IActionResult> GroupSubmitAnswers(List<SubmissionAnswer> answers)
+        public async Task<IActionResult> GroupSubmitAnswers(List<GroupSubmissionViewModel> answers)
         {
-            (List<SubmissionAnswer> updatedValidAnswers, List<SubmissionAnswer> newValidAnswers) = SortSubmittedAnswers(ModelState, answers);
+            (List<SubmissionAnswer> updatedValidAnswers, List<SubmissionAnswer> newValidAnswers) =  await SortSubmittedAnswers(ModelState, answers);
             
             if (newValidAnswers.Count > 0)
             {
@@ -76,39 +81,77 @@ namespace ToaPro.Controllers
                 return View("StudentSubmitFilesConfirmation", newValidAnswers.Count);
             }
 
-            var subFields = _repo.SubmissionFields().Where(sf => answers.Select(a => a.SubmissionFieldId).Contains(sf.Id)).ToList();
+            var subFields = _repo.SubmissionFields().Where(sf => answers.Select(a => a.SubmissionAnswer.SubmissionFieldId).Contains(sf.Id)).ToList();
             foreach (var answer in answers)
             {
-                var answerSubField = subFields.FirstOrDefault(sf => sf.Id == answer.SubmissionFieldId);
+                var answerSubField = subFields.FirstOrDefault(sf => sf.Id == answer.SubmissionAnswer.SubmissionFieldId);
                 if (answerSubField != null)
                 {
-                    answer.SubmissionField = answerSubField;
+                    answer.SubmissionAnswer.SubmissionField = answerSubField;
                 }
             }
             //ViewBag.Categories = _repo.Submissions.ToList();
             return View("StudentSubmitFiles", answers); // Corrected to return the right view
         }
 
-        private (List<SubmissionAnswer> updatedValidAnswers, List<SubmissionAnswer> newValidAnswers) SortSubmittedAnswers(ModelStateDictionary modelState, List<SubmissionAnswer> answers)
+        private async Task<(List<SubmissionAnswer> updatedValidAnswers, List<SubmissionAnswer> newValidAnswers)> SortSubmittedAnswers(ModelStateDictionary modelState, List<GroupSubmissionViewModel> answers)
         {
             List<SubmissionAnswer> updatedValidAnswers = new List<SubmissionAnswer>();
             List<SubmissionAnswer> newValidAnswers = new List<SubmissionAnswer>();
-            for (int i = 0; i < answers.Count; i++)
+
+            var validAnswers = ModelState.Where(pair => (pair.Key.Contains("TextData") || pair.Key.Contains("UploadFile"))
+                                                && pair.Value != null && pair.Value.ValidationState == ModelValidationState.Valid);
+            
+            if (validAnswers != null)
             {
-                var tempEntry = ModelState.Where(pair => pair.Key.Contains("TextData") || pair.Key.Contains("FileData")).ElementAtOrDefault(i);
-                if ((tempEntry.Key.Contains("TextData") || tempEntry.Key.Contains("FileData")) && tempEntry.Value != null && tempEntry.Value.ValidationState == ModelValidationState.Valid)
+                for (int i = 0; i < validAnswers.Count(); i++)
                 {
-                    if (answers[i].Id > 0)
+                    var tempEntry = validAnswers.ElementAt(i);
+                    // Parse out the index of the new or updated answer
+                    // The Key is assumed to be in the form of "[index].UploadFile" or "[index].SubmissionAnswer.TextData"
+                    int answerIndex = -1;
+                    var stringIndex = tempEntry.Key[(tempEntry.Key.IndexOf('[') + 1)..(tempEntry.Key.IndexOf(']'))];
+                    bool successfulParse = int.TryParse(stringIndex, out answerIndex);
+
+                    if (successfulParse && answerIndex >= 0)
                     {
-                        updatedValidAnswers.Add(answers[i]);
-                    } else
-                    {
-                        newValidAnswers.Add(answers[i]);
+                        if (answers[answerIndex].UploadFile != null)
+                        {
+                            using (var memoryStream = new MemoryStream())
+                            {
+                                await answers[answerIndex].UploadFile.CopyToAsync(memoryStream);
+
+                                answers[answerIndex].SubmissionAnswer.FileData = memoryStream.ToArray();
+                                answers[answerIndex].SubmissionAnswer.TextData = answers[answerIndex].UploadFile.ContentType;
+
+                                // Upload the file if less than 2 MB
+                                /*
+                                if (memoryStream.Length < 2097152)
+                                {
+                                }
+                                else
+                                {
+                                    // TODO: Add error to model to display to user
+                                    //ModelState.AddModelError("File", "The file is too large.");
+                                }
+                                */
+                            }
+                        }
+
+                        if (answers[answerIndex].SubmissionAnswer.Id > 0)
+                        {
+                            updatedValidAnswers.Add(answers[answerIndex].SubmissionAnswer);
+                        } else
+                        {
+                            newValidAnswers.Add(answers[answerIndex].SubmissionAnswer);
+                        }
                     }
                 }
             }
+                                                
 
-            return (updatedValidAnswers: updatedValidAnswers, newValidAnswers: newValidAnswers);
+
+            return (updatedValidAnswers, newValidAnswers);
         }
 
         [HttpGet]
