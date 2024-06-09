@@ -96,6 +96,7 @@ namespace ToaPro.Controllers
 
         private async Task<(List<SubmissionAnswer> updatedValidAnswers, List<SubmissionAnswer> newValidAnswers)> SortSubmittedAnswers(ModelStateDictionary modelState, List<GroupSubmissionViewModel> answers)
         {
+            const int MAX_FILE_SIZE = 2097152; // 2 MB
             List<SubmissionAnswer> updatedValidAnswers = new List<SubmissionAnswer>();
             List<SubmissionAnswer> newValidAnswers = new List<SubmissionAnswer>();
 
@@ -110,40 +111,41 @@ namespace ToaPro.Controllers
                     // Parse out the index of the new or updated answer
                     // The Key is assumed to be in the form of "[index].UploadFile" or "[index].SubmissionAnswer.TextData"
                     int answerIndex = -1;
-                    var stringIndex = tempEntry.Key[(tempEntry.Key.IndexOf('[') + 1)..(tempEntry.Key.IndexOf(']'))];
+                    var stringIndex = tempEntry.Key[(tempEntry.Key.IndexOf('[') + 1)..tempEntry.Key.IndexOf(']')];
                     bool successfulParse = int.TryParse(stringIndex, out answerIndex);
 
                     if (successfulParse && answerIndex >= 0)
                     {
+                        bool successful = true;
                         if (answers[answerIndex].UploadFile != null)
                         {
                             using (var memoryStream = new MemoryStream())
                             {
-                                await answers[answerIndex].UploadFile.CopyToAsync(memoryStream);
-
-                                answers[answerIndex].SubmissionAnswer.FileData = memoryStream.ToArray();
-                                answers[answerIndex].SubmissionAnswer.TextData = answers[answerIndex].UploadFile.ContentType;
-
-                                // Upload the file if less than 2 MB
-                                /*
-                                if (memoryStream.Length < 2097152)
+                                if (answers[answerIndex].UploadFile.Length < MAX_FILE_SIZE)
                                 {
+                                    await answers[answerIndex].UploadFile.CopyToAsync(memoryStream);
+
+                                    answers[answerIndex].SubmissionAnswer.FileData = memoryStream.ToArray();
+                                    answers[answerIndex].SubmissionAnswer.TextData = answers[answerIndex].UploadFile.ContentType;
                                 }
                                 else
                                 {
-                                    // TODO: Add error to model to display to user
-                                    //ModelState.AddModelError("File", "The file is too large.");
+                                    successful = false;
+                                    ModelState.AddModelError("[" + answerIndex.ToString() + "].UploadFile", "The file is too large. Must be smaller than " + MAX_FILE_SIZE / (1024 * 1024) + " MB.");
                                 }
-                                */
+
                             }
                         }
 
-                        if (answers[answerIndex].SubmissionAnswer.Id > 0)
+                        if (successful)
                         {
-                            updatedValidAnswers.Add(answers[answerIndex].SubmissionAnswer);
-                        } else
-                        {
-                            newValidAnswers.Add(answers[answerIndex].SubmissionAnswer);
+                            if (answers[answerIndex].SubmissionAnswer.Id > 0)
+                            {
+                                updatedValidAnswers.Add(answers[answerIndex].SubmissionAnswer);
+                            } else
+                            {
+                                newValidAnswers.Add(answers[answerIndex].SubmissionAnswer);
+                            }
                         }
                     }
                 }

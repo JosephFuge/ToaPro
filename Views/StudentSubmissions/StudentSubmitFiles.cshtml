@@ -41,47 +41,9 @@
                             @* Assume it's a file upload *@
                             <label asp-for="@Model[i].UploadFile">@Model[i].SubmissionAnswer.SubmissionField.Prompt</label>
                             <input asp-for="@Model[i].UploadFile"/>
+                            <span asp-validation-for="@Model[i].UploadFile"></span>
                         }
                     }
-
-@*                     <input type="hidden" asp-for="Id" />
-                    <input type="hidden" asp-for="StudentId"/>
-                    <input type="hidden" asp-for="GroupId"/>
-                    <input id="CreatedDate" asp-for="CreatedDate" hidden/> <!--Created down below when submitted-->
-
-                    <br />
-                    <br />
-                    <!--Getting links & files for submission-->
-                    <label asp-for="GithubLink" class="bold-text">GitHub Link:</label>
-                    <p>Make sure your repository is public.</p>
-                    <input type="text" id="GithubLink" asp-for="GithubLink" style="width: 80%;">
-                    <br />
-                    <br />
-                    <label asp-for="YoutubeLink" class="bold-text">YouTube Link:</label>
-                    <p>Explain how your project fulfills the rubric requirements  in 10 minutes or less. Showcase any extra features you’ve added.</p>
-                    <input type="text" id="YoutubeLink" asp-for="YoutubeLink" style="width: 80%;">
-                    <br />
-                    <br />
-                    <label asp-for="UploadFile" class="bold-text">Upload Files:</label>
-                    <p>
-                        Include: readme file, data analysis, presentation, ERD, and normalization files <br>
-                        Readme file requirements: website link with username and password
-                    </p>
-                    <input type="file" id="UploadFile" asp-for="UploadFile" directory webkitdirectory mozdirectory style="width: 250px;">
-                    <br />
-                    <!--Error Messages-->
-                    <span asp-validation-for="GithubLink" class="text-danger"></span><br />
-                    <span asp-validation-for="YoutubeLink" class="text-danger"></span><br />
-                    <span asp-validation-for="UploadFile" class="text-danger"></span>
-                    *@
-                     @* Trying to test form submission:
-                    <span asp-validation-for="Id" class="text-danger"></span>
-                    <span asp-validation-for="StudentId" class="text-danger"></span>
-                    <span asp-validation-for="GroupId" class="text-danger"></span>
-                    <span asp-validation-for="CreatedDate" class="text-danger"></span>
-                    <span asp-validation-for="Grades" class="text-danger"></span>
-                    <span asp-validation-for="Group" class="text-danger"></span>
-                    <span asp-validation-for="Student" class="text-danger"></span> *@
                     <br />
                     <div style="text-align: center; margin-left: -25%">
                         <button type="submit" class="button">Submit</button>
