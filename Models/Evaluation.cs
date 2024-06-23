@@ -10,9 +10,6 @@ public partial class Evaluation
     public int? EvaluatedId { get; set; }
     public string? EvalComments { get; set; }
 
-    public int? SubmissionId { get; set; }
-    public virtual Submission? Submission { get; set; }
-
     // Assume each evaluation is for a single group and multiple students
     public int? GroupId { get; set; }
     public virtual Group? Group { get; set; }

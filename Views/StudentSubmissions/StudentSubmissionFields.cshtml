@@ -228,10 +228,10 @@
                     <td><input type="text" name="SubmissionFields[${numCurrentFields + numNewFields}].Prompt" class="form-control" /></td>
                     <td>
                         <select name="SubmissionFields[${numCurrentFields + numNewFields}].DataType" class="form-control">
-                            <option value="Text">Text</option>
-                            <option value="URL">URL</option>
-                            <option value="Description">Description</option>
-                            <option value="Image">Image</option>
+                            @foreach (var dataType in Enum.GetValues(typeof(SubmissionInputType)))
+                            {
+                                <option value="@dataType">@dataType</option>
+                            }
                         </select>
                     </td>
                     <td><input type="datetime-local" name="SubmissionFields[${numCurrentFields + numNewFields}].DueDate" class="form-control" /></td>

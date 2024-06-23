@@ -13,8 +13,6 @@ public partial class Grade
 
     public int GroupId { get; set; }
 
-    public int SubmissionId { get; set; }
-
     public float? Points { get; set; }
 
     public string? Comments { get; set; }
@@ -24,6 +22,4 @@ public partial class Grade
     public virtual Group Group { get; set; } = null!;
 
     public virtual Requirement Requirement { get; set; } = null!;
-
-    public virtual Submission Submission { get; set; } = null!;
 }
