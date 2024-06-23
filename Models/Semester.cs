@@ -16,6 +16,4 @@ public partial class Semester
     public virtual ICollection<Group> Groups { get; set; } = new List<Group>();
 
     public virtual ICollection<Class> Classes { get; set; } = new List<Class>();
-
-    public virtual ICollection<Grader> Graders { get; set; } = new List<Grader>();
 }
