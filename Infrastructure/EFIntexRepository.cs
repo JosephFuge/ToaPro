@@ -25,7 +25,6 @@ namespace ToaPro.Infrastructure
         public IQueryable<Judge> Judges => _toaProContext.Judges;
         public IQueryable<Presentation> Presentations => _toaProContext.Presentations;
         public IEnumerable<Class> Classes => _toaProContext.Classes;
-        public IQueryable<Grade> Grades => _toaProContext.Grades;
         public IQueryable<Requirement> Requirements => _toaProContext.Requirements;
         public IEnumerable<Semester> Semesters => _toaProContext.Semesters;
         public IQueryable<Ranking> Rankings => _toaProContext.Rankings;
@@ -128,6 +127,16 @@ namespace ToaPro.Infrastructure
         public void DeleteSubmissionFieldList(List<SubmissionField> submissionFields)
         {
             _toaProContext.SubmissionFields.RemoveRange(submissionFields);
+        }
+
+        /* Grades */
+        public IQueryable<Grade> Grades => _toaProContext.Grades;
+        public void AddGrades(IEnumerable<Grade> grades) {
+            _toaProContext.Grades.AddRange(grades);
+        }
+
+        public void UpdateGrades(IEnumerable<Grade> grades) {
+            _toaProContext.Grades.UpdateRange(grades);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ToaPro.Infrastructure;
 using ToaPro.Models;
@@ -9,11 +10,13 @@ namespace ToaPro.Controllers
     public class GradingController : Controller
     {
         private IIntexRepository _gradeSummaryRepository;
+        private SignInManager<ToaProUser> _signInManager;
         private int SEMESTER_ID = 1;
 
-        public GradingController(IIntexRepository temp)
+        public GradingController(IIntexRepository tempRepo, SignInManager<ToaProUser> signInManager)
         {
-            _gradeSummaryRepository = temp;
+            _gradeSummaryRepository = tempRepo;
+            _signInManager = signInManager;
         }
         public IActionResult Index()
         {
@@ -52,14 +55,18 @@ namespace ToaPro.Controllers
         }
 
         [HttpGet]
-        public IActionResult GradingPage(int groupId)
+        public async Task<IActionResult> GradeSubmission(int groupId)
         {
             //Only Professors and TAs have access to this page. Professors can view which TAs are assigned to which team.
             //TAs are the only ones who can input grades--professors only have view capability when it comes to this.
             //(TAs, Prof)
 
+            ToaProUser? currentUser = await _signInManager.UserManager.GetUserAsync(HttpContext.User);
+
+            Group? group = _gradeSummaryRepository.Groups.Where(g => g.Id == groupId).FirstOrDefault();
+
             List<Requirement> requirements = _gradeSummaryRepository.Requirements.Include(r => r.Class).Where(r => r.Class.SemesterId == SEMESTER_ID).ToList();
-            List<Grade> grades = _gradeSummaryRepository.Grades.Where(grade => grade.GroupId == groupId).Include(g => g.Requirement).ToList();
+            List<Grade> grades = _gradeSummaryRepository.Grades.Where(grade => grade.GroupId == groupId).Include(g => g.Requirement).Include(g => g.Group).ToList();
 
             requirements.ForEach(requirement => { 
                 if (!grades.Any(g => g.RequirementId == requirement.Id))
@@ -68,7 +75,9 @@ namespace ToaPro.Controllers
                     {
                         RequirementId = requirement.Id,
                         Requirement = requirement,
-                        GroupId = groupId
+                        GroupId = groupId,
+                        Group = group,
+                        GraderId = currentUser?.Id
                     });
                 }
             });
@@ -82,6 +91,38 @@ namespace ToaPro.Controllers
             };
 
             return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GradeSubmission(SubmissionGradingViewModel submissionGrades)
+        {
+            List<Grade> newGrades = submissionGrades.Grades.Where(g => g.Id == 0 && g.Points != null).ToList();
+
+            // Inaccurate way to check if it was updated; any pre-existing grades will always be marked as updated even with same values. 
+            // TODO: Track updates via ID list or by fetching from database and comparing
+            List<Grade> updatedGrades = submissionGrades.Grades.Where(g => g.Id != 0 && g.Points != null).ToList(); 
+
+            int gradedGroupId = submissionGrades.Grades.FirstOrDefault()?.GroupId ?? 0;
+
+            bool saveData = false;
+            if (newGrades.Count > 0)
+            {
+                _gradeSummaryRepository.AddGrades(newGrades);
+                saveData = true;
+            }
+            
+            if (updatedGrades.Count > 0)
+            {
+                _gradeSummaryRepository.UpdateGrades(updatedGrades);
+                saveData = true;
+            }
+
+            if (saveData)
+            {
+                await _gradeSummaryRepository.CommitChangesAsync();
+            }
+
+            return RedirectToAction("GradeSubmission", new { groupId = gradedGroupId });
         }
 
         public IActionResult PeerEvalDetails(int evaluationId)

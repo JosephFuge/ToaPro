@@ -7,7 +7,6 @@ namespace ToaPro.Infrastructure
     {
 
         IEnumerable<Class> Classes { get; }
-        IQueryable<Grade> Grades { get; }
         IQueryable<Requirement> Requirements { get; }
         IEnumerable<Semester> Semesters { get; }
         IQueryable<Judge> Judges { get; }
@@ -45,5 +44,10 @@ namespace ToaPro.Infrastructure
         public void UpdateSubmissionFieldList(List<SubmissionField> submissionFields);
         public void DeleteSubmissionFieldList(List<SubmissionField> submissionFields);
         public Task<int> CommitChangesAsync();
+
+        /* Grades */
+        IQueryable<Grade> Grades { get; }
+        public void AddGrades(IEnumerable<Grade> grades);
+        public void UpdateGrades(IEnumerable<Grade> grades);
     }
 }

@@ -6,7 +6,7 @@ namespace ToaPro.Models;
 
 public partial class Grade
 {
-    public string Id { get; set; }
+    public int Id { get; set; }
 
     [ForeignKey("Requirement")]
     public int RequirementId { get; set; }
