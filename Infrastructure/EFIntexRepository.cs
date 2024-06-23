@@ -25,8 +25,8 @@ namespace ToaPro.Infrastructure
         public IQueryable<Judge> Judges => _toaProContext.Judges;
         public IQueryable<Presentation> Presentations => _toaProContext.Presentations;
         public IEnumerable<Class> Classes => _toaProContext.Classes;
-        public IEnumerable<Grade> Grades => _toaProContext.Grades;
-        public IEnumerable<Requirement> Requirements => _toaProContext.Requirements;
+        public IQueryable<Grade> Grades => _toaProContext.Grades;
+        public IQueryable<Requirement> Requirements => _toaProContext.Requirements;
         public IEnumerable<Semester> Semesters => _toaProContext.Semesters;
         public IQueryable<Ranking> Rankings => _toaProContext.Rankings;
 
@@ -99,7 +99,7 @@ namespace ToaPro.Infrastructure
         }
 
         /* Submissions */
-        public IEnumerable<SubmissionAnswer> SubmissionAnswers => _toaProContext.SubmissionAnswers.ToList();
+        public IQueryable<SubmissionAnswer> SubmissionAnswers => _toaProContext.SubmissionAnswers;
         public async Task<int> AddSubmissionAnswers(IEnumerable<SubmissionAnswer> answers)
         {
             _toaProContext.SubmissionAnswers.AddRange(answers);

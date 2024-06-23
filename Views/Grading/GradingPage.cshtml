@@ -3,4 +3,68 @@
 *@
 @{
 }
-@*Grading View for professors and TAs (Groups 1, 10, & 12)*@
+@*Grading View for professors and TAs*@
+
+@model SubmissionGradingViewModel
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Prompt</th>
+            <th>Answer</th>
+            <th>Submission Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(SubmissionAnswer answer in Model.SubmissionAnswers)
+        {
+            <tr>
+                @answer.SubmissionField.Prompt
+            </tr>
+            <tr>
+                @answer.TextData
+            </tr>
+            <tr>
+                @answer.SubmitDate.ToString()
+            </tr>
+        }
+    </tbody>
+</table>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Requirement</th>
+            <th>Available Points</th>
+            <th>Score</th>
+            <th>Notes</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(Grade grade in Model.Grades)
+        {
+            <tr>
+                <td>
+                    @grade.Requirement.Description
+                </td>
+                <td>
+                    @grade.Requirement.Points
+                </td>
+                <td>
+                    <input asp-for=@grade.Points />
+                </td>
+                <td>
+                    <input asp-for=@grade.Comments/>
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="4">
+                <button type="submit" class="button">Save Changes</button>
+                <button type="button" id="cancel-changes-button" class="ghostButton">Cancel</button>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+

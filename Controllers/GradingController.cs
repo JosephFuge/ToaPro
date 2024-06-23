@@ -2,12 +2,14 @@
 using Microsoft.EntityFrameworkCore;
 using ToaPro.Infrastructure;
 using ToaPro.Models;
+using ToaPro.Models.ViewModels;
 
 namespace ToaPro.Controllers
 {
     public class GradingController : Controller
     {
         private IIntexRepository _gradeSummaryRepository;
+        private int SEMESTER_ID = 1;
 
         public GradingController(IIntexRepository temp)
         {
@@ -49,12 +51,37 @@ namespace ToaPro.Controllers
             return View();
         }
 
-        public IActionResult GradingPage()
+        [HttpGet]
+        public IActionResult GradingPage(int groupId)
         {
             //Only Professors and TAs have access to this page. Professors can view which TAs are assigned to which team.
             //TAs are the only ones who can input grades--professors only have view capability when it comes to this.
             //(TAs, Prof)
-            return View();
+
+            List<Requirement> requirements = _gradeSummaryRepository.Requirements.Include(r => r.Class).Where(r => r.Class.SemesterId == SEMESTER_ID).ToList();
+            List<Grade> grades = _gradeSummaryRepository.Grades.Where(grade => grade.GroupId == groupId).Include(g => g.Requirement).ToList();
+
+            requirements.ForEach(requirement => { 
+                if (!grades.Any(g => g.RequirementId == requirement.Id))
+                {
+                    grades.Add(new Grade
+                    {
+                        RequirementId = requirement.Id,
+                        Requirement = requirement,
+                        GroupId = groupId
+                    });
+                }
+            });
+
+            List<SubmissionAnswer> answers = _gradeSummaryRepository.SubmissionAnswers.Where(answer => answer.GroupId == groupId).Include(answer => answer.SubmissionField).ToList();
+
+            SubmissionGradingViewModel viewModel = new SubmissionGradingViewModel
+            {
+                Grades = grades,
+                SubmissionAnswers = answers
+            };
+
+            return View(viewModel);
         }
 
         public IActionResult PeerEvalDetails(int evaluationId)
