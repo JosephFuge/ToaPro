@@ -10,7 +10,7 @@
 <div class="button-container" align="center">
     @foreach (GradingSummaryViewModel summary in Model)
     {
-        <button class="button">Section @summary.Section.ToString()</button>
+        <button data-section="@summary.Section" class="button section-button">Section @summary.Section.ToString()</button>
     }
 </div>
 <br />
@@ -28,7 +28,7 @@
 <br />
 @foreach (GradingSummaryViewModel summary in Model)
 {
-    <table class="table table-bordered table-striped">
+    <table id="section-@summary.Section" class="table table-bordered table-striped" style="display: none;">
         <thead>
             <tr>
                 <th>Group Number</th>
@@ -67,6 +67,14 @@
     $(document).ready(function() {
         $('table tbody tr').click(function() {
             window.location = $(this).data('url');
+        });
+
+        $('table').first().show();
+
+        $('.section-button').click(function () {
+            const sectionNum = $(this).data('section');
+            $('table').hide();
+            $(`#section-${sectionNum}`).show();
         });
     });
 </script>

@@ -45,7 +45,7 @@ namespace ToaPro.Controllers
                 foreach (var grade in g.Grades)
                 {
                     totalScore += grade.Points ?? 0;
-                    numRequirementsGraded++; 
+                    numRequirementsGraded++; // Since Include does a left join, if the grade exists, the requirement was graded
 
                     double currentClassScore = 0;
                     classGrades.TryGetValue(grade.Requirement.Class.Code, out currentClassScore);
