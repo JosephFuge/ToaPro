@@ -33,25 +33,67 @@ namespace ToaPro.Controllers
             //Only Professors and TAs have access to this page. Only Professors can export the files.
             //(TAs, Prof)
 
-            //var query = from cls in _gradeSummaryRepository.Classes
-            //            join req in _gradeSummaryRepository.Requirements on cls.Id equals req.ClassId
-            //            join grd in _gradeSummaryRepository.Grades on req.Id equals grd.RequirementId
-            //            join sub in _gradeSummaryRepository.Submissions on grd.SubmissionId equals sub.Id
-            //            join stu in _gradeSummaryRepository.Students on sub.StudentId equals stu.Id
-            //            join grp in _gradeSummaryRepository.Groups on grd.GroupId equals grp.Id
-            //            join rank in _gradeSummaryRepository.Rankings on grp.Id equals rank.GroupId
-            //            select new
-            //            {
-            //                Class = cls,
-            //                Requirement = req,
-            //                Grade = grd,
-            //                Submission = sub,
-            //                Student = stu,
-            //                Group = grp,
-            //                Rank = rank
-            //            };
-            //var result = query.ToList();
-            return View();
+            List<Group> groups = _gradeSummaryRepository.Groups.Where(g => g.SemesterId == SEMESTER_ID).Include(g => g.Grades).ThenInclude(grade => grade.Requirement).ThenInclude(req => req.Class).Include(g => g.Presentation).ThenInclude(p => p.Rankings).ToList();
+            double numRequirements = _gradeSummaryRepository.Requirements.Include(r => r.Class).Where(r => r.Class.SemesterId == SEMESTER_ID).Count();
+
+            List<GroupGradesViewModel> groupGrades = groups.Select<Group, GroupGradesViewModel>((g, index) => 
+            {
+                double totalScore = 0;
+                double numRequirementsGraded = 0;
+
+                Dictionary<string, double> classGrades = [];
+                foreach (var grade in g.Grades)
+                {
+                    totalScore += grade.Points ?? 0;
+                    numRequirementsGraded++; 
+
+                    double currentClassScore = 0;
+                    classGrades.TryGetValue(grade.Requirement.Class.Code, out currentClassScore);
+
+                    classGrades[grade.Requirement.Class.Code] = currentClassScore + grade.Points ?? 0;
+                }
+
+                double presentationScore = 0;
+                foreach (Ranking ranking in g.Rankings)
+                {
+                    presentationScore += ranking.OverallPoints ?? 0;
+                }
+
+                return new GroupGradesViewModel
+                {
+                    Group = g,
+                    TotalScore = totalScore,
+                    PercentGraded = ((numRequirementsGraded / numRequirements) * 100).ToString() + "%",
+                    ClassGrades = classGrades,
+                    PresentationScore = presentationScore
+                };
+            }).ToList();
+
+
+            List<GradingSummaryViewModel> viewModel = [];
+
+            foreach (var groupGrade in groupGrades)
+            {
+                GradingSummaryViewModel? tempSummary = viewModel.Find(gradeSummary => gradeSummary.Section == groupGrade.Group.Section);
+                if (tempSummary == null)
+                {
+                    viewModel.Add(new GradingSummaryViewModel
+                    {
+                        Section = groupGrade.Group.Section,
+                        GroupGrades = [groupGrade]
+                    });
+                } else
+                {
+                    tempSummary.GroupGrades.Add(groupGrade);
+                }
+            }
+
+            viewModel.Sort(delegate (GradingSummaryViewModel a, GradingSummaryViewModel b)
+            {
+                return a.Section.CompareTo(b.Section);
+            });
+
+            return View(viewModel);
         }
 
         [HttpGet]
