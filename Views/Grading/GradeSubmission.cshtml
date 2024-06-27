@@ -15,6 +15,7 @@
     <vc:header-types title="Unable To Find Group"/>
 }
 
+<h2>Answers</h2>
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
@@ -27,18 +28,116 @@
         @foreach(SubmissionAnswer answer in Model.SubmissionAnswers)
         {
             <tr>
-                @answer.SubmissionField.Prompt
-            </tr>
-            <tr>
-                @answer.TextData
-            </tr>
-            <tr>
-                @answer.SubmitDate.ToString()
+                <td>
+                    @answer.SubmissionField.Prompt
+                </td>
+                @if (answer.FileData != null)
+                {
+                    <td>
+                        <img height="300" src="data:@(answer.TextData);base64,@Convert.ToBase64String(answer.FileData)" />
+                    </td>
+                } else
+                {
+                    <td>
+                        @answer.TextData
+                    </td>
+                }
+                <td>
+                    @answer.SubmitDate.ToString()
+                </td>
             </tr>
         }
     </tbody>
 </table>
-<table class="table table-bordered table-striped">
+
+<h2>Grades</h2>
+@if (Model.ClassGrades != null)
+{
+    @for (int i = 0; i < Model.ClassGrades.Count; i++)
+    {
+        <div class="class-grade-section">
+            <div class="class-header" data-toggle="collapse" data-target="#class-table-@i">
+                <h3>@Model.ClassGrades[i].ClassName</h3>
+                <span class="dropdown-arrow">&#9660;</span>
+            </div>
+            <div id="class-table-@i" class="class-table collapse">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Requirement</th>
+                            <th>Available Points</th>
+                            <th>Score</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <form asp-controller="Grading" asp-action="GradeSubmission" method="post">
+                        <tbody>
+                            @for(int j = 0; j < Model.ClassGrades[i].Grades.Count; j++)
+                            {
+                                <tr>
+                                    <input asp-for="@Model.ClassGrades[i].Grades[j].Id" hidden />
+                                    <input asp-for="@Model.ClassGrades[i].Grades[j].GraderId" hidden />
+                                    <input asp-for="@Model.ClassGrades[i].Grades[j].GroupId" hidden />
+                                    <input asp-for="@Model.ClassGrades[i].Grades[j].RequirementId" hidden />
+                                    <input asp-for="@Model.ClassGrades[i].ClassName" hidden />
+                                    <td>
+                                        @Model.ClassGrades[i].Grades[j].Requirement.Description
+                                    </td>
+                                    <td>
+                                        @Model.ClassGrades[i].Grades[j].Requirement.Points
+                                    </td>
+                                    <td>
+                                        <input asp-for="@Model.ClassGrades[i].Grades[j].Points" />
+                                    </td>
+                                    <td>
+                                        <input asp-for="@Model.ClassGrades[i].Grades[j].Comments" />
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4">
+                                    <button type="submit" class="button">Save Changes</button>
+                                    <button type="button" id="cancel-changes-button" class="ghostButton">Cancel</button>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </form>
+                </table>
+            </div>
+        </div>
+    }
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".class-header").click(function () {
+                var target = $(this).data("target");
+                $(target).toggleClass("show");
+
+                // Toggle the dropdown arrow rotation
+                $(this).toggleClass("collapsed");
+
+                // Animate the table collapse
+                if ($(target).hasClass("show")) {
+                    $(target).css("max-height", $(target).prop("scrollHeight") + "px");
+                } else {
+                    $(target).css("max-height", "0");
+                }
+            });
+
+            // Initialize the max-height for collapsed tables
+            $(".class-table").each(function () {
+                if (!$(this).hasClass("show")) {
+                    $(this).css("max-height", "0");
+                }
+            });
+        });
+    </script>
+}
+
+@* <table class="table table-bordered table-striped">
     <thead>
         <tr>
             <th>Requirement</th>
@@ -82,3 +181,4 @@
     </form>
 </table>
 
+ *@

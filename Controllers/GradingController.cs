@@ -66,7 +66,7 @@ namespace ToaPro.Controllers
             Group? group = _gradeSummaryRepository.Groups.Where(g => g.Id == groupId).FirstOrDefault();
 
             List<Requirement> requirements = _gradeSummaryRepository.Requirements.Include(r => r.Class).Where(r => r.Class.SemesterId == SEMESTER_ID).ToList();
-            List<Grade> grades = _gradeSummaryRepository.Grades.Where(grade => grade.GroupId == groupId).Include(g => g.Requirement).Include(g => g.Group).ToList();
+            List<Grade> grades = _gradeSummaryRepository.Grades.Where(grade => grade.GroupId == groupId).Include(g => g.Group).Include(g => g.Requirement).ThenInclude(r => r.Class).ToList();
 
             requirements.ForEach(requirement => { 
                 if (!grades.Any(g => g.RequirementId == requirement.Id))
@@ -82,12 +82,26 @@ namespace ToaPro.Controllers
                 }
             });
 
+            List<ClassGradesViewModel> classGrades = [];
+
+            grades.ForEach(grade =>
+            {
+                string classDisplayName = grade.Requirement.Class.Code + " - " + grade.Requirement.Class.Description;
+                if (!classGrades.Any(cg => cg.ClassName == classDisplayName))
+                {
+                    classGrades.Add(new ClassGradesViewModel { ClassName = classDisplayName, Grades = new List<Grade>() });
+                }
+
+                classGrades.Find(cg => cg.ClassName == classDisplayName)?.Grades.Add(grade);
+            });
+
             List<SubmissionAnswer> answers = _gradeSummaryRepository.SubmissionAnswers.Where(answer => answer.GroupId == groupId).Include(answer => answer.SubmissionField).ToList();
 
             SubmissionGradingViewModel viewModel = new SubmissionGradingViewModel
             {
                 Grades = grades,
-                SubmissionAnswers = answers
+                SubmissionAnswers = answers,
+                ClassGrades = classGrades
             };
 
             return View(viewModel);
@@ -96,33 +110,39 @@ namespace ToaPro.Controllers
         [HttpPost]
         public async Task<IActionResult> GradeSubmission(SubmissionGradingViewModel submissionGrades)
         {
-            List<Grade> newGrades = submissionGrades.Grades.Where(g => g.Id == 0 && g.Points != null).ToList();
-
             // Inaccurate way to check if it was updated; any pre-existing grades will always be marked as updated even with same values. 
             // TODO: Track updates via ID list or by fetching from database and comparing
-            List<Grade> updatedGrades = submissionGrades.Grades.Where(g => g.Id != 0 && g.Points != null).ToList(); 
-
-            int gradedGroupId = submissionGrades.Grades.FirstOrDefault()?.GroupId ?? 0;
-
-            bool saveData = false;
-            if (newGrades.Count > 0)
+            ClassGradesViewModel? classGrades = submissionGrades.ClassGrades.FirstOrDefault();
+            if (classGrades != null)
             {
-                _gradeSummaryRepository.AddGrades(newGrades);
-                saveData = true;
-            }
-            
-            if (updatedGrades.Count > 0)
-            {
-                _gradeSummaryRepository.UpdateGrades(updatedGrades);
-                saveData = true;
+                List<Grade> newGrades = classGrades.Grades.Where(g => g.Id == 0 && g.Points != null).ToList();
+
+                List<Grade> updatedGrades = classGrades.Grades.Where(g => g.Id != 0 && g.Points != null).ToList(); 
+
+                int gradedGroupId = classGrades.Grades.FirstOrDefault()?.GroupId ?? 0;
+
+                bool saveData = false;
+                if (newGrades.Count > 0)
+                {
+                    _gradeSummaryRepository.AddGrades(newGrades);
+                    saveData = true;
+                }
+                
+                if (updatedGrades.Count > 0)
+                {
+                    _gradeSummaryRepository.UpdateGrades(updatedGrades);
+                    saveData = true;
+                }
+
+                if (saveData)
+                {
+                    await _gradeSummaryRepository.CommitChangesAsync();
+                }
+                
+                return RedirectToAction("GradeSubmission", new { groupId = gradedGroupId });
             }
 
-            if (saveData)
-            {
-                await _gradeSummaryRepository.CommitChangesAsync();
-            }
-
-            return RedirectToAction("GradeSubmission", new { groupId = gradedGroupId });
+            return RedirectToAction("GradeSubmission");
         }
 
         public IActionResult PeerEvalDetails(int evaluationId)
