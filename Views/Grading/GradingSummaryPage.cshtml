@@ -3,14 +3,15 @@
 *@
 @{
 }
-@*Grading Summary View for professors and TAs (Groups 1, 10, & 12)*@
+@*Grading Summary View for professors and TAs*@
 
+@model List<GradingSummaryViewModel>
 
 <div class="button-container" align="center">
-    <button>Section 1</button>
-    <button>Section 2</button>
-    <button>Section 3</button>
-    <button>Section 4</button>
+    @foreach (GradingSummaryViewModel summary in Model)
+    {
+        <button data-section="@summary.Section" class="button section-button">Section @summary.Section.ToString()</button>
+    }
 </div>
 <br />
 <div style="display: flex; align-items: center;">
@@ -25,43 +26,55 @@
 <br />
 
 <br />
-<table class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>Group Number</th>
-            <th>Site URL</th>
-            <th>Percent Graded</th>
-            <th>401</th>
-            <th>413</th>
-            <th>414</th>
-            <th>455</th>
-            <th>Presentation Score</th>
-            <th>Score w/out Adjustments</th>
-            <th>Peer Evaluations</th>
-        </tr>
-    </thead>
-    @*
-    <tbody>
-        @foreach (var row in Model)
-        {
+@foreach (GradingSummaryViewModel summary in Model)
+{
+    <table id="section-@summary.Section" class="table table-bordered table-striped" style="display: none;">
+        <thead>
             <tr>
-                <td>@row.GroupId</td>
-                <td>@row.URL</td>
-                <td>@row.PercentGraded</td>
-                <td>@row.ClassId</td>
-                <td>@row.ClassId</td>
-                <td>@row.ClassId</td>
-                <td>@row.ClassId</td>
-                <td>@row.PresentationScore</td>
-                <td>@row.ScoreNoAdjustments</td>
-                <td>@row.PeerEval</td>
-                <td>
-                    <div class="btn-group" role="group">
-                        <a class="btn btn-info btn-light-blue" asp-controller="Home" asp-action="Edit" asp-route-id="@row.GroupId">Edit</a>
-                        <a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@row.GroupId">Delete</a>
-                    </div>
-                </td>
+                <th>Group Number</th>
+                @* <th>Site URL</th> *@
+                <th>Percent Graded</th>
+                @foreach (string className in summary.GroupGrades.FirstOrDefault().ClassGrades.Keys)
+                {
+                    <th>@className</th>
+                }
+                <th>Presentation Score</th>
+                <th>Peer Evaluations</th>
+                <th>Score w/out Adjustments</th>
             </tr>
-        }
-    </tbody> *@
-</table>
+        </thead>
+        <tbody>
+            @foreach (GroupGradesViewModel groupGrades in summary.GroupGrades)
+            {
+                <tr class="clickable" data-url="@Url.Action("GradeSubmission", "Grading", new { groupId = groupGrades.Group.Id })">
+                    <td>@(groupGrades.Group.Section)-@(groupGrades.Group.Number)</td>
+                    <td>@groupGrades.PercentGraded</td>
+                    @foreach (double points in groupGrades.ClassGrades.Values)
+                    {
+                        <td>@points</td>
+                    }
+                    <td>@groupGrades.PresentationScore</td>
+                    <td>N/A</td>
+                    <td>@groupGrades.TotalScore</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('table tbody tr').click(function() {
+            window.location = $(this).data('url');
+        });
+
+        $('table').first().show();
+
+        $('.section-button').click(function () {
+            const sectionNum = $(this).data('section');
+            $('table').hide();
+            $(`#section-${sectionNum}`).show();
+        });
+    });
+</script>

@@ -22,10 +22,6 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
 
     public virtual DbSet<Grade> Grades { get; set; }
 
-    public virtual DbSet<Grader> Graders { get; set; }
-
-    public virtual DbSet<GraderAssign> GraderAssigns { get; set; }
-
     public virtual DbSet<Group> Groups { get; set; }
 
     public virtual DbSet<Judge> Judges { get; set; }

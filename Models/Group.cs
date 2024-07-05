@@ -19,9 +19,7 @@ public partial class Group
 
     public virtual ICollection<Grade> Grades { get; set; } = new List<Grade>();
 
-    public virtual ICollection<GraderAssign> GraderAssign { get; set; } = new List<GraderAssign>();
-
-    public virtual ICollection<Presentation> Presentations { get; set; } = new List<Presentation>();
+    public virtual Presentation Presentation { get; set; } = new Presentation();
 
     public virtual ICollection<Ranking> Rankings { get; set; } = new List<Ranking>();
 

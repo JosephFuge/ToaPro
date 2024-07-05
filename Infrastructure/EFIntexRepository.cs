@@ -25,10 +25,7 @@ namespace ToaPro.Infrastructure
         public IQueryable<Judge> Judges => _toaProContext.Judges;
         public IQueryable<Presentation> Presentations => _toaProContext.Presentations;
         public IEnumerable<Class> Classes => _toaProContext.Classes;
-        public IEnumerable<Grade> Grades => _toaProContext.Grades;
-        public IEnumerable<Grader> Graders => _toaProContext.Graders;
-        public IEnumerable<GraderAssign> GraderAssigns => _toaProContext.GraderAssigns;
-        public IEnumerable<Requirement> Requirements => _toaProContext.Requirements;
+        public IQueryable<Requirement> Requirements => _toaProContext.Requirements;
         public IEnumerable<Semester> Semesters => _toaProContext.Semesters;
         public IQueryable<Ranking> Rankings => _toaProContext.Rankings;
 
@@ -101,7 +98,7 @@ namespace ToaPro.Infrastructure
         }
 
         /* Submissions */
-        public IEnumerable<SubmissionAnswer> SubmissionAnswers => _toaProContext.SubmissionAnswers.ToList();
+        public IQueryable<SubmissionAnswer> SubmissionAnswers => _toaProContext.SubmissionAnswers;
         public async Task<int> AddSubmissionAnswers(IEnumerable<SubmissionAnswer> answers)
         {
             _toaProContext.SubmissionAnswers.AddRange(answers);
@@ -130,6 +127,16 @@ namespace ToaPro.Infrastructure
         public void DeleteSubmissionFieldList(List<SubmissionField> submissionFields)
         {
             _toaProContext.SubmissionFields.RemoveRange(submissionFields);
+        }
+
+        /* Grades */
+        public IQueryable<Grade> Grades => _toaProContext.Grades;
+        public void AddGrades(IEnumerable<Grade> grades) {
+            _toaProContext.Grades.AddRange(grades);
+        }
+
+        public void UpdateGrades(IEnumerable<Grade> grades) {
+            _toaProContext.Grades.UpdateRange(grades);
         }
     }
 }

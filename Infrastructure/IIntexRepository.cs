@@ -7,10 +7,7 @@ namespace ToaPro.Infrastructure
     {
 
         IEnumerable<Class> Classes { get; }
-        IEnumerable<Grade> Grades { get; }
-        IEnumerable<Grader> Graders { get; }
-        IEnumerable<GraderAssign> GraderAssigns { get; }
-        IEnumerable<Requirement> Requirements { get; }
+        IQueryable<Requirement> Requirements { get; }
         IEnumerable<Semester> Semesters { get; }
         IQueryable<Judge> Judges { get; }
         IQueryable<Presentation> Presentations { get; }
@@ -40,12 +37,17 @@ namespace ToaPro.Infrastructure
         public Task AddGroup(Group group);
 
         /* Submissions */
-        IEnumerable<SubmissionAnswer> SubmissionAnswers { get; }
+        IQueryable<SubmissionAnswer> SubmissionAnswers { get; }
         public Task<int> AddSubmissionAnswers(IEnumerable<SubmissionAnswer> answers);
         IEnumerable<SubmissionField> SubmissionFields(bool tracking = true);
         public void AddSubmissionFieldList(List<SubmissionField> submissionFields);
         public void UpdateSubmissionFieldList(List<SubmissionField> submissionFields);
         public void DeleteSubmissionFieldList(List<SubmissionField> submissionFields);
         public Task<int> CommitChangesAsync();
+
+        /* Grades */
+        IQueryable<Grade> Grades { get; }
+        public void AddGrades(IEnumerable<Grade> grades);
+        public void UpdateGrades(IEnumerable<Grade> grades);
     }
 }

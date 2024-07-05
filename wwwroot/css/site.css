@@ -515,6 +515,41 @@ table {
     width: 20%;
 }
 
+/********************************************************************
+ * Dropdown Collapse
+ *******************************************************************/
+.class-grade-section {
+    margin-bottom: 20px;
+}
+
+.class-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    background-color: #f8f9fa;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.class-header h3 {
+    margin: 0;
+}
+
+.class-header .dropdown-arrow {
+    font-size: 1.5em;
+    transition: transform 0.3s;
+}
+
+.class-header.collapsed .dropdown-arrow {
+    transform: rotate(-90deg);
+}
+
+.class-table {
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
 
 /********************************************************************
  * Other
@@ -544,4 +579,9 @@ table {
 
 .filter-grey {
     filter: invert(79%) sepia(3%) saturate(13%) hue-rotate(321deg) brightness(87%) contrast(85%);
+}
+
+/* Miscellaneous */
+.clickable {
+    cursor: pointer;
 }

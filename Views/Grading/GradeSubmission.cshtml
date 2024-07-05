@@ -1,0 +1,184 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@*Grading View for professors and TAs*@
+
+@model SubmissionGradingViewModel
+
+@if (Model.Grades.First() != null && Model.Grades.First().Group != null)
+{
+    <vc:header-types title="Grading Group @(Model.Grades.First().Group.Section)-@(Model.Grades.First().Group.Number)"/>
+} else
+{
+    <vc:header-types title="Unable To Find Group"/>
+}
+
+<h2>Answers</h2>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Prompt</th>
+            <th>Answer</th>
+            <th>Submission Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(SubmissionAnswer answer in Model.SubmissionAnswers)
+        {
+            <tr>
+                <td>
+                    @answer.SubmissionField.Prompt
+                </td>
+                @if (answer.FileData != null)
+                {
+                    <td>
+                        <img height="300" src="data:@(answer.TextData);base64,@Convert.ToBase64String(answer.FileData)" />
+                    </td>
+                } else
+                {
+                    <td>
+                        @answer.TextData
+                    </td>
+                }
+                <td>
+                    @answer.SubmitDate.ToString()
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h2>Grades</h2>
+@if (Model.ClassGrades != null)
+{
+    @for (int i = 0; i < Model.ClassGrades.Count; i++)
+    {
+        <div class="class-grade-section">
+            <div class="class-header" data-toggle="collapse" data-target="#class-table-@i">
+                <h3>@Model.ClassGrades[i].ClassName</h3>
+                <span class="dropdown-arrow">&#9660;</span>
+            </div>
+            <div id="class-table-@i" class="class-table collapse">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Requirement</th>
+                            <th>Available Points</th>
+                            <th>Score</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <form asp-controller="Grading" asp-action="GradeSubmission" method="post">
+                        <tbody>
+                            @for(int j = 0; j < Model.ClassGrades[i].Grades.Count; j++)
+                            {
+                                <tr>
+                                    <input asp-for="@Model.ClassGrades[i].Grades[j].Id" hidden />
+                                    <input asp-for="@Model.ClassGrades[i].Grades[j].GraderId" hidden />
+                                    <input asp-for="@Model.ClassGrades[i].Grades[j].GroupId" hidden />
+                                    <input asp-for="@Model.ClassGrades[i].Grades[j].RequirementId" hidden />
+                                    <input asp-for="@Model.ClassGrades[i].ClassName" hidden />
+                                    <td>
+                                        @Model.ClassGrades[i].Grades[j].Requirement.Description
+                                    </td>
+                                    <td>
+                                        @Model.ClassGrades[i].Grades[j].Requirement.Points
+                                    </td>
+                                    <td>
+                                        <input asp-for="@Model.ClassGrades[i].Grades[j].Points" />
+                                    </td>
+                                    <td>
+                                        <input asp-for="@Model.ClassGrades[i].Grades[j].Comments" />
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4">
+                                    <button type="submit" class="button">Save Changes</button>
+                                    <button type="button" id="cancel-changes-button" class="ghostButton">Cancel</button>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </form>
+                </table>
+            </div>
+        </div>
+    }
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".class-header").click(function () {
+                var target = $(this).data("target");
+                $(target).toggleClass("show");
+
+                // Toggle the dropdown arrow rotation
+                $(this).toggleClass("collapsed");
+
+                // Animate the table collapse
+                if ($(target).hasClass("show")) {
+                    $(target).css("max-height", $(target).prop("scrollHeight") + "px");
+                } else {
+                    $(target).css("max-height", "0");
+                }
+            });
+
+            // Initialize the max-height for collapsed tables
+            $(".class-table").each(function () {
+                if (!$(this).hasClass("show")) {
+                    $(this).css("max-height", "0");
+                }
+            });
+        });
+    </script>
+}
+
+@* <table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Requirement</th>
+            <th>Available Points</th>
+            <th>Score</th>
+            <th>Notes</th>
+        </tr>
+    </thead>
+    <form asp-controller="Grading" asp-action="GradeSubmission" method="post">
+        <tbody>
+            @for(int i = 0; i < Model.Grades.Count; i++)
+            {
+                <tr>
+                    <input asp-for="@Model.Grades[i].Id" hidden />
+                    <input asp-for="@Model.Grades[i].GraderId" hidden />
+                    <input asp-for="@Model.Grades[i].GroupId" hidden />
+                    <input asp-for="@Model.Grades[i].RequirementId" hidden />
+                    <td>
+                        @Model.Grades[i].Requirement.Description
+                    </td>
+                    <td>
+                        @Model.Grades[i].Requirement.Points
+                    </td>
+                    <td>
+                        <input asp-for="@Model.Grades[i].Points" />
+                    </td>
+                    <td>
+                        <input asp-for="@Model.Grades[i].Comments" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4">
+                    <button type="submit" class="button">Save Changes</button>
+                    <button type="button" id="cancel-changes-button" class="ghostButton">Cancel</button>
+                </td>
+            </tr>
+        </tfoot>
+    </form>
+</table>
+
+ *@
