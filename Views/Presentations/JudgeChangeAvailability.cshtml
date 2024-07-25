@@ -27,7 +27,7 @@
                         12:00-12:40
                     </td>
                     <td>
-                        @(Model.TimeSlot1Room.Length > 0 ? Model.TimeSlot1Room : "Not Assigned")
+                        @if (Model.TimeSlot1Room.Length > 0) { <p>Model.TimeSlot1Room</p> } else { <p class="text-grey">Not Assigned</p>}
                     </td>
                 </tr>
                 <tr>
@@ -35,7 +35,7 @@
                         12:45-1:25
                     </td>
                     <td>
-                        @(Model.TimeSlot2Room.Length > 0 ? Model.TimeSlot2Room : "Not Assigned")
+                        @if (Model.TimeSlot2Room.Length > 0) { <p>Model.TimeSlot2Room</p> } else { <p class="text-grey">Not Assigned</p>}
                     </td>
                 </tr>
                 <tr>
@@ -43,15 +43,15 @@
                         1:30-2:10
                     </td>
                     <td>
-                        @(Model.TimeSlot3Room.Length > 0 ? Model.TimeSlot3Room : "Not Assigned")
-                    </td>
+                        @if (Model.TimeSlot3Room.Length > 0) { <p>Model.TimeSlot3Room</p> } else { <p class="text-grey">Not Assigned</p>}
+                        </td>
                 </tr>
                 <tr>
                     <td>
                         2:15-2:55
                     </td>
                     <td>
-                        @(Model.TimeSlot4Room.Length > 0 ? Model.TimeSlot4Room : "Not Assigned")
+                        @if (Model.TimeSlot4Room.Length > 0) { <p>Model.TimeSlot4Room</p> } else { <p class="text-grey">Not Assigned</p>}
                     </td>
                 </tr>
                 <tr>
@@ -59,7 +59,7 @@
                         3:00-3:40
                     </td>
                     <td>
-                        @(Model.TimeSlot5Room.Length > 0 ? Model.TimeSlot5Room : "Not Assigned")
+                        @if (Model.TimeSlot5Room.Length > 0) { <p>Model.TimeSlot5Room</p> } else { <p class="text-grey">Not Assigned</p>}
                     </td>
                 </tr>
                 <tr>
@@ -67,7 +67,7 @@
                         3:45-4:25
                     </td>
                     <td>
-                        @(Model.TimeSlot6Room.Length > 0 ? Model.TimeSlot6Room : "Not Assigned")
+                        @if (Model.TimeSlot6Room.Length > 0) { <p>Model.TimeSlot6Room</p> } else { <p class="text-grey">Not Assigned</p>}
                     </td>
                 </tr>
             </tbody>
