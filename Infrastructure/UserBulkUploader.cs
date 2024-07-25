@@ -184,11 +184,13 @@ namespace ToaPro.Infrastructure
                             Id = users[i].Id,
                             JudgeType = userImportModels[i].JudgeType,
                             Affiliation = userImportModels[i].Organization,
-                            TimeSlot1 = true,
-                            TimeSlot2 = true,
-                            TimeSlot3 = true,
-                            TimeSlot4 = true,
-                            TimeSlot5 = true
+                            JudgeAvailability = "",
+                            TimeSlot1Room = "",
+                            TimeSlot2Room = "",
+                            TimeSlot3Room = "",
+                            TimeSlot4Room = "",
+                            TimeSlot5Room = "",
+                            TimeSlot6Room = ""
                         };
                         judges.Add(newJudge);
                     }

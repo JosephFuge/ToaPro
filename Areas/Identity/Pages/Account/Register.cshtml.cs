@@ -162,6 +162,20 @@ namespace ToaPro.Areas.Identity.Pages.Account
                     } else if (user.NormalizedUserName.StartsWith("JUDGE"))
                     {
                         await _userManager.AddToRoleAsync(user, "Judge");
+                        Judge newJudge = new Judge
+                        {
+                            Id = user.Id,
+                            JudgeType = "Test",
+                            Affiliation = "Test BYU",
+                            JudgeAvailability = "",
+                            TimeSlot1Room = "",
+                            TimeSlot2Room = "",
+                            TimeSlot3Room = "",
+                            TimeSlot4Room = "",
+                            TimeSlot5Room = "",
+                            TimeSlot6Room = ""
+                        };
+                        await _repo.AddJudgeList([newJudge]);
                     }
                     else if (user.NormalizedUserName.StartsWith("TA"))
                     {
