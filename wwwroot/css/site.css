@@ -38,11 +38,14 @@ body {
 }
 .login-logout-card a.nav-link {
     font-size: 1rem;
-    color: #495057;
     text-align: center;
     padding: 1rem;
+    color: #6c757d; /* Inactive tab color */
 }
-
+.login-logout-card a.nav-link.active {
+    background-color: #ffffff; /* Active tab background color */
+    color: #000000; /* Active tab text color */
+}
 .login-logout-card .card-body {
     padding: 10px 20px;
 }
@@ -264,6 +267,92 @@ body, html {
         transform: scale(0.95); /* Slight decrease in size on click */
     }
 
+.ghostButton-danger {
+    border-color: #A10D2D;
+    color: #A10D2D;
+}
+
+    .ghostButton-danger:hover {
+        background-color: #ffe6e6; /* light red background on hover */
+    }
+
+.button-circle {
+    background-color: #0D64B5;
+    text-align: center;
+    color: white; 
+    border: none;
+    width: 2em;
+    height: 2em;
+    padding: 4px 4px; 
+    font-size: 16px; 
+    border-radius: 50px; 
+    cursor: pointer; 
+    user-select: none; 
+    transition: background-color 0.3s, transform 0.3s; 
+}
+
+    .button-circle:hover {
+        background-color: #003369; /* Darker blue background on hover */
+    }
+
+    .button-circle:active {
+        transform: scale(0.95); /* Slight decrease in size on click */
+    }
+
+.background-dark-blue {
+    background-color: #0D64B5;
+}
+
+.background-danger-red {
+    background-color: #A10D2D;
+}
+
+    .background-danger-red:hover {
+        background-color: #63091D;
+    }
+
+.width-large { 
+    width: 174px;
+}
+
+a.link-button-styling {
+    text-decoration: none;
+    text-align: center;
+    display: inline-block;
+}
+
+/* Search bar */
+    .search-container {
+        position: relative;
+        width: 300px;
+        margin: 0 auto;
+    }
+
+    .search-input {
+        width: 100%;
+        padding: 10px 15px;
+        border: 1px solid #ccc;
+        border-radius: 32px;
+        background-color: transparent;
+        outline: none;
+    }
+
+    .search-button {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 50px;
+        height: 100%;
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+    }
+
+        .search-button i {
+            font-size: 18px;
+        }
+
+
 
 /********************************************************************
  * Fonts
@@ -363,12 +452,23 @@ table {
  * Landing Pages
  *******************************************************************/
 
+.dashboard {
+    font-family: 'Public Sans', sans-serif;
+}
+
 .dashboard-section img {
     transition: transform 0.3s ease;
 }
 
 .dashboard-section:hover img {
     transform: scale(1.1);
+}
+
+.dashboard-section a {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Use the default text color */
+}
+
 }
 
 /********************************************************************
@@ -413,4 +513,75 @@ table {
 .rTable th:nth-child(3),
 .rTable td:nth-child(3) {
     width: 20%;
+}
+
+/********************************************************************
+ * Dropdown Collapse
+ *******************************************************************/
+.class-grade-section {
+    margin-bottom: 20px;
+}
+
+.class-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    background-color: #f8f9fa;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.class-header h3 {
+    margin: 0;
+}
+
+.class-header .dropdown-arrow {
+    font-size: 1.5em;
+    transition: transform 0.3s;
+}
+
+.class-header.collapsed .dropdown-arrow {
+    transform: rotate(-90deg);
+}
+
+.class-table {
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+/********************************************************************
+ * Other
+ *******************************************************************/
+
+/* Notification Dialogs */
+
+.toast {
+    display: none; 
+    border-radius: 24px;
+    background-color: #FDFDFD;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.35);
+}
+
+.toast.show {
+    display: block; /* Show the toast when the 'show' class is added */
+}
+
+/* SVG color filters */
+.filter-red {
+    filter: invert(36%) sepia(8%) saturate(7430%) hue-rotate(323deg) brightness(127%) contrast(92%);
+}
+
+.filter-green {
+    filter: invert(69%) sepia(48%) saturate(3931%) hue-rotate(70deg) brightness(90%) contrast(135%);
+}
+
+.filter-grey {
+    filter: invert(79%) sepia(3%) saturate(13%) hue-rotate(321deg) brightness(87%) contrast(85%);
+}
+
+/* Miscellaneous */
+.clickable {
+    cursor: pointer;
 }

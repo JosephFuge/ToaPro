@@ -22,10 +22,6 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
 
     public virtual DbSet<Grade> Grades { get; set; }
 
-    public virtual DbSet<Grader> Graders { get; set; }
-
-    public virtual DbSet<GraderAssign> GraderAssigns { get; set; }
-
     public virtual DbSet<Group> Groups { get; set; }
 
     public virtual DbSet<Judge> Judges { get; set; }
@@ -40,12 +36,39 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
 
     public virtual DbSet<Student> Students { get; set; }
 
-    public virtual DbSet<Submission> Submissions { get; set; }
     //added this part for our model:
+    public virtual DbSet<SubmissionAnswer> SubmissionAnswers { get; set; }
+
+    public virtual DbSet<SubmissionField> SubmissionFields { get; set; }
+
     public virtual DbSet<Evaluation> Evaluations { get; set; }
 
     public virtual DbSet<Award> Awards { get; set; }
     //inlcude a query section on Award
+
+    private void SeedData(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Semester>().HasData(
+            new Semester { Id = 1, Year = 2024, Term = "Fall" }
+        );
+
+        modelBuilder.Entity<Class>().HasData(
+            new Class { Id = 1, Code = "401", Description = "Product Management, Project Management, UX/UI, and so much more!" },
+            new Class { Id = 2, Code = "413", Description = "Big Boss Dawg's class about ASP .NET." },
+            new Class { Id = 3, Code = "414", Description = "Cybersecurity; sleep with one eye open, you'll get social engineered out of your first-born child." },
+            new Class { Id = 4, Code = "455", Description = "Machine Learning with Dr. Keith, the man with the biggest heart and the fastest fingers in the west." }
+        );
+
+        modelBuilder.Entity<Requirement>().HasData(
+            new Requirement { Id = 1, ClassId = 1, Description = "Figma is fully prototyped with every possible user flow." },
+            new Requirement { Id = 2, ClassId = 2, Description = "Use the word 'yeet' somewhere in your website." },
+            new Requirement { Id = 3, ClassId = 2, Description = "Code is clean; excessively commented and with descriptive variable names" }
+        );
+
+        modelBuilder.Entity<Group>().HasData(
+            new Group { Id = 1, Section = 4, Number = 1, SemesterId = 1 }
+        );
+    }
 
 
     /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -396,6 +419,8 @@ public partial class ToaProContext : IdentityDbContext<ToaProUser, IdentityRole,
         });
 
         OnModelCreatingPartial(modelBuilder);
+
+        SeedData(modelBuilder);
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);*/

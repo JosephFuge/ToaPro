@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using ToaPro.Infrastructure;
 using ToaPro.Models;
 
 namespace ToaPro.Areas.Identity.Pages.Account
@@ -30,13 +31,15 @@ namespace ToaPro.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<ToaProUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IIntexRepository _repo;
 
         public RegisterModel(
             UserManager<ToaProUser> userManager,
             IUserStore<ToaProUser> userStore,
             SignInManager<ToaProUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IIntexRepository repo)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -44,6 +47,7 @@ namespace ToaPro.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _repo = repo;
         }
 
         /// <summary>
@@ -128,15 +132,42 @@ namespace ToaPro.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
 
-                user.FirstName = Input.FirstName; user.LastName = Input.LastName;
+                user.FirstName = Input.FirstName; user.LastName = Input.LastName; 
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+
+                if (Input.Email.ToUpper().StartsWith("STUD"))
+                {
+                    user.NetId = Input.Email.Substring(0, Input.Email.IndexOf("@"));
+                }
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    if (user.NormalizedUserName.StartsWith("COORD")) {
+                        await _userManager.AddToRoleAsync(user, "Coordinator");
+                    } else if (user.NormalizedUserName.StartsWith("PROF")) {
+                        await _userManager.AddToRoleAsync(user, "Professor");
+                    } else if (user.NormalizedUserName.StartsWith("STUD")) {
+                        await _userManager.AddToRoleAsync(user, "Student");
+                        await _repo.AddStudent(new Student
+                        {
+                            Id = user.Id,
+                            GroupId = 1,
+                        });
+                    } else if (user.NormalizedUserName.StartsWith("JUDGE"))
+                    {
+                        await _userManager.AddToRoleAsync(user, "Judge");
+                    }
+                    else if (user.NormalizedUserName.StartsWith("TA"))
+                    {
+                        await _userManager.AddToRoleAsync(user, "TA");
+                    }
+
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

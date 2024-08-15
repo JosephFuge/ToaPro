@@ -2,8 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using ToaPro.Models;
-using ToaPro;
 using System.Runtime.ConstrainedExecution;
+using ToaPro.Infrastructure;
 
 // using ToaPro.Models;
 
@@ -83,21 +83,24 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-else
+
+// Seed the database with a semester if it does not exist
+using (var scope = app.Services.CreateScope())
 {
-    // Seed the database with testing data if in development mode
-    using (var scope = app.Services.CreateScope())
+    var context = scope.ServiceProvider.GetRequiredService<ToaProContext>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ToaProUser>>();
+    var dataSeeder = new DataSeeder(context, userManager);
+
+    ToaProUser coordinator = new ToaProUser
     {
-        var context = scope.ServiceProvider.GetRequiredService<ToaProContext>();
-        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ToaProUser>>();
-        var dataSeeder = new DataSeeder(context, userManager);
+        UserName = "BrewmasterTaylor",
+        Email = "taylor@wells.com",
+        FirstName = "Taylor",
+        LastName = "Wells"
+    };
 
-        bool userSeedSuccess = await dataSeeder.SeedUsers();
-
-        await dataSeeder.SeedData();
-    }
+    await dataSeeder.SeedIndividualUser(coordinator, "Password123!", "Coordinator");
 }
-
 
 
 app.UseHttpsRedirection();

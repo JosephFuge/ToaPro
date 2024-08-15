@@ -3,11 +3,11 @@
 *@
 @{
 }
+@model int
 
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
-<vc:nav-bar-types user="Student"></vc:nav-bar-types>
 <vc:submenu-types view="Default"></vc:submenu-types>
 <vc:header-types title="Submission Confirmation" />
 <!--This is just a confirmation page for after the students submit-->
@@ -15,7 +15,7 @@
     <br />
     <br />
     <br />
-    <h2 class="text-center">Thank you. Your submission has been received.</h2>
+    <h2 class="text-center">Thank you. @Model answers successfully submitted.</h2>
     <br />
     <br />
     <br />

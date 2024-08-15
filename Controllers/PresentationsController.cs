@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ToaPro.Infrastructure;
 using ToaPro.Models;
 
 

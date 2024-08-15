@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ToaPro.Models;
@@ -26,7 +24,9 @@ public partial class Ranking
 
     public string? Nomination { get; set; }
 
+    [ForeignKey("Presentation")]
     public int PresentationId { get; set; }
+    public virtual Presentation Presentation { get; set; } = null!;
     public virtual Group Group { get; set; } = null!;
 
     public virtual Judge Judge { get; set; } = null!;

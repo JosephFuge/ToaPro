@@ -16,12 +16,7 @@ namespace ToaPro.Models
         public int GroupId { get; set; }
 
         public virtual Group Group { get; set; }
-        public string NetId { get; set; } = null!;
-        public string Reason { get; set; }
-
-
-        public virtual ICollection<Submission> Submissions { get; set; } = new List<Submission>();
-
+        public string Reason { get; set; } = string.Empty;
         public virtual ICollection<Evaluation> Evaluations { get; set; } = new List<Evaluation>();
 
     }

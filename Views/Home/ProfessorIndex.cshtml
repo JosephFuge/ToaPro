@@ -4,7 +4,6 @@
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 <link href="~/css/site.css" rel="stylesheet" />
 
-<vc:nav-bar-types user="Professor"></vc:nav-bar-types>
 <vc:submenu-types view="Default"></vc:submenu-types>
 <vc:header-types title="Welcome Professor" />
 
@@ -13,19 +12,27 @@
         <div class="col-md-12 d-flex justify-content-center">
             <div class="dashboard-section" style="background-color: #DDDDDD; width: 150px; height: 150px; margin: 0 30px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                 <img src="~/img/rubric.png" style="width: 48px; height: 48px;" />
-                <h3 style="font-size: 14px; margin-top: 10px; text-align: center;">Rubric</h3>
+                <a asp-controller="Rubric" asp-action="Rubric">
+                    <h3 style="font-size: 14px; margin-top: 10px; text-align: center;">Rubric</h3>
+                </a>
             </div>
             <div class="dashboard-section" style="background-color: #DDDDDD; width: 150px; height: 150px; margin: 0 30px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                 <img src="~/img/grading.png" style="width: 48px; height: 48px;" />
-                <h3 style="font-size: 14px; margin-top: 10px; text-align: center;">Grading</h3>
+                <a asp-controller="Grading" asp-action="GradingSummaryPage">
+                    <h3 style="font-size: 14px; margin-top: 10px; text-align: center;">Grading</h3>
+                </a>
             </div>
             <div class="dashboard-section" style="background-color: #DDDDDD; width: 150px; height: 150px; margin: 0 30px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                 <img src="~/img/ta_assignments.png" style="width: 48px; height: 48px;" />
-                <h3 style="font-size: 14px; margin-top: 10px; text-align: center;">TA Assignments</h3>
+                <a asp-controller="Rubric" asp-action="AssignTAs">
+                    <h3 style="font-size: 14px; margin-top: 10px; text-align: center;">TA Assignments</h3>
+                </a>
             </div>
             <div class="dashboard-section" style="background-color: #DDDDDD; width: 150px; height: 150px; margin: 0 30px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                 <img src="~/img/normalize.png" style="width: 48px; height: 48px;" />
-                <h3 style="font-size: 14px; margin-top: 10px; text-align: center;">Normalize</h3>
+                <a asp-controller="Grading" asp-action="ProfessorNormalizateGrades">
+                    <h3 style="font-size: 14px; margin-top: 10px; text-align: center;">Normalize</h3>
+                </a>
             </div>
         </div>
     </div>
