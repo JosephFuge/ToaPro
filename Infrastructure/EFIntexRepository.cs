@@ -64,7 +64,7 @@ namespace ToaPro.Infrastructure
         //PLS FIX THIS TEAM :) 
         public void UpdateJudgeAvailability(Judge judge)
         {
-            _toaProContext.Judges.Add(judge);
+            _toaProContext.Judges.Update(judge);
             _toaProContext.SaveChanges();
         }
         public async Task AddJudgeList(List<Judge> judges)
@@ -73,7 +73,7 @@ namespace ToaPro.Infrastructure
             _toaProContext.SaveChanges();
         }
 
-        public Judge GetJudgeById(string id)
+        public Judge? GetJudgeById(string id)
         {
             return _toaProContext.Judges.FirstOrDefault(x => x.Id == id);
         }

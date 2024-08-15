@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using ToaPro.Infrastructure;
 using ToaPro.Models;
@@ -8,10 +10,12 @@ namespace ToaPro.Controllers
     public class JudgeRankingsController : Controller
     {
         private IIntexRepository _repo;
+        private SignInManager<ToaProUser> _signInManager;
         
-        public JudgeRankingsController(IIntexRepository temp)
+        public JudgeRankingsController(IIntexRepository tempRepo, SignInManager<ToaProUser> tempSignInManager)
         {
-            _repo = temp;
+            _repo = tempRepo;
+            _signInManager = tempSignInManager;
         }
         
         public IActionResult Index()

@@ -581,6 +581,11 @@ table {
     filter: invert(79%) sepia(3%) saturate(13%) hue-rotate(321deg) brightness(87%) contrast(85%);
 }
 
+/* Font colors */
+.text-grey {
+    color: dimgrey;
+}
+
 /* Miscellaneous */
 .clickable {
     cursor: pointer;

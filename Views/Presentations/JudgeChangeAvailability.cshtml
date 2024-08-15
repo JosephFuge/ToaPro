@@ -1,0 +1,95 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Judge;
+
+<vc:header-types title="Request Availability"/>
+
+<div class="row">
+    <div class="col-6">
+        <div>
+            <p class="bold-text">
+                Your current timeslot assignments
+            </p>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Time Slot</th>
+                    <th>Room Number</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        12:00-12:40
+                    </td>
+                    <td>
+                        @if (Model.TimeSlot1Room.Length > 0) { <p>Model.TimeSlot1Room</p> } else { <p class="text-grey">Not Assigned</p>}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        12:45-1:25
+                    </td>
+                    <td>
+                        @if (Model.TimeSlot2Room.Length > 0) { <p>Model.TimeSlot2Room</p> } else { <p class="text-grey">Not Assigned</p>}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        1:30-2:10
+                    </td>
+                    <td>
+                        @if (Model.TimeSlot3Room.Length > 0) { <p>Model.TimeSlot3Room</p> } else { <p class="text-grey">Not Assigned</p>}
+                        </td>
+                </tr>
+                <tr>
+                    <td>
+                        2:15-2:55
+                    </td>
+                    <td>
+                        @if (Model.TimeSlot4Room.Length > 0) { <p>Model.TimeSlot4Room</p> } else { <p class="text-grey">Not Assigned</p>}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        3:00-3:40
+                    </td>
+                    <td>
+                        @if (Model.TimeSlot5Room.Length > 0) { <p>Model.TimeSlot5Room</p> } else { <p class="text-grey">Not Assigned</p>}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        3:45-4:25
+                    </td>
+                    <td>
+                        @if (Model.TimeSlot6Room.Length > 0) { <p>Model.TimeSlot6Room</p> } else { <p class="text-grey">Not Assigned</p>}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="vr"></div>
+    <div class="col">
+        <div>
+            <p class="bold-text">
+                Please explain what times you will be available.
+            </p>
+        </div>
+        <form method="post">
+            <input asp-for="Id" hidden />
+            <textarea asp-for="JudgeAvailability"></textarea>
+            <div class="row">
+                <div class="col-5"></div>
+                <div class="col">
+                    <button class="button" type="submit">Submit</button>
+                </div>
+                <div class="col-5"></div>
+            </div>
+        </form>
+    </div>
+</div>
