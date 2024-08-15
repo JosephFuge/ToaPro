@@ -24,7 +24,7 @@ namespace ToaPro.Infrastructure
         public void UpdateAward(Award award);
 
         /* Judges */
-        public Judge GetJudgeById(string id);
+        public Judge? GetJudgeById(string id);
         public Task AddJudgeList(List<Judge> judges);
         public void UpdateJudgeAvailability(Judge judge);
 

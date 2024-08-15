@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ToaPro.Infrastructure;
 using ToaPro.Models;
@@ -9,10 +10,12 @@ namespace ToaPro.Controllers
     public class PresentationsController : Controller
     {
         private IIntexRepository _repo;
+        private SignInManager<ToaProUser> _signInManager;
 
-        public PresentationsController (IIntexRepository temp)
+        public PresentationsController (IIntexRepository tempRepo, SignInManager<ToaProUser> tempSignInManager)
         {
-            _repo = temp;
+            _repo = tempRepo;
+            _signInManager = tempSignInManager;
         }
         public IActionResult Index()
         {
@@ -80,6 +83,66 @@ namespace ToaPro.Controllers
 
             // Assuming you're returning JSON data
             return Json(judge2);
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> JudgeChangeAvailability()
+        {
+            ToaProUser? currentUser = await _signInManager.UserManager.GetUserAsync(HttpContext.User);
+
+            if (currentUser == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            bool isJudge = await _signInManager.UserManager.IsInRoleAsync(currentUser, "Judge");
+
+            if (!isJudge)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            Judge? userJudge = _repo.GetJudgeById(currentUser.Id);
+
+            if (userJudge != null)
+            {
+                return View(userJudge);
+            }
+
+            return RedirectToAction("JudgeIndex", "Home");
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> JudgeChangeAvailability(Judge updatedJudge)
+        {
+            ToaProUser? currentUser = await _signInManager.UserManager.GetUserAsync(HttpContext.User);
+
+            if (currentUser == null || currentUser.Id != updatedJudge.Id)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            bool isJudge = await _signInManager.UserManager.IsInRoleAsync(currentUser, "Judge");
+
+            if (!isJudge)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            Judge? userJudge = _repo.GetJudgeById(currentUser.Id);
+
+            if (userJudge == null)
+            {
+                return View("Index", "Home");
+            } else
+            {
+                userJudge.JudgeAvailability = updatedJudge.JudgeAvailability;
+                _repo.UpdateJudgeAvailability(userJudge);
+            }
+
+            return RedirectToAction("JudgeIndex", "Home");
         }
     }
 }
