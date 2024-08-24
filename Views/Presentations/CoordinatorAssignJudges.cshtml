@@ -125,13 +125,13 @@
                 <h2>Judge Assignment</h2>
                 <!-- Dropdown for Judges -->
                  <div class="form-group">
-                <label asp-for="@Model.FirstOrDefault().Id">Select Judge:</label>
-                <select class="form-control" id="judgeDropdown">
-                @foreach (Judge j in Model)
-                {
-                <option value="@j.Id">@j.ToaProUser.FirstName @j.ToaProUser.LastName</option>
-                }
-                </select>
+                    <label asp-for="@Model.FirstOrDefault().Id">Select Judge:</label>
+                    <select class="form-control" id="judgeDropdown">
+                        @foreach (Judge j in Model)
+                        {
+                            <option value="@j.Id">@j.ToaProUser.FirstName @j.ToaProUser.LastName</option>
+                        }
+                    </select>
                 </div>
                 @*
                 <!-- Current Assignments Box -->
