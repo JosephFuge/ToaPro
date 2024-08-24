@@ -4,6 +4,10 @@ using Microsoft.AspNetCore.Identity;
 using ToaPro.Models;
 using System.Runtime.ConstrainedExecution;
 using ToaPro.Infrastructure;
+using NpgsqlTypes;
+using Serilog.Sinks.PostgreSQL;
+using Serilog;
+using System.Configuration;
 
 // using ToaPro.Models;
 
@@ -46,6 +50,10 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 
 builder.Services.AddScoped<IIntexRepository, EFIntexRepository>();
+
+//Add support for logging with SERILOG
+builder.Host.UseSerilog((context, configuration) =>
+configuration.ReadFrom.Configuration(context.Configuration));
 
 var app = builder.Build();
 
@@ -102,6 +110,7 @@ using (var scope = app.Services.CreateScope())
     await dataSeeder.SeedIndividualUser(coordinator, "Password123!", "Coordinator");
 }
 
+app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
